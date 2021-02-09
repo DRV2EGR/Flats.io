@@ -19,7 +19,7 @@ workflows:
 jobs:
   build:
 
-    working_directory: ~/Flats_io
+#    working_directory: ~/Flats_io
 
     docker:
       - image: circleci/openjdk:latest
@@ -37,7 +37,7 @@ jobs:
 #            sudo apt-get update
 #            sudo apt install -y postgresql-client
 #            createdb -h localhost hackaton_test -U hackaton_app
-#      - checkout
+      - checkout
 
       - run: mvn package
 
