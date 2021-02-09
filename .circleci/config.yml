@@ -19,7 +19,7 @@ workflows:
 jobs:
   build:
 
-    working_directory: ~/hackaton_demo
+    working_directory: ~/Flats.io
 
     docker:
       - image: circleci/openjdk:latest
