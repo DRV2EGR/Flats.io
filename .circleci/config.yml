@@ -19,7 +19,7 @@ workflows:
 jobs:
   build:
 
-    working_directory: ~/Flats_io/Flats.io
+    working_directory: ~/Flats_io
 
     docker:
       - image: circleci/openjdk:latest
