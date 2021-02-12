@@ -23,5 +23,6 @@ public class Flat extends BaseEntity {
     protected String description;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     protected User owner;
 }
