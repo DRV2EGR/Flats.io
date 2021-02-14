@@ -10,4 +10,8 @@ class FlatsApplicationTests {
     void contextLoads() {
     }
 
+    public FlatsApplicationTests() {
+
+    }
+
 }
