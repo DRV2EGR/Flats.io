@@ -6,7 +6,7 @@
 
 ![GitHub contributors](https://img.shields.io/github/contributors/DRV2VNA/Flats.io)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/DRV2VNA/Flats.io)
-![GitHub last commit](https://img.shields.io/github/last-commit/DRV2VNA/Flats.io) 
+![GitHub last commit](https://img.shields.io/github/last-commit/DRV2VNA/Flats.io)
 
 [![Discord](https://img.shields.io/discord/807292304405954580?label=Discord)](https://discord.gg/snVd8NbN)
 
