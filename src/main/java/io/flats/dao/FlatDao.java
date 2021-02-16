@@ -1,7 +1,9 @@
 package io.flats.dao;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 public class FlatDao {
     protected String country;
