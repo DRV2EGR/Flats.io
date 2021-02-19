@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "flat-order-type")
+@Table(name = "flat_order_type")
 @Data
 public class FlatOrderType extends BaseEntity {
     @Column
-    private String name;
+    protected String name;
 }
