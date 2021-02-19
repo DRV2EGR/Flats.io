@@ -7,6 +7,6 @@ public class ResponceCompletedDto extends BasicResponce {
     protected String response;
 
     public ResponceCompletedDto() {
-        this.response = "OK.";
+        this.response = "OK";
     }
 }

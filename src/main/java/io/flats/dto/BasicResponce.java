@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BasicResponce {
+public abstract class BasicResponce {
     protected String response;
 }
