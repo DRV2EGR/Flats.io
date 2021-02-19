@@ -12,7 +12,8 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:/api/user/get_user_img_url' )
+        //TODO: вставить получение картинки.
+        fetch('http://localhost:/api/user/get_user_img_url/'  )
             .then(response => response.json())
             .then(result => this.setState({data: result, isFetching: false }));
     // .catch(e => {
