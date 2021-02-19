@@ -3,6 +3,7 @@ import './App.css';
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import ErrorPage from './ErrorPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   render() {
