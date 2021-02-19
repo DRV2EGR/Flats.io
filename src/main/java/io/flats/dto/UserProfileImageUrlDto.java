@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class UserProfileImageUrlDto {
-    private String url;
+    private String img;
 
-    public UserProfileImageUrlDto(String url) {
-        this.url = url;
+    public UserProfileImageUrlDto(String img) {
+        this.img = img;
     }
 }
