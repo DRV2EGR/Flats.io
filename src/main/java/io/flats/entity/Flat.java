@@ -19,6 +19,8 @@ public class Flat extends BaseEntity {
     protected int houseNom;
     protected int floor;
 
+    protected float price;
+
     protected String description;
 
     @ManyToOne
