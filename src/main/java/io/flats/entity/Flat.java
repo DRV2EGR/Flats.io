@@ -19,7 +19,13 @@ public class Flat extends BaseEntity {
     protected int houseNom;
     protected int floor;
 
+    protected float price;
+
     protected String description;
+
+    @ManyToOne
+    @JoinColumn(name = "flat_order_type_id", referencedColumnName = "id")
+    protected FlatOrderType orderType;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
