@@ -4,6 +4,7 @@ import io.flats.dao.FlatDao;
 import io.flats.entity.Flat;
 import io.flats.payload.AddSaleFlatDaoPayload;
 import io.flats.repository.FlatRepository;
+import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,14 +18,14 @@ import java.util.List;
 @RequestMapping("api/service")
 public class ServiceController {
     @Autowired
-    FlatRepository flatRepository;
+    FlatService flatService;
 
 
 
     @RequestMapping("/flats")
     public ResponseEntity<ArrayList<FlatDao>> mainPage() {
 
-        List<Flat> lf = flatRepository.findAll();
+        List<Flat> lf = flatService.findAll();
         ArrayList<FlatDao> fd = new ArrayList<>();
 
         for(Flat flat : lf) {
