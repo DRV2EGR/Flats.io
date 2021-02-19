@@ -30,7 +30,7 @@ public class FlatService {
     public List<Flat> findAll() {
         List<Flat> resArray = new ArrayList<>();
 
-        for (int i = 0; i < flatRepository.count(); ++i) {
+        for (int i = 1; i <= flatRepository.count(); ++i) {
             Flat curFlat = flatRepository.findById(Long.valueOf(i)).orElseThrow(
                     () -> { throw new NoSuchElementException("No such role found."); }
             );
