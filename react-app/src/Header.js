@@ -7,15 +7,17 @@ class Header extends Component {
         this.state = {
             code: props.code ? props.code : '999',
             description: props.description ? props.description : 'Unknown error',
-            data: {}, isFetching: true, error: null
+            data: {}, error: null
         }
     }
 
     componentDidMount() {
         //TODO: вставить получение картинки.
-        fetch('http://localhost:/api/user/get_user_img_url/'  )
+        fetch('http://localhost:8081/api/user/get_user_img_url' + '?userId=3' )
             .then(response => response.json())
-            .then(result => this.setState({data: result, isFetching: false }));
+            .then(result => this.setState({data: result }));
+
+        console.log(this.state.data);
     // .catch(e => {
     //         console.log(e);
     //         this.setState({data: result, isFetching: false, error: e }));

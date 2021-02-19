@@ -2,6 +2,7 @@ package io.flats.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,6 +39,9 @@ public class User extends BaseEntity {
 
     @Column(name = "time_of_account_creation")
     protected LocalDateTime timeOfAccountCreation;
+
+    @Column(name = "user_profile_image_url", nullable = true)
+    protected String userProfileImageUrl;
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
