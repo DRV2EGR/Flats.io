@@ -24,6 +24,10 @@ public class Flat extends BaseEntity {
     protected String description;
 
     @ManyToOne
+    @JoinColumn(name = "flat-order-type_id", referencedColumnName = "id")
+    protected FlatOrderType orderType;
+
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     protected User owner;
 }

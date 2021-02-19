@@ -1,9 +1,12 @@
 INSERT INTO roles (id, name) VALUES
 (1, 'ROLE_USER'),
 (2, 'ROLE_ADMIN'),
-(3, 'ROLE_INITIATOR'),
-(4, 'ROLE_CURATOR'),
-(5, 'ROLE_INVESTOR');
+(3, 'ROLE_INVESTOR');
+
+INSERT INTO flat-order-type (id, name) VALUES
+(1, 'TYPE_SALE'),
+(2, 'TYPE_RENT'),
+(3, 'TYPE_DAILY_RENT');
 
 INSERT INTO users (id, first_name, second_name, last_name, username, email, password, phone_number, role_id) VALUES
 (1, 'John', 'Frederick', 'Smith', 'john_the_admin', 'j_smith@rosatom.ru', '$2y$12$6G7v5bApu2ZRH7W.HV8NHuJs0W4pDQ3xMmXZSW1k03Dfvzk78lkaO', '+7000', 2),
