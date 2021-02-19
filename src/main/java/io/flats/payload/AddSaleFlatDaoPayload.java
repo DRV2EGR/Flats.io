@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 @Data
 @NoArgsConstructor
-public class AddSaleFlatPayload {
+public class AddSaleFlatDaoPayload {
     protected String country;
     protected String town;
     protected String street;
@@ -25,7 +25,7 @@ public class AddSaleFlatPayload {
 
     protected User owner;
 
-    public AddSaleFlatPayload(String country, String town, String street, int houseNom, int floor, float price, String description, FlatOrderType orderType, User owner) {
+    public AddSaleFlatDaoPayload(String country, String town, String street, int houseNom, int floor, float price, String description, FlatOrderType orderType, User owner) {
         this.country = country;
         this.town = town;
         this.street = street;
