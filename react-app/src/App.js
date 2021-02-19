@@ -4,12 +4,15 @@ import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MainPage from "./MainPage";
 
 class App extends Component {
   render() {
     return (
         <BrowserRouter>
           <Switch>
+              <Route exact path={'/'} component={MainPage}/>
+
             {/*<Route exact path='/'>*/}
             {/*  <Header/>*/}
             {/*  <Mainpage/>*/}
