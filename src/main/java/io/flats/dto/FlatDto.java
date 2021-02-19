@@ -1,20 +1,22 @@
-package io.flats.dao;
+package io.flats.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FlatDao {
+public class FlatDto {
     protected String country;
     protected String town;
     protected String street;
     protected int houseNom;
     protected int floor;
 
+    protected float price;
+
     protected String description;
 
-    public FlatDao(String country, String town, String street, int houseNom, int floor, String description) {
+    public FlatDto(String country, String town, String street, int houseNom, int floor, String description) {
         this.country = country;
         this.town = town;
         this.street = street;

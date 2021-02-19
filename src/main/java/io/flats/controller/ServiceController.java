@@ -1,9 +1,11 @@
 package io.flats.controller;
 
-import io.flats.dao.FlatDao;
+import io.flats.dto.BasicResponce;
+import io.flats.dto.FlatDto;
+import io.flats.dto.ResponceCompletedDto;
+import io.flats.dto.ResponceNotCompletedDto;
 import io.flats.entity.Flat;
-import io.flats.payload.AddSaleFlatDaoPayload;
-import io.flats.repository.FlatRepository;
+import io.flats.payload.FlatDtoPayload;
 import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +25,13 @@ public class ServiceController {
 
 
     @RequestMapping("/flats")
-    public ResponseEntity<ArrayList<FlatDao>> mainPage() {
+    public ResponseEntity<ArrayList<FlatDto>> mainPage() {
 
         List<Flat> lf = flatService.findAll();
-        ArrayList<FlatDao> fd = new ArrayList<>();
+        ArrayList<FlatDto> fd = new ArrayList<>();
 
         for(Flat flat : lf) {
-            fd.add(new FlatDao(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(), flat.getDescription()));
+            fd.add(new FlatDto(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(), flat.getDescription()));
         }
 
         return ResponseEntity.ok(fd);
@@ -50,9 +52,14 @@ public class ServiceController {
     }
 
     @RequestMapping("add-sale-flat")
-    public ResponseEntity addFilterredFlats(@RequestBody AddSaleFlatDaoPayload newFlatDao) {
-        //TODO: дописать метод
+    public ResponseEntity<BasicResponce> addFilterredFlats(@RequestBody FlatDtoPayload newFlatDao) {
 
-        return null;
+        boolean stat = flatService.addSaleFlat(newFlatDao);
+
+        if (!stat) {
+            return ResponseEntity.ok(new ResponceNotCompletedDto());
+        }
+
+        return ResponseEntity.ok(new ResponceCompletedDto());
     }
 }
