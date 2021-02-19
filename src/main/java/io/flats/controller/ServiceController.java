@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/service")
+@RequestMapping("api/service")
 public class ServiceController {
     @Autowired
     FlatRepository flatRepository;
@@ -31,5 +31,26 @@ public class ServiceController {
         }
 
         return ResponseEntity.ok(fd);
+    }
+
+    @RequestMapping("filterred-flats")
+    public ResponseEntity returnFilterredFlats() {
+        //TODO: дописать метод
+
+        return null;
+    }
+
+    @RequestMapping("add-rent-flat")
+    public ResponseEntity addRentFlats() {
+        //TODO: дописать метод
+
+        return null;
+    }
+
+    @RequestMapping("add-sale-flat")
+    public ResponseEntity addFilterredFlats() {
+        //TODO: дописать метод
+
+        return null;
     }
 }
