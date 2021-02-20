@@ -32,6 +32,8 @@ public class ServiceController {
 
         for(Flat flat : lf) {
             fd.add(new FlatDto(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(), flat.getDescription()));
+
+            System.out.println(flat.getFlatsImages());
         }
 
         return ResponseEntity.ok(fd);

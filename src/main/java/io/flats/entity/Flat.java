@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "flats")
@@ -30,4 +33,7 @@ public class Flat extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     protected User owner;
+
+    @OneToMany(mappedBy="flat")
+    protected List<FlatsImages> flatsImages;
 }
