@@ -73,16 +73,16 @@ class MainPage extends Component {
 
 
             userList.push(
-                <div className='my-card col-md-4'>
+                <div className='card col m-1'>
                     <AwesomeSlider animation="cubeAnimation">
                         {mappedImgs}
                     </AwesomeSlider>
 
                     <div className='my-div'>
-                        <h2>{price}</h2>
+                        <h3>{price}</h3>
 
-                        <span>Улица: {street}</span> <br />
-                        <span>Дом: {houseNom}</span>
+                        <p>Улица: {street} <br />
+                        Дом: {houseNom}</p>
                     </div>
                 </div>
             );
@@ -107,7 +107,7 @@ class MainPage extends Component {
 
 
 
-                <div className='page-wrap d-flex flex-row align-items-center pt-5'>
+                <div className='page-wrap d-flex flex-row align-items-center m-3'>
                     <div className='container'>
                         <div className='row'>
                                     {this.renderFlats()}
