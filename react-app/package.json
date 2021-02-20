@@ -2,11 +2,14 @@
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:8081/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
+    "bootstrap": "^4.0.0-alpha.6",
     "react": "^17.0.1",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
