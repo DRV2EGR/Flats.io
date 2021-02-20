@@ -1,10 +1,12 @@
 import './App.css';
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './MainPage.css';
+
 
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
+
+import './MainPage.css';
 
 
 import Header from './Header';
@@ -65,6 +67,8 @@ class MainPage extends Component {
             let price = this.state.flats[i].price;
             let description = this.state.flats[i].description;
 
+            let id = this.state.flats[i].id;
+
             let images = this.state.flats[i].images;
             let mappedImgs = images.map((image) =>
                 <div data-src={image} key={Math.random()} />
@@ -77,14 +81,16 @@ class MainPage extends Component {
                     <AwesomeSlider animation="cubeAnimation">
                         {mappedImgs}
                     </AwesomeSlider>
+                    <a href={id}  className='main-a'>
+                        <div className='my-div'>
+                            <h3>{price}</h3>
 
-                    <div className='my-div'>
-                        <h3>{price}</h3>
-
-                        <p>Улица: {street} <br />
-                        Дом: {houseNom}</p>
-                    </div>
+                            <p>Улица: {street} <br />
+                            Дом: {houseNom}</p>
+                        </div>
+                    </a>
                 </div>
+
             );
         }
 
