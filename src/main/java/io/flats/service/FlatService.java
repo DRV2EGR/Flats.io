@@ -2,6 +2,7 @@ package io.flats.service;
 
 import io.flats.dto.FlatDto;
 import io.flats.entity.Flat;
+import io.flats.entity.FlatsImages;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.repository.FlatOrderTypeRepository;
@@ -26,6 +27,19 @@ public class FlatService {
     UserRepository userRepository;
 
 
+    public List<String> findImagesByFlatId(long flatId) {
+
+        Flat currentFlat = flatRepository.findById(flatId).orElseThrow(
+                () -> { throw new NoSuchElementException("No such flat found."); }
+        );
+
+        List<String> res = new ArrayList<>();
+        for(FlatsImages entity : currentFlat.getFlatsImages()) {
+            res.add(entity.getImgUrl());
+        }
+
+        return res;
+    }
 
     public List<Flat> findAll() {
         List<Flat> resArray = new ArrayList<>();

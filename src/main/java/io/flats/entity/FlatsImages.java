@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="flats_images")
+@Data
 public class FlatsImages extends BaseEntity {
 
     protected String imgUrl;

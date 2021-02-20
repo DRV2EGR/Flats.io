@@ -31,9 +31,8 @@ public class ServiceController {
         ArrayList<FlatDto> fd = new ArrayList<>();
 
         for(Flat flat : lf) {
-            fd.add(new FlatDto(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(), flat.getDescription()));
-
-            System.out.println(flat.getFlatsImages());
+            fd.add(new FlatDto(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(),
+                    flat.getPrice(), flat.getDescription(), flatService.findImagesByFlatId(flat.getId())));
         }
 
         return ResponseEntity.ok(fd);

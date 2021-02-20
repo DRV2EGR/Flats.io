@@ -21,3 +21,7 @@ INSERT INTO flats (id, country, town, street, house_nom, floor, price, descripti
 (1, 'Россия', 'Москва', 'Красный казанец', 12, 10, 7000000, 'описание 1', 1, 2),
 (2, 'Россия', 'Москва', 'Ивановское шоссе', 12, 10, 15000000, 'описание 2', 1, 2),
 (3, 'Россия', 'Москва', 'Виноградова', 12, 10, 7854202.45, 'описание 3', 2, 2);
+
+INSERT INTO flats_images (id, img_url, flat_id) VALUES
+(1, 'dfhfhfthf', 2),
+(2, 'hdhtfht', 2);
