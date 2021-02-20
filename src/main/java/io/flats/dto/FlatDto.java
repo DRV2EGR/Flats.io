@@ -20,7 +20,9 @@ public class FlatDto {
 
     protected List<String> images;
 
-    public FlatDto(String country, String town, String street, int houseNom, int floor, float price, String description, List<String> images) {
+    protected long id;
+
+    public FlatDto(String country, String town, String street, int houseNom, int floor, float price, String description, List<String> images, long id) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -29,6 +31,6 @@ public class FlatDto {
         this.price = price;
         this.description = description;
         this.images = images;
+        this.id = id;
     }
-
 }

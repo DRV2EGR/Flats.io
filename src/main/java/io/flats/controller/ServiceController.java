@@ -32,7 +32,7 @@ public class ServiceController {
 
         for(Flat flat : lf) {
             fd.add(new FlatDto(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(),
-                    flat.getPrice(), flat.getDescription(), flatService.findImagesByFlatId(flat.getId())));
+                    flat.getPrice(), flat.getDescription(), flatService.findImagesByFlatId(flat.getId()), flat.getId()));
         }
 
         return ResponseEntity.ok(fd);
