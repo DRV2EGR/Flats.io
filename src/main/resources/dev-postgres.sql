@@ -23,5 +23,5 @@ INSERT INTO flats (id, country, town, street, house_nom, floor, price, descripti
 (3, 'Россия', 'Москва', 'Виноградова', 12, 10, 7854202.45, 'описание 3', 2, 2);
 
 INSERT INTO flats_images (id, img_url, flat_id) VALUES
-(1, 'dfhfhfthf', 2),
-(2, 'hdhtfht', 2);
+(1, 'http://img-fotki.yandex.ru/get/9300/102699435.9d8/0_b88f4_8fa30144_L.jpg', 2),
+(2, 'https://anapacity.com/content/images/adygeya-10.jpg', 2);

@@ -47,8 +47,19 @@
 
 .my-card {
 
-  background-color: rgba(200, 200, 200, 0.5);
+  background-color: rgba(200, 200, 200, 0.8);
 
   padding: 15px;
-  margin: 3px;
+}
+
+.my-card:after {
+  background-color: grey;
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: -1;
 }

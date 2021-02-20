@@ -1,5 +1,11 @@
 import './App.css';
 import React, {Component} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './MainPage.css';
+
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+
 
 import Header from './Header';
 
@@ -9,6 +15,7 @@ class MainPage extends Component {
 
         this.state = {
             flats: [],
+            slideIndex: 1,
             //code: props.code ? props.code : '999',
             //description: props.description ? props.description : 'Unknown error'
         };
@@ -34,7 +41,6 @@ class MainPage extends Component {
         console.log(_flats);
         this.setState({ flats: [..._flats] });
 
-
     }
 
     renderFlats() {
@@ -58,8 +64,27 @@ class MainPage extends Component {
             let floor = this.state.flats[i].floor;
             let price = this.state.flats[i].price;
             let description = this.state.flats[i].description;
+
+            let images = this.state.flats[i].images;
+            let mappedImgs = images.map((image) =>
+                <div data-src={image} key={Math.random()} />
+            );
+
+
+
             userList.push(
-                <div className='my-card col-md-5'> {town} {houseNom} {description} </div>
+                <div className='my-card col-md-4'>
+                    <AwesomeSlider animation="cubeAnimation">
+                        {mappedImgs}
+                    </AwesomeSlider>
+
+                    <div className='my-div'>
+                        <h2>{price}</h2>
+
+                        <span>Улица: {street}</span> <br />
+                        <span>Дом: {houseNom}</span>
+                    </div>
+                </div>
             );
         }
 
@@ -72,6 +97,13 @@ class MainPage extends Component {
         return (
             <div>
                 <Header/>
+
+                {/*<AwesomeSlider animation="cubeAnimation">*/}
+                {/*    <div data-src="/path/to/image-0.png" />*/}
+                {/*    <div data-src="/path/to/image-1.png" />*/}
+                {/*    <div data-src="/path/to/image-2.jpg" />*/}
+                {/*</AwesomeSlider>*/}
+
 
 
 
