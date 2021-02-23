@@ -2,6 +2,7 @@ package io.flats.JWT_AUTH.controller;
 
 
 import io.flats.JWT_AUTH.dto.UserDto;
+import io.flats.JWT_AUTH.exeption.ConflictException;
 import io.flats.JWT_AUTH.payload.UserDtoPayload;
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.entity.User;
