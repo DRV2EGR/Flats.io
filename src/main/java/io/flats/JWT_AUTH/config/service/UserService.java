@@ -60,6 +60,8 @@ public class UserService {
         user.setSecondName(sailorDto.getSecondName());
         user.setRole((Role) roleRepository.findByName("ROLE_SELLER").orElseThrow(() -> { throw new NoSuchElementException("No such role found.");}));
 
+
+        user.setUserProfileImageUrl(sailorDto.getUserProfileImageUrl());
         //user.setActivationCode(UUID.randomUUID().toString());
         //user.setCreatedActivationCode(LocalDateTime.now());
 

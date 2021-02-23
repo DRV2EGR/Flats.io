@@ -15,14 +15,17 @@ public class UserDtoPayload {
     private String password;
     private String phoneNumber;
     private String role;
+    private String userProfileImageUrl;
 
-    public UserDtoPayload(User user) {
-        this.firstName = user.getFirstName();
-        this.secondName = user.getSecondName();
-        this.lastName = user.getLastName();
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.phoneNumber = user.getPhoneNumber();
-        role = user.getRole().getName();
+    public UserDtoPayload(String firstName, String secondName, String lastName, String username, String email, String password, String phoneNumber, String role, String userProfileImageUrl) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.userProfileImageUrl = userProfileImageUrl;
     }
 }
