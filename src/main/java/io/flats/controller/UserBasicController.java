@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api/user")
-public class UserController {
+public class UserBasicController {
     @Autowired
     UserRepository userRepository;
 
