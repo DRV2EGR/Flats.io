@@ -48,24 +48,25 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public User registerNewSailor(UserDtoPayload sailorDto) {
+
+    public User registerNewSailor(UserDtoPayload sailorDtoPayload) {
 
         User user = new User();
 
-        user.setUsername(sailorDto.getUsername());
-        user.setEmail(sailorDto.getEmail());
-        user.setFirstName(sailorDto.getFirstName());
-        user.setLastName(sailorDto.getLastName());
-        user.setPhoneNumber(sailorDto.getPhoneNumber());
-        user.setSecondName(sailorDto.getSecondName());
+        user.setUsername(sailorDtoPayload.getUsername());
+        user.setEmail(sailorDtoPayload.getEmail());
+        user.setFirstName(sailorDtoPayload.getFirstName());
+        user.setLastName(sailorDtoPayload.getLastName());
+        user.setPhoneNumber(sailorDtoPayload.getPhoneNumber());
+        user.setSecondName(sailorDtoPayload.getSecondName());
         user.setRole((Role) roleRepository.findByName("ROLE_SELLER").orElseThrow(() -> { throw new NoSuchElementException("No such role found.");}));
 
 
-        user.setUserProfileImageUrl(sailorDto.getUserProfileImageUrl());
+        user.setUserProfileImageUrl(sailorDtoPayload.getUserProfileImageUrl());
         //user.setActivationCode(UUID.randomUUID().toString());
         //user.setCreatedActivationCode(LocalDateTime.now());
 
-        String encodedPassword = bCryptPasswordEncoder.encode(sailorDto.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(sailorDtoPayload.getPassword());
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
