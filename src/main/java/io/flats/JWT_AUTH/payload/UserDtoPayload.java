@@ -13,10 +13,9 @@ public class UserDtoPayload extends BasicPayload{
     private String email;
     private String password;
     private String phoneNumber;
-    private String role;
     private String userProfileImageUrl;
 
-    public UserDtoPayload(String firstName, String secondName, String lastName, String username, String email, String password, String phoneNumber, String role, String userProfileImageUrl) {
+    public UserDtoPayload(String firstName, String secondName, String lastName, String username, String email, String password, String phoneNumber, String userProfileImageUrl) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
@@ -24,7 +23,6 @@ public class UserDtoPayload extends BasicPayload{
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.role = role;
         this.userProfileImageUrl = userProfileImageUrl;
     }
 }
