@@ -1,19 +1,18 @@
 package io.flats.JWT_AUTH.config.service;
 
+import io.flats.JWT_AUTH.config.payload.UserDtoPayload;
+import io.flats.entity.Role;
 import io.flats.entity.User;
 import io.flats.repository.RoleRepository;
 import io.flats.repository.UserRepository;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -49,6 +48,29 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
+    public User registerNewSailor(UserDtoPayload sailorDto) {
+
+        User user = new User();
+
+        user.setUsername(sailorDto.getUsername());
+        user.setEmail(sailorDto.getEmail());
+        user.setFirstName(sailorDto.getFirstName());
+        user.setLastName(sailorDto.getLastName());
+        user.setPhoneNumber(sailorDto.getPhoneNumber());
+        user.setSecondName(sailorDto.getSecondName());
+        user.setRole((Role) roleRepository.findByName("ROLE_SELLER").orElseThrow(() -> { throw new NoSuchElementException("No such role found.");}));
+
+        //user.setActivationCode(UUID.randomUUID().toString());
+        //user.setCreatedActivationCode(LocalDateTime.now());
+
+        String encodedPassword = bCryptPasswordEncoder.encode(sailorDto.getPassword());
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+
+        return user;
+    }
 
 
 //    public Curator registerNewCurator(CuratorDto curatorDto) {
