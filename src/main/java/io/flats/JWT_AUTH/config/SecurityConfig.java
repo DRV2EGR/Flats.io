@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH;
+package io.flats.JWT_AUTH.config;
 
 
 import io.flats.JWT_AUTH.jwt.JwtConfigurer;
