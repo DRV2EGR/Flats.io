@@ -1,7 +1,7 @@
-package io.flats.JWT_AUTH.config.service;
+package io.flats.JWT_AUTH.service;
 
-import io.flats.JWT_AUTH.config.payload.BasicPayload;
-import io.flats.JWT_AUTH.config.payload.UserDtoPayload;
+import io.flats.JWT_AUTH.payload.BasicPayload;
+import io.flats.JWT_AUTH.payload.UserDtoPayload;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 import io.flats.repository.RoleRepository;

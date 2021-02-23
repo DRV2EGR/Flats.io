@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH.config.jwt;
+package io.flats.JWT_AUTH.jwt;
 
 
 import io.flats.entity.User;

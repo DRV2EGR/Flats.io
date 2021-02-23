@@ -1,7 +1,7 @@
-package io.flats.JWT_AUTH.config.jwt;
+package io.flats.JWT_AUTH.jwt;
 
 
-import io.flats.JWT_AUTH.config.service.UserService;
+import io.flats.JWT_AUTH.service.UserService;
 import io.flats.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

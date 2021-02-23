@@ -1,9 +1,9 @@
-package io.flats.JWT_AUTH.config.controller;
+package io.flats.JWT_AUTH.controller;
 
-import io.flats.JWT_AUTH.config.exeption.NotFoundException;
-import io.flats.JWT_AUTH.config.dto.UserDto;
-import io.flats.JWT_AUTH.config.dto.UserDtoFactory;
-import io.flats.JWT_AUTH.config.service.UserService;
+import io.flats.JWT_AUTH.exeption.NotFoundException;
+import io.flats.JWT_AUTH.dto.UserDto;
+import io.flats.JWT_AUTH.dto.UserDtoFactory;
+import io.flats.JWT_AUTH.service.UserService;
 import io.flats.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

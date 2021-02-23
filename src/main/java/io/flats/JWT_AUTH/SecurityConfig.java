@@ -1,8 +1,8 @@
-package io.flats.JWT_AUTH.config;
+package io.flats.JWT_AUTH;
 
 
-import io.flats.JWT_AUTH.config.jwt.JwtConfigurer;
-import io.flats.JWT_AUTH.config.jwt.JwtTokenProvider;
+import io.flats.JWT_AUTH.jwt.JwtConfigurer;
+import io.flats.JWT_AUTH.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

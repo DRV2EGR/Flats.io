@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH.config.exeption;
+package io.flats.JWT_AUTH.exeption;
 
 import io.flats.exception.ApiClientException;
 import org.springframework.http.HttpStatus;

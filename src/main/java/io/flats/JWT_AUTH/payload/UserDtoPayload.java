@@ -1,6 +1,5 @@
-package io.flats.JWT_AUTH.config.payload;
+package io.flats.JWT_AUTH.payload;
 
-import io.flats.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

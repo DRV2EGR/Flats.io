@@ -1,11 +1,11 @@
-package io.flats.JWT_AUTH.config.controller;
+package io.flats.JWT_AUTH.controller;
 
 
-import io.flats.JWT_AUTH.config.exeption.JwtInvalidRefreshTokenException;
-import io.flats.JWT_AUTH.config.dto.AuthenticationRequestDto;
-import io.flats.JWT_AUTH.config.dto.JwtAuthDto;
-import io.flats.JWT_AUTH.config.jwt.JwtTokenProvider;
-import io.flats.JWT_AUTH.config.service.UserService;
+import io.flats.JWT_AUTH.exeption.JwtInvalidRefreshTokenException;
+import io.flats.JWT_AUTH.dto.AuthenticationRequestDto;
+import io.flats.JWT_AUTH.dto.JwtAuthDto;
+import io.flats.JWT_AUTH.jwt.JwtTokenProvider;
+import io.flats.JWT_AUTH.service.UserService;
 import io.flats.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

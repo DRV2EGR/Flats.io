@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH.config.payload;
+package io.flats.JWT_AUTH.payload;
 
 public abstract class BasicPayload {
     public abstract String getUsername();

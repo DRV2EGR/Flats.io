@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH.config.dto;
+package io.flats.JWT_AUTH.dto;
 
 import lombok.Data;
 

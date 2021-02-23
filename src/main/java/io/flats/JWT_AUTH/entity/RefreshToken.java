@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH.config.entity;
+package io.flats.JWT_AUTH.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

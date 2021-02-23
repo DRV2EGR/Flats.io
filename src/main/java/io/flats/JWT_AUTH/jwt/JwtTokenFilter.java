@@ -1,4 +1,4 @@
-package io.flats.JWT_AUTH.config.jwt;
+package io.flats.JWT_AUTH.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

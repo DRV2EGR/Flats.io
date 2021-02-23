@@ -1,9 +1,9 @@
-package io.flats.JWT_AUTH.config.jwt;
+package io.flats.JWT_AUTH.jwt;
 
-import io.flats.JWT_AUTH.config.dto.JwtAuthDto;
-import io.flats.JWT_AUTH.config.entity.RefreshToken;
-import io.flats.JWT_AUTH.config.repository.RefreshTokenRepository;
-import io.flats.JWT_AUTH.config.service.UserService;
+import io.flats.JWT_AUTH.dto.JwtAuthDto;
+import io.flats.JWT_AUTH.entity.RefreshToken;
+import io.flats.JWT_AUTH.repository.RefreshTokenRepository;
+import io.flats.JWT_AUTH.service.UserService;
 import io.flats.entity.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
