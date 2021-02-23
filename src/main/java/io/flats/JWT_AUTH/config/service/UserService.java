@@ -1,5 +1,6 @@
 package io.flats.JWT_AUTH.config.service;
 
+import io.flats.JWT_AUTH.config.payload.BasicPayload;
 import io.flats.JWT_AUTH.config.payload.UserDtoPayload;
 import io.flats.entity.Role;
 import io.flats.entity.User;
@@ -48,25 +49,51 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
+    private User createNewUserAndFillBasicFields(BasicPayload basicPayload) {
+        User user = new User();
+
+        user.setUsername(basicPayload.getUsername());
+        user.setEmail(basicPayload.getEmail());
+        user.setFirstName(basicPayload.getFirstName());
+        user.setLastName(basicPayload.getLastName());
+        user.setPhoneNumber(basicPayload.getPhoneNumber());
+        user.setSecondName(basicPayload.getSecondName());
+
+        return user;
+    }
 
     public User registerNewSailor(UserDtoPayload sailorDtoPayload) {
 
-        User user = new User();
+        //TODO: проверить мрабатоспособность такого метода.
+        User user = createNewUserAndFillBasicFields(sailorDtoPayload);
 
-        user.setUsername(sailorDtoPayload.getUsername());
-        user.setEmail(sailorDtoPayload.getEmail());
-        user.setFirstName(sailorDtoPayload.getFirstName());
-        user.setLastName(sailorDtoPayload.getLastName());
-        user.setPhoneNumber(sailorDtoPayload.getPhoneNumber());
-        user.setSecondName(sailorDtoPayload.getSecondName());
         user.setRole((Role) roleRepository.findByName("ROLE_SELLER").orElseThrow(() -> { throw new NoSuchElementException("No such role found.");}));
-
 
         user.setUserProfileImageUrl(sailorDtoPayload.getUserProfileImageUrl());
         //user.setActivationCode(UUID.randomUUID().toString());
         //user.setCreatedActivationCode(LocalDateTime.now());
 
         String encodedPassword = bCryptPasswordEncoder.encode(sailorDtoPayload.getPassword());
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+
+        return user;
+    }
+
+    public User registerNewRealtor(UserDtoPayload realtorDtoPayload) {
+
+        //TODO: проверить мрабатоспособность такого метода.
+        User user = createNewUserAndFillBasicFields(realtorDtoPayload);
+
+        user.setRole((Role) roleRepository.findByName("ROLE_REALTOR").orElseThrow(() -> { throw new NoSuchElementException("No such role found.");}));
+
+        user.setUserProfileImageUrl(realtorDtoPayload.getUserProfileImageUrl());
+        //user.setActivationCode(UUID.randomUUID().toString());
+        //user.setCreatedActivationCode(LocalDateTime.now());
+
+        String encodedPassword = bCryptPasswordEncoder.encode(realtorDtoPayload.getPassword());
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
