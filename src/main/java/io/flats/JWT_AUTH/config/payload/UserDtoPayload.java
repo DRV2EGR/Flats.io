@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserDtoPayload {
+public class UserDtoPayload extends BasicPayload{
     private String firstName;
     private String secondName;
     private String lastName;
