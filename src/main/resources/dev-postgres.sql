@@ -3,7 +3,7 @@
 INSERT INTO roles (id, name) VALUES
 (1, 'ROLE_USER'),
 (2, 'ROLE_ADMIN'),
-(3, 'ROLE_SELLER');
+(3, 'ROLE_SELLER'),
 (4, 'ROLE_REALTOR');
 
 INSERT INTO flat_order_type (id, name) VALUES
