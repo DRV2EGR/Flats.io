@@ -101,7 +101,7 @@ class Login extends Component {
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email адресс"
+                                label="Email адрес"
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
