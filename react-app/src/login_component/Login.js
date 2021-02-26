@@ -83,75 +83,75 @@ class Login extends Component {
             <div>
                 <Header />
 
-            <Container component="main" maxWidth="xs" >
-                <CssBaseline />
+                <Container component="main" maxWidth="xs" >
+                    <CssBaseline />
 
-                <div className='main_container_top'>
-                    <div className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Войти
-                        </Typography>
-                        <form className={classes.form} noValidate>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email адрес"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Пароль"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Запомнить меня"
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                            >
-                                Войти!
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    {/*TODO: */}
-                                    <Link href="#" variant="body2">
-                                        Забыли пароль?
-                                    </Link>
+                    <div className='main_container_top'>
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Войти
+                            </Typography>
+                            <form className={classes.form} noValidate>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email адрес"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                />
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Пароль"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox value="remember" color="primary" />}
+                                    label="Запомнить меня"
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                >
+                                    Войти!
+                                </Button>
+                                <Grid container>
+                                    <Grid item xs>
+                                        {/*TODO: */}
+                                        <Link href="#" variant="body2">
+                                            Забыли пароль?
+                                        </Link>
+                                    </Grid>
+                                    <Grid item sm>
+                                        <Link href="/signup" variant="body2">
+                                            {"Еще нет у нас аккаунта? Зарегистрироваться!"}
+                                        </Link>
+                                    </Grid>
                                 </Grid>
-                                <Grid item sm>
-                                    <Link href="/signup" variant="body2">
-                                        {"Еще нет у нас аккаунта? Зарегистрироваться!"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <Box mt={8}>
-                    {/*<Copyright />*/}
-                    {this.Copyright()}
-                </Box>
-            </Container>
+                    <Box mt={8}>
+                        {/*<Copyright />*/}
+                        {this.Copyright()}
+                    </Box>
+                </Container>
             </div>
         );
     }
