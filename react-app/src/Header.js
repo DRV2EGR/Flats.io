@@ -39,7 +39,9 @@ class Header extends Component {
                         <a className='p-2 text-dark' href='/rieltors'>Риелторы</a>
                         <a className='p-2 text-dark' href='/about'>О нас</a>
 
-                        <img className='user-nav-img' src={data_p} />
+                        <a href='/login' >
+                            <img className='user-nav-img' src={data_p} />
+                        </a>
                     </nav>
                     {/*<a className='btn btn-outline-primary' href='/#'>Выход</a>*/}
 
