@@ -1,6 +1,7 @@
 
 import '../App.css';
 import React, {Component} from 'react';
+import { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -74,6 +75,29 @@ class Login extends Component {
     //     // });
     // }
 
+    async loginUser() { //credentials as param
+        return fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+            .then(data => data.json())
+    }
+
+    // export default function Login({ setToken }) {
+    // const [username, setUserName] = useState();
+    // const [password, setPassword] = useState();
+
+    // handleSubmit = async e => {
+    //     e.preventDefault();
+    //     const token = await loginUser({
+    //         username,
+    //         password
+    //     });
+    //     setToken(token);
+    // }
 
 
     render() {
@@ -122,7 +146,8 @@ class Login extends Component {
                                     label="Запомнить меня"
                                 />
                                 <Button
-                                    type="submit"
+                                    // type="submit"
+                                    onClick={this.handleClick}
                                     fullWidth
                                     variant="contained"
                                     color="primary"
