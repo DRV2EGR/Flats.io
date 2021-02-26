@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Copyright} from "@material-ui/icons";
 import {withStyles} from "@material-ui/core";
+import Header from "../Header";
 
 const useStyles = (theme) => ({
     paper: {
@@ -86,94 +87,98 @@ class SignUP extends Component {
         const { classes } = this.props;
 
         return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Зарегистрироваться
-                    </Typography>
-                    <form className={classes.form} noValidate>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="fname"
-                                    name="firstName"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="firstName"
-                                    label="Имя"
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Фамилия"
-                                    name="lastName"
-                                    autoComplete="lname"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email адрес"
-                                    name="email"
-                                    autoComplete="email"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Пароль"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="Я хочу получать рассылку с интересными новостями."
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            id="awd"
-                        >
+            <div>
+                <Header />
+
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
                             Зарегистрироваться
-                        </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="/login" variant="body2">
-                                    Уже есть аккаунт? Войти!
-                                </Link>
+                        </Typography>
+                        <form className={classes.form} noValidate>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        autoComplete="fname"
+                                        name="firstName"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="firstName"
+                                        label="Имя"
+                                        autoFocus
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="lastName"
+                                        label="Фамилия"
+                                        name="lastName"
+                                        autoComplete="lname"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email адрес"
+                                        name="email"
+                                        autoComplete="email"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        name="password"
+                                        label="Пароль"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <FormControlLabel
+                                        control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                        label="Я хочу получать рассылку с интересными новостями."
+                                    />
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                </div>
-                <Box mt={5}>
-                    {/*<Copyright />*/}
-                    {this.Copyright()}
-                </Box>
-            </Container>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                id="awd"
+                            >
+                                Зарегистрироваться
+                            </Button>
+                            <Grid container justify="flex-end">
+                                <Grid item>
+                                    <Link href="/login" variant="body2">
+                                        Уже есть аккаунт? Войти!
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </div>
+                    <Box mt={5}>
+                        {/*<Copyright />*/}
+                        {this.Copyright()}
+                    </Box>
+                </Container>
+            </div>
         );
     }
 
