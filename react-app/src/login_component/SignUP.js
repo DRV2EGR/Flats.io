@@ -59,7 +59,7 @@ class SignUP extends Component {
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Copyright © '}
                 <Link color="inherit" href="https://material-ui.com/">
-                    Your Website
+                    Flats.io
                 </Link>{' '}
                 {new Date().getFullYear()}
                 {'.'}
@@ -93,7 +93,7 @@ class SignUP extends Component {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign up
+                        Зарегистрироваться
                     </Typography>
                     <form className={classes.form} noValidate>
                         <Grid container spacing={2}>
@@ -105,7 +105,7 @@ class SignUP extends Component {
                                     required
                                     fullWidth
                                     id="firstName"
-                                    label="First Name"
+                                    label="Имя"
                                     autoFocus
                                 />
                             </Grid>
@@ -115,7 +115,7 @@ class SignUP extends Component {
                                     required
                                     fullWidth
                                     id="lastName"
-                                    label="Last Name"
+                                    label="Фамилия"
                                     name="lastName"
                                     autoComplete="lname"
                                 />
@@ -126,7 +126,7 @@ class SignUP extends Component {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label="Email адрес"
                                     name="email"
                                     autoComplete="email"
                                 />
@@ -137,7 +137,7 @@ class SignUP extends Component {
                                     required
                                     fullWidth
                                     name="password"
-                                    label="Password"
+                                    label="Пароль"
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
@@ -146,7 +146,7 @@ class SignUP extends Component {
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
+                                    label="Я хочу получать рассылку с интересными новостями."
                                 />
                             </Grid>
                         </Grid>
@@ -158,12 +158,12 @@ class SignUP extends Component {
                             className={classes.submit}
                             id="awd"
                         >
-                            Sign Up
+                            Зарегистрироваться
                         </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
                                 <Link href="/login" variant="body2">
-                                    Already have an account? Sign in
+                                    Уже есть аккаунт? Войти!
                                 </Link>
                             </Grid>
                         </Grid>
