@@ -124,6 +124,18 @@ class SignUP extends Component {
                                         autoComplete="lname"
                                     />
                                 </Grid>
+
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        id="secondName"
+                                        label="Отчество"
+                                        name="secondName"
+                                        autoComplete="sname"
+                                    />
+                                </Grid>
+
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
@@ -133,6 +145,18 @@ class SignUP extends Component {
                                         label="Email адрес"
                                         name="email"
                                         autoComplete="email"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        id="username"
+                                        label="Имя пользователя"
+                                        name="username"
+                                        autoComplete="username"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -147,6 +171,7 @@ class SignUP extends Component {
                                         autoComplete="current-password"
                                     />
                                 </Grid>
+
                                 <Grid item xs={12}>
                                     <FormControlLabel
                                         control={<Checkbox value="allowExtraEmails" color="primary" />}

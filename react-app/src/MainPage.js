@@ -83,9 +83,9 @@ class MainPage extends Component {
                     </AwesomeSlider>
                     <a href={id}  className='main-a'>
                         <div className='my-div'>
-                            <h3>{price}</h3>
+                            <h3 className='font-weight-bold lead'>{price}</h3>
 
-                            <p>Улица: {street} <br />
+                            <p className='lead'>Улица: {street} <br />
                             Дом: {houseNom}</p>
                         </div>
                     </a>

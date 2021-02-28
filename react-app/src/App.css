@@ -89,3 +89,7 @@
 .dropdown:hover .dropdown-child {
   display: block;
 }
+
+a {
+  text-decoration: none !important; /* Убирает подчеркивание для ссылок */
+}

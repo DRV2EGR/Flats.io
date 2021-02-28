@@ -5,3 +5,7 @@
 .main-a {
     text-decoration: none;
 }
+
+a {
+    text-decoration: none; /* Убирает подчеркивание для ссылок */
+}
