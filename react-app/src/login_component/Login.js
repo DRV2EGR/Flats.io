@@ -180,16 +180,16 @@ class Login extends Component {
         });
 
         //console.log(token);
+        if (token.accessToken) {
+            const cookies = new Cookies();
+            cookies.set('accessToken', token.accessToken, {path: '/'});
+            cookies.set('refreshToken', token.refreshToken, {path: '/'});
+            cookies.set('username', token.username, {path: '/'});
 
-        const cookies = new Cookies();
-        cookies.set('accessToken', token.accessToken, { path: '/' });
-        cookies.set('refreshToken', token.refreshToken, { path: '/' });
-        cookies.set('username', token.username, { path: '/' });
-
-        //history.push('/');
-        //this.context.router.history.push('/');
-        this.props.history.push("/");
-
+            //history.push('/');
+            //this.context.router.history.push('/');
+            this.props.history.push("/");
+        }
         // console.log(cookies.get('accessToken'));
         // console.log(cookies.get('refreshToken'));
         // const cookies = new Cookies();
