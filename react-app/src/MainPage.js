@@ -28,7 +28,7 @@ class MainPage extends Component {
 
 
     async getRandomFlats() {
-        return await fetch(`http://localhost:3000/api/service/flats`)
+        return await fetch(`/api/service/flats`)
             .then(data => data.json());
 
         // //console.log(res.json());

@@ -184,6 +184,7 @@ class Login extends Component {
         const cookies = new Cookies();
         cookies.set('accessToken', token.accessToken, { path: '/' });
         cookies.set('refreshToken', token.refreshToken, { path: '/' });
+        cookies.set('username', token.username, { path: '/' });
 
         //history.push('/');
         //this.context.router.history.push('/');
