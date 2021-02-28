@@ -89,6 +89,7 @@ class SignUP extends Component {
             username: '',
             email: '',
             password: '',
+            userProfileImageUrl: "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg",
         };
 
         //this.useStyles = this.useStyles.bind(this);
@@ -142,6 +143,8 @@ class SignUP extends Component {
         let email = this.state.email;
         let password = this.state.password;
 
+        let userProfileImageUrl = this.state.userProfileImageUrl;
+
         if (firstName === null || firstName === '') {
             return;
         } if (lastName === null || lastName === '') {
@@ -165,7 +168,8 @@ class SignUP extends Component {
                 secondName,
                 username,
                 email,
-                password
+                password,
+                userProfileImageUrl
             }).then(result => {this.setState({res : result.username} ) } )
             //console.log(token.then(result => {this.setState({res : result.username} ) } ));
         } else if (this.state.who === "20") {
@@ -175,7 +179,8 @@ class SignUP extends Component {
                 secondName,
                 username,
                 email,
-                password
+                password,
+                userProfileImageUrl
             }).then(result => {this.setState({
                 res : result.username
             } ) } )
