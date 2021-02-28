@@ -65,7 +65,22 @@ class Header extends Component {
 
     }
 
+    addFunctions() {
+        const cookies = new Cookies();
+        let b = cookies.get('username');
 
+        if (b) { //войдено
+            return (
+            <div className="dropdown-child">
+                <a href="/user_cabinette">Мой кабинет</a>
+                <a href="/add_order">Разместить объявление</a>
+                <a href="/user_settings">Настройки</a>
+                <a href="/logout">Выйти</a>
+            </div>
+            )
+        }
+
+    }
 
     render() {
         const { data_p } = this.state;
@@ -81,9 +96,18 @@ class Header extends Component {
                         <a className='p-2 text-dark' href='/rieltors'>Риелторы</a>
                         <a className='p-2 text-dark' href='/about'>О нас</a>
 
-                        <a href={userhref} >
-                            <img className='user-nav-img' src={data_p} />
-                        </a>
+                        {/*<a href={userhref} >*/}
+                        {/*    <img className='user-nav-img' src={data_p} />*/}
+
+                        {/*</a>*/}
+
+                        <div className="dropdown">
+                            <div >
+                                <img className='user-nav-img' src={data_p} />
+
+                            </div>
+                            { this.addFunctions() }
+                        </div>
                     </nav>
                     {/*<a className='btn btn-outline-primary' href='/#'>Выход</a>*/}
 
