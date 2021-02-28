@@ -14,8 +14,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Copyright} from "@material-ui/icons";
-import {withStyles} from "@material-ui/core";
+import {Input, Select, withStyles} from "@material-ui/core";
 import Header from "../Header";
+import Cookies from "universal-cookie";
+import MenuItem from "react-bootstrap/lib/MenuItem";
 
 const useStyles = (theme) => ({
     paper: {
@@ -35,17 +37,66 @@ const useStyles = (theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    button: {
+        display: 'block',
+        marginTop: theme.spacing(2),
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
 });
+
+function registerSellerUser(credentials) { //credentials as param
+    //console.log(JSON.stringify(credentials));
+
+    let data = '';
+    return fetch('/api/signup/seller', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+        .then(data => data.json())
+
+}
+
+async function registerRealtorUser(credentials) { //credentials as param
+    //console.log(JSON.stringify(credentials));
+
+    let data = '';
+    return fetch('/api/signup/realtor', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+        .then(data => data.json())
+
+}
 
 class SignUP extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            who: '',
+            res: '',
+            firstName: '',
+            lastName: '',
+            secondName: '',
+            username: '',
+            email: '',
+            password: '',
         };
 
         //this.useStyles = this.useStyles.bind(this);
 
         //this.state.classes = this.useStyles();
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
 
@@ -81,7 +132,82 @@ class SignUP extends Component {
     //     // });
     // }
 
+    handleSubmit = async e => {
+        e.preventDefault();
 
+        let firstName = this.state.firstName;
+        let lastName = this.state.lastName;
+        let secondName = this.state.secondName;
+        let username = this.state.username;
+        let email = this.state.email;
+        let password = this.state.password;
+
+        if (firstName === null || firstName === '') {
+            return;
+        } if (lastName === null || lastName === '') {
+            return;
+        } if (secondName === null || secondName === '') {
+            return;
+        } if (username === null || username === '') {
+            return;
+        } if (email === null || email === '') {
+            return;
+        } if (password === null || password === '') {
+            return;
+        }
+
+
+
+        if (this.state.who === "10") {
+            const token = registerSellerUser({
+                firstName,
+                lastName,
+                secondName,
+                username,
+                email,
+                password
+            }).then(result => {this.setState({res : result.username} ) } )
+            //console.log(token.then(result => {this.setState({res : result.username} ) } ));
+        } else if (this.state.who === "20") {
+            const token = registerRealtorUser({
+                firstName,
+                lastName,
+                secondName,
+                username,
+                email,
+                password
+            }).then(result => {this.setState({
+                res : result.username
+            } ) } )
+        }
+
+        this.props.history.push("/login");
+    }
+
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        //console.log(name, " ", value)
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleChange = (event) => {
+        // this.setState(state => ({
+        //     editTodo: {
+        //         ...state.editTodo,
+        //         who: event.target.value,
+        //     },
+        // }));
+
+        this.setState({
+            who: event.target.value
+        });
+    }
 
     render() {
         const { classes } = this.props;
@@ -110,6 +236,7 @@ class SignUP extends Component {
                                         fullWidth
                                         id="firstName"
                                         label="Имя"
+                                        onChange={this.handleInputChange}
                                         autoFocus
                                     />
                                 </Grid>
@@ -122,6 +249,7 @@ class SignUP extends Component {
                                         label="Фамилия"
                                         name="lastName"
                                         autoComplete="lname"
+                                        onChange={this.handleInputChange}
                                     />
                                 </Grid>
 
@@ -133,6 +261,7 @@ class SignUP extends Component {
                                         label="Отчество"
                                         name="secondName"
                                         autoComplete="sname"
+                                        onChange={this.handleInputChange}
                                     />
                                 </Grid>
 
@@ -145,6 +274,7 @@ class SignUP extends Component {
                                         label="Email адрес"
                                         name="email"
                                         autoComplete="email"
+                                        onChange={this.handleInputChange}
                                     />
                                 </Grid>
 
@@ -157,6 +287,7 @@ class SignUP extends Component {
                                         label="Имя пользователя"
                                         name="username"
                                         autoComplete="username"
+                                        onChange={this.handleInputChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -169,7 +300,24 @@ class SignUP extends Component {
                                         type="password"
                                         id="password"
                                         autoComplete="current-password"
+                                        onChange={this.handleInputChange}
                                     />
+                                </Grid>
+
+                                <Grid item xs={12}>
+                                    <Select
+                                        required
+                                        labelId="demo-controlled-open-select-label"
+                                        id="demo-controlled-open-select"
+                                        defaultValue = ""
+                                        onChange={this.handleChange}
+                                    >
+                                        <MenuItem value="" hidden>
+                                            <em>None</em>
+                                        </MenuItem>
+                                        <MenuItem className='font-weight-bold lead' value="10">Собственник</MenuItem>
+                                        <MenuItem className='font-weight-bold lead'value="20">Агент (риелтор)</MenuItem>
+                                    </Select>*
                                 </Grid>
 
                                 <Grid item xs={12}>
@@ -185,6 +333,7 @@ class SignUP extends Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={this.handleSubmit}
                                 id="awd"
                             >
                                 Зарегистрироваться
