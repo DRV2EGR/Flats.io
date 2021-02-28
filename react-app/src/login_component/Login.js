@@ -18,6 +18,7 @@ import Container from '@material-ui/core/Container';
 import {Copyright} from "@material-ui/icons";
 import {withStyles} from "@material-ui/core";
 import Header from "../Header";
+import printValue from "yup/es/util/printValue";
 
 const useStyles = (theme) => ({
     paper: {
@@ -39,13 +40,35 @@ const useStyles = (theme) => ({
     },
 });
 
+// const [username, setUserName] = useState();
+// const [password, setPassword] = useState();
+
+async function loginUser(credentials) { //credentials as param
+    console.log(credentials);
+
+    return fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+        .then(data => data.json())
+}
+
+
+
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            _email: '',
+            _password: ''
         };
 
-
+        //const [token, setToken] = useState();
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
 
@@ -75,7 +98,9 @@ class Login extends Component {
     //     // });
     // }
 
-    async loginUser() { //credentials as param
+    async loginUser(credentials) { //credentials as param
+        console.log(credentials);
+
         return fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
@@ -90,14 +115,39 @@ class Login extends Component {
     // const [username, setUserName] = useState();
     // const [password, setPassword] = useState();
 
-    // handleSubmit = async e => {
-    //     e.preventDefault();
-    //     const token = await loginUser({
-    //         username,
-    //         password
-    //     });
-    //     setToken(token);
+    // handleChange(event) {
+    //     this.setState({value: event.target.value});
     // }
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        //console.log(name, " ", value)
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleSubmit = async e => {
+        e.preventDefault();
+
+        // alert('Ваш любимый вкус: ' + this.state.value);
+        // console.log(this.refs)
+
+        let email = this.state._email;
+        let password = this.state._password;
+
+        const token = await loginUser({
+            email,
+            password
+            // username,
+            // password
+        });
+
+
+        //setToken(token);
+    }
 
 
     render() {
@@ -126,8 +176,9 @@ class Login extends Component {
                                     fullWidth
                                     id="email"
                                     label="Email адрес"
-                                    name="email"
+                                    name="_email"
                                     autoComplete="email"
+                                    onChange={this.handleInputChange}
                                     autoFocus
                                 />
                                 <TextField
@@ -135,10 +186,11 @@ class Login extends Component {
                                     margin="normal"
                                     required
                                     fullWidth
-                                    name="password"
+                                    name="_password"
                                     label="Пароль"
                                     type="password"
                                     id="password"
+                                    onChange={this.handleInputChange}
                                     autoComplete="current-password"
                                 />
                                 <FormControlLabel
@@ -147,7 +199,7 @@ class Login extends Component {
                                 />
                                 <Button
                                     // type="submit"
-                                    onClick={this.handleClick}
+                                    onClick={this.handleSubmit}
                                     fullWidth
                                     variant="contained"
                                     color="primary"
