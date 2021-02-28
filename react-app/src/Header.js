@@ -1,27 +1,34 @@
 import './App.css';
 import React, {Component, useRef} from 'react';
 import Cookies from "universal-cookie";
+import {withCookies} from "react-cookie";
+import { instanceOf } from "prop-types";
 
-function getUserAvatar() {
-    const cookies = new Cookies();
-    let a = cookies.get('accessToken');
-    let b = cookies.get('username');
-    console.log(b)
-
-    return fetch('/api/user/get_user_img_url_by_username?username=' + b, {
-        method: 'post',
-        headers: new Headers({
-            'Authorization': 'Barer ' + a,
-            'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify(cookies.get('username'))
-    });
-}
+// function getUserAvatar() {
+//     const cookies = new Cookies();
+//     let a = cookies.get('accessToken');
+//     let b = cookies.get('username');
+//     console.log(b)
+//
+//     return fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+//         method: 'post',
+//         headers: new Headers({
+//             'Authorization': 'Barer ' + a,
+//             'Content-Type': 'application/json'
+//         }),
+//         body: JSON.stringify(cookies.get('username'))
+//     });
+// }
 
 class Header extends Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props) {
         super(props);
         this.state = {
+            user: this.props.cookies.get("username") || "",
             data_p: '',
             userhref: '/login',
             code: props.code ? props.code : '999',
@@ -65,18 +72,33 @@ class Header extends Component {
 
     }
 
+    handleRemoveCookie = () => {
+        const { cookies } = this.props;
+        cookies.remove("username"); // remove the cookie
+        cookies.remove("accessToken"); // remove the cookie
+        cookies.remove("refreshToken"); // remove the cookie
+        // this.setState({ user: cookies.get("user") });
+    };
+
     addFunctions() {
         const cookies = new Cookies();
         let b = cookies.get('username');
 
         if (b) { //войдено
             return (
-            <div className="dropdown-child">
-                <a href="/user_cabinette">Мой кабинет</a>
-                <a href="/add_order">Разместить объявление</a>
-                <a href="/user_settings">Настройки</a>
-                <a href="/logout">Выйти</a>
-            </div>
+                <div className="dropdown-child">
+                    <a href="/user_cabinette">Мой кабинет</a>
+                    <a href="/add_order">Разместить объявление</a>
+                    <a href="/user_settings">Настройки</a>
+                    <a href="/" onClick={this.handleRemoveCookie}>Выйти</a>
+                </div>
+            )
+        } else {
+            return (
+                <div className="dropdown-child">
+                    <a href="/login">Войти</a>
+                    <a href="/signup">Зарегистрироваться</a>
+                </div>
             )
         }
 
@@ -118,4 +140,4 @@ class Header extends Component {
 
 }
 
-export default Header;
+export default (withCookies)(Header);
