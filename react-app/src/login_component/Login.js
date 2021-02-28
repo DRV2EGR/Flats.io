@@ -44,9 +44,9 @@ const useStyles = (theme) => ({
 // const [password, setPassword] = useState();
 
 async function loginUser(credentials) { //credentials as param
-    console.log(credentials);
+    console.log(JSON.stringify(credentials));
 
-    return fetch('http://localhost:8080/login', {
+    return fetch('/api/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -98,18 +98,18 @@ class Login extends Component {
     //     // });
     // }
 
-    async loginUser(credentials) { //credentials as param
-        console.log(credentials);
-
-        return fetch('http://localhost:8080/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(credentials)
-        })
-            .then(data => data.json())
-    }
+    // async loginUser(credentials) { //credentials as param
+    //     console.log(credentials);
+    //
+    //     return fetch('http://localhost:8080/api/auth/login', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(credentials)
+    //     })
+    //         .then(data => data.json())
+    // }
 
     // export default function Login({ setToken }) {
     // const [username, setUserName] = useState();

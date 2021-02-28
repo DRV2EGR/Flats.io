@@ -29,14 +29,14 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<JwtAuthDto> login(@RequestBody AuthenticationRequestDto authenticationRequestDto) {
         try {
-            User user = userService.findByUsername(authenticationRequestDto.getUsername()).orElseThrow(IllegalArgumentException::new);
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequestDto.getUsername(), authenticationRequestDto.getPassword()));
+            User user = userService.findByEmail(authenticationRequestDto.getEmail()).orElseThrow(IllegalArgumentException::new);
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), authenticationRequestDto.getPassword()));
 
             String accessToken = jwtTokenProvider.createAccessToken(user);
             String refreshToken = jwtTokenProvider.createRefreshToken(user.getId());
 
             JwtAuthDto jwtAuthDto = new JwtAuthDto();
-            jwtAuthDto.setUsername(authenticationRequestDto.getUsername());
+            jwtAuthDto.setUsername(authenticationRequestDto.getEmail());
             jwtAuthDto.setAccessToken(accessToken);
             jwtAuthDto.setRefreshToken(refreshToken);
 

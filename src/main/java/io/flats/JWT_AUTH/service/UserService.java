@@ -102,6 +102,14 @@ public class UserService {
         return user;
     }
 
+    public Optional<User> findByEmail(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent())
+            log.info("User " + optionalUser.get().toString() + "found by email " + email);
+        else log.info("User with email '" + email + "' not found.");
+        return userRepository.findByEmail(email);
+    }
+
 
 //    public Curator registerNewCurator(CuratorDto curatorDto) {
 //        Curator user = new Curator();
