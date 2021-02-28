@@ -19,6 +19,11 @@ import {Copyright} from "@material-ui/icons";
 import {withStyles} from "@material-ui/core";
 import Header from "../Header";
 import printValue from "yup/es/util/printValue";
+import {useCookies} from "react-cookie";
+import Cookies from 'universal-cookie';
+import {useHistory} from "react-router";
+import history from './history';
+import PropTypes from "prop-types";
 
 const useStyles = (theme) => ({
     paper: {
@@ -44,8 +49,9 @@ const useStyles = (theme) => ({
 // const [password, setPassword] = useState();
 
 async function loginUser(credentials) { //credentials as param
-    console.log(JSON.stringify(credentials));
+    //console.log(JSON.stringify(credentials));
 
+    let data = '';
     return fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -54,17 +60,41 @@ async function loginUser(credentials) { //credentials as param
         body: JSON.stringify(credentials)
     })
         .then(data => data.json())
+
 }
 
+// async function CookiesWork(access, refresh) {
+//     const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+//
+//     const MyCookies = (a, r) => {
+//
+//
+//         setCookie('accessToken', a);
+//         setCookie('refreshToken', r);
+//     };
+//     MyCookies(access, refresh);
+// }
+
+// function setCookies(access, refresh) {
+//     const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+//
+//     setCookie('accessToken', access);
+//     setCookie('refreshToken', refresh);
+// }
 
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
+    static contextTypes = {
+        router: PropTypes.object
+    }
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             _email: '',
             _password: ''
         };
+
+
 
         //const [token, setToken] = useState();
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -118,6 +148,10 @@ class Login extends Component {
     // handleChange(event) {
     //     this.setState({value: event.target.value});
     // }
+
+
+
+
     handleInputChange(event) {
         const target = event.target;
         const value = target.value;
@@ -145,6 +179,23 @@ class Login extends Component {
             // password
         });
 
+        //console.log(token);
+
+        const cookies = new Cookies();
+        cookies.set('accessToken', token.accessToken, { path: '/' });
+        cookies.set('refreshToken', token.refreshToken, { path: '/' });
+
+        //history.push('/');
+        //this.context.router.history.push('/');
+        this.props.history.push("/");
+
+        // console.log(cookies.get('accessToken'));
+        // console.log(cookies.get('refreshToken'));
+        // const cookies = new Cookies();
+        // cookies.set('myCat', 'Pacman', { path: '/' });
+        // console.log(cookies.get('myCat')); // Pacman
+
+        //CookiesWork(token.accessToken, token.refreshToken);
 
         //setToken(token);
     }

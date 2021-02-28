@@ -36,7 +36,7 @@ public class AuthenticationController {
             String refreshToken = jwtTokenProvider.createRefreshToken(user.getId());
 
             JwtAuthDto jwtAuthDto = new JwtAuthDto();
-            jwtAuthDto.setUsername(authenticationRequestDto.getEmail());
+            jwtAuthDto.setUsername(user.getUsername());
             jwtAuthDto.setAccessToken(accessToken);
             jwtAuthDto.setRefreshToken(refreshToken);
 
