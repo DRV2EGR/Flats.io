@@ -14,6 +14,9 @@ public class restfull {
 
     @RequestMapping("/ping")
     @ResponseBody
+    /**
+     * Метод returnPong для проверки работоспособности сервиса.
+     */
     public ResponseEntity<BasicResponce> returnPong() {
         return ResponseEntity.ok(new ResponceCompletedDto());
     }

@@ -15,6 +15,7 @@ class MainPage extends Component {
     constructor(props) {
         super(props);
 
+        // Установка состояния страницы
         this.state = {
             flats: [],
             slideIndex: 1,
@@ -27,6 +28,7 @@ class MainPage extends Component {
 
 
 
+    // Получение квартир на основную страницу
     async getRandomFlats() {
         return await fetch(`/api/service/flats`)
             .then(data => data.json());
@@ -37,6 +39,8 @@ class MainPage extends Component {
         //return data;
     }
 
+    // Выполнение перед загрузкой страницы
+    // Десериализация квартир и подготовка к отрисовке
     async componentDidMount() {
         //TODO:
         const _flats = await this.getRandomFlats();
@@ -45,6 +49,8 @@ class MainPage extends Component {
 
     }
 
+
+    // Функция рендера квартир
     renderFlats() {
 
         const userList = [];
@@ -57,6 +63,7 @@ class MainPage extends Component {
         }
 
 
+        // Проход по листу квартир
         for(let i = 0; i < k; i++) {
             // let name = `${this.state.flats_p[i].name.first} ${this.state.flats_p[i].name.last}`;
             let country = this.state.flats[i].country;
