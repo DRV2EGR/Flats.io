@@ -7,11 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * The type Restfull.
+ */
 @Controller
 @RequestMapping("/api/check_stability")
 public class restfull {
+    /**
+     * The Response.
+     */
     protected String response;
 
+    /**
+     * Return pong response entity.
+     *
+     * @return the response entity
+     */
     @RequestMapping("/ping")
     @ResponseBody
     /**

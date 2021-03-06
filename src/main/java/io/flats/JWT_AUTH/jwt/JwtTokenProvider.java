@@ -23,6 +23,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * The type Jwt token provider.
+ */
 @Component
 @Slf4j
 public class JwtTokenProvider {
@@ -45,6 +48,11 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration.refresh}")
     private Long refreshTokenExpiration;
 
+    /**
+     * Instantiates a new Jwt token provider.
+     *
+     * @param jwtUserDetailsService the jwt user details service
+     */
     public JwtTokenProvider(JwtUserDetailsService jwtUserDetailsService) {
         this.jwtUserDetailsService = jwtUserDetailsService;
     }
@@ -52,11 +60,20 @@ public class JwtTokenProvider {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Init.
+     */
     @PostConstruct
     protected void init() {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
+    /**
+     * Create access token string.
+     *
+     * @param user the user
+     * @return the string
+     */
     public String createAccessToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("role", user.getRole().getName());
@@ -73,6 +90,12 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * Create refresh token string.
+     *
+     * @param userID the user id
+     * @return the string
+     */
     public String createRefreshToken(long userID) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + refreshTokenExpiration);
@@ -90,6 +113,12 @@ public class JwtTokenProvider {
         return createdToken;
     }
 
+    /**
+     * Resolve access token string.
+     *
+     * @param req the req
+     * @return the string
+     */
     public String resolveAccessToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
@@ -98,6 +127,12 @@ public class JwtTokenProvider {
         return null;
     }
 
+    /**
+     * Validate access token boolean.
+     *
+     * @param token the token
+     * @return the boolean
+     */
     public boolean validateAccessToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
@@ -107,6 +142,12 @@ public class JwtTokenProvider {
         }
     }
 
+    /**
+     * Validate refresh token boolean.
+     *
+     * @param token the token
+     * @return the boolean
+     */
     public boolean validateRefreshToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
@@ -116,12 +157,24 @@ public class JwtTokenProvider {
         }
     }
 
+    /**
+     * Gets authentication.
+     *
+     * @param token the token
+     * @return the authentication
+     */
     public Authentication getAuthentication(String token) {
         String username = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
         UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
+    /**
+     * Refresh pair of tokens jwt auth dto.
+     *
+     * @param refreshTokenString the refresh token string
+     * @return the jwt auth dto
+     */
     public JwtAuthDto refreshPairOfTokens(String refreshTokenString) {
         if (!validateRefreshToken(refreshTokenString))
             throw new IllegalArgumentException("Refresh token is expired or invalid");

@@ -16,14 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Service controller.
+ */
 @Controller
 @RequestMapping("api/service")
 public class ServiceController {
+    /**
+     * The Flat service.
+     */
     @Autowired
     FlatService flatService;
 
 
-
+    /**
+     * Main page response entity.
+     *
+     * @return the response entity
+     */
     @RequestMapping("/flats")
     public ResponseEntity<ArrayList<FlatDto>> mainPage() {
 
@@ -38,6 +48,11 @@ public class ServiceController {
         return ResponseEntity.ok(fd);
     }
 
+    /**
+     * Return filterred flats response entity.
+     *
+     * @return the response entity
+     */
     @RequestMapping("filterred-flats")
     public ResponseEntity returnFilterredFlats() {
         //TODO: дописать метод
@@ -45,6 +60,11 @@ public class ServiceController {
         return null;
     }
 
+    /**
+     * Add rent flats response entity.
+     *
+     * @return the response entity
+     */
     @RequestMapping("add-rent-flat")
     public ResponseEntity addRentFlats() {
         //TODO: дописать метод
@@ -52,6 +72,12 @@ public class ServiceController {
         return null;
     }
 
+    /**
+     * Add filterred flats response entity.
+     *
+     * @param newFlatDao the new flat dao
+     * @return the response entity
+     */
     @RequestMapping("add-sale-flat")
     public ResponseEntity<BasicResponce> addFilterredFlats(@RequestBody FlatDtoPayload newFlatDao) {
 

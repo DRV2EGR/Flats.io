@@ -14,12 +14,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * The type User signup controller.
+ */
 @Controller
 @RequestMapping("/api/signup")
 public class UserSignupController {
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
+    /**
+     * Signup new seller response entity.
+     *
+     * @param sellerDto the seller dto
+     * @return the response entity
+     */
     @PostMapping("/seller")
     public ResponseEntity<User> signupNewSeller(@RequestBody UserDtoPayload sellerDto) {
         if (userService.findByUsername(sellerDto.getUsername()).isPresent())
@@ -29,6 +41,12 @@ public class UserSignupController {
         return ResponseEntity.ok(registeredUser);
     }
 
+    /**
+     * Signup new realtor response entity.
+     *
+     * @param realtorDto the realtor dto
+     * @return the response entity
+     */
     @PostMapping("/realtor")
     public ResponseEntity<User> signupNewRealtor(@RequestBody UserDtoPayload realtorDto) {
         if (userService.findByUsername(realtorDto.getUsername()).isPresent())

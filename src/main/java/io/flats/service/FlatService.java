@@ -15,18 +15,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * The type Flat service.
+ */
 @Service
 public class FlatService {
+    /**
+     * The Flat repository.
+     */
     @Autowired
     FlatRepository flatRepository;
 
+    /**
+     * The Flat order type repository.
+     */
     @Autowired
     FlatOrderTypeRepository flatOrderTypeRepository;
 
+    /**
+     * The User repository.
+     */
     @Autowired
     UserRepository userRepository;
 
 
+    /**
+     * Find images by flat id list.
+     *
+     * @param flatId the flat id
+     * @return the list
+     */
     public List<String> findImagesByFlatId(long flatId) {
 
         Flat currentFlat = flatRepository.findById(flatId).orElseThrow(
@@ -41,6 +59,11 @@ public class FlatService {
         return res;
     }
 
+    /**
+     * Find all list.
+     *
+     * @return the list
+     */
     public List<Flat> findAll() {
         List<Flat> resArray = new ArrayList<>();
 
@@ -55,6 +78,12 @@ public class FlatService {
         return resArray;
     }
 
+    /**
+     * Add sale flat boolean.
+     *
+     * @param newFlatDao the new flat dao
+     * @return the boolean
+     */
     public boolean addSaleFlat(FlatDtoPayload newFlatDao) {
         Flat newFlat = new Flat();
         newFlat.setCountry(newFlatDao.getCountry());

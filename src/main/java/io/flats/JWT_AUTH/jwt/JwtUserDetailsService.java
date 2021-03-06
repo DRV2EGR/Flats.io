@@ -9,11 +9,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Jwt user details service.
+ */
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 //    @Autowired
     private final UserService userService;
 
+    /**
+     * Instantiates a new Jwt user details service.
+     *
+     * @param userService the user service
+     */
     @Autowired
     public JwtUserDetailsService(UserService userService) {
         this.userService = userService;

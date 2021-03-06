@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * The type User service.
+ */
 @Service
 @Slf4j
 public class UserService {
@@ -24,15 +27,29 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    /**
+     * The B crypt password encoder.
+     */
     @Autowired
     public BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * Password encoder b crypt password encoder.
+     *
+     * @return the b crypt password encoder
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
 
+    /**
+     * Find by username optional.
+     *
+     * @param username the username
+     * @return the optional
+     */
     public Optional<User> findByUsername(String username) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent())
@@ -41,6 +58,12 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * Find by id optional.
+     *
+     * @param userId the user id
+     * @return the optional
+     */
     public Optional<User> findById(Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent())
@@ -62,6 +85,12 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Register new sailor user.
+     *
+     * @param sailorDtoPayload the sailor dto payload
+     * @return the user
+     */
     public User registerNewSailor(UserDtoPayload sailorDtoPayload) {
 
         //TODO: проверить мрабатоспособность такого метода.
@@ -82,6 +111,12 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Register new realtor user.
+     *
+     * @param realtorDtoPayload the realtor dto payload
+     * @return the user
+     */
     public User registerNewRealtor(UserDtoPayload realtorDtoPayload) {
 
         //TODO: проверить мрабатоспособность такого метода.
@@ -102,6 +137,12 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Find by email optional.
+     *
+     * @param email the email
+     * @return the optional
+     */
     public Optional<User> findByEmail(String email) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent())
