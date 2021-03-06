@@ -1,4 +1,4 @@
-import './App.css';
+import '../App.css';
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,12 +9,13 @@ import 'react-awesome-slider/dist/styles.css';
 import './MainPage.css';
 
 
-import Header from './Header';
+import Header from '../Header';
 
 class MainPage extends Component {
     constructor(props) {
         super(props);
 
+        // Установка состояния страницы
         this.state = {
             flats: [],
             slideIndex: 1,
@@ -27,8 +28,9 @@ class MainPage extends Component {
 
 
 
+    // Получение квартир на основную страницу
     async getRandomFlats() {
-        return await fetch(`http://localhost:3000/api/service/flats`)
+        return await fetch(`/api/service/flats`)
             .then(data => data.json());
 
         // //console.log(res.json());
@@ -37,6 +39,8 @@ class MainPage extends Component {
         //return data;
     }
 
+    // Выполнение перед загрузкой страницы
+    // Десериализация квартир и подготовка к отрисовке
     async componentDidMount() {
         //TODO:
         const _flats = await this.getRandomFlats();
@@ -45,6 +49,8 @@ class MainPage extends Component {
 
     }
 
+
+    // Функция рендера квартир
     renderFlats() {
 
         const userList = [];
@@ -57,6 +63,7 @@ class MainPage extends Component {
         }
 
 
+        // Проход по листу квартир
         for(let i = 0; i < k; i++) {
             // let name = `${this.state.flats_p[i].name.first} ${this.state.flats_p[i].name.last}`;
             let country = this.state.flats[i].country;
@@ -83,9 +90,9 @@ class MainPage extends Component {
                     </AwesomeSlider>
                     <a href={id}  className='main-a'>
                         <div className='my-div'>
-                            <h3>{price}</h3>
+                            <h3 className='font-weight-bold lead'>{price}</h3>
 
-                            <p>Улица: {street} <br />
+                            <p className='lead'>Улица: {street} <br />
                             Дом: {houseNom}</p>
                         </div>
                     </a>

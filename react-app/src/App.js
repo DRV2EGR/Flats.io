@@ -4,8 +4,10 @@ import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MainPage from "./MainPage";
+import MainPage from "./main_page_component/MainPage";
 import Header from './Header';
+import Login from "./login_component/Login";
+import SignUP from "./login_component/SignUP";
 
 class App extends Component {
   render() {
@@ -13,6 +15,10 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
               <Route exact path={'/'} component={MainPage}/>
+
+              <Route exact path={'/login'} component={Login}/>
+
+              <Route exact path={'/signup'} component={SignUP}/>
 
             {/*<Route exact path='/'>*/}
             {/*  <Header/>*/}

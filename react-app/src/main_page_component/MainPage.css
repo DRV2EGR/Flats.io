@@ -1,0 +1,11 @@
+.my-div {
+    margin-top: 40px;
+}
+
+.main-a {
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none; /* Убирает подчеркивание для ссылок */
+}
