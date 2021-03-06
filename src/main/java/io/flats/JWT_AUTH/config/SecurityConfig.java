@@ -13,12 +13,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String ADMIN_ENDPOINT = "/api/admin/**";
+
+    // SERVICE ENDPOINTS
+    private static final String CHECK_STABILITY_ENDPOINT = "/api/check_stability/**";
+
+    // AUTH ENDPOINTS
     private static final String AUTH_ENDPOINT = "/api/auth/**";
     private static final String SIGNUP_ENDPOINT = "/api/signup/**";
+
+    // USER CABINET ENDPOINTS
+//private static final String PUBLIC_USERS_ENDPOINT = "/api/user/**";
+    private static final String PRIVATE_USERS_ENDPOINT = "/api/user/**";
+
+
+
+    private static final String ADMIN_ENDPOINT = "/api/admin/**";
+
     private static final String MAIN_PAGES_ENDPOINT = "/api/service/**";
     //private static final String PUBLIC_USERS_ENDPOINT = "/api/user/**";
-    private static final String PRIVATE_USERS_ENDPOINT = "/api/user/**";
+    //private static final String PRIVATE_USERS_ENDPOINT = "/api/user/**";
 
     private final JwtTokenProvider jwtTokenProvider;
 
