@@ -18,44 +18,12 @@ public class UserBasicController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping("get_user_img_url")
-    public ResponseEntity<UserProfileImageUrlDto> getUserProfileImageUrl(@RequestParam long userId) { //TODO: сменить id на токен
-        String url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
-
-        try {
-            url = userRepository.findById(userId).orElseThrow(
-                    () -> {throw new UserNotFoundExeption();}
-            ).getUserProfileImageUrl();
-        } catch (Exception e) {
-            url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
-        }
-
-        //System.out.println(jsonString);
-
-
-        return ResponseEntity.ok(new UserProfileImageUrlDto(url));
-    }
-
     @RequestMapping("get_user_img_url_by_username")
     public ResponseEntity<UserProfileImageUrlDto> getUserProfileImageUrlByUsername(@RequestParam String username) { //TODO: сменить id на токен
-        String url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
-
-        try {
-            url = userRepository.findByUsername(username).orElseThrow(
-                    () -> {throw new UserNotFoundExeption();}
-            ).getUserProfileImageUrl();
-        } catch (Exception e) {
-            url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
-        }
-//        try {
-//            url = userRepository.findById(userId).orElseThrow(
-//                    () -> {throw new UserNotFoundExeption();}
-//            ).getUserProfileImageUrl();
-//        } catch (Exception e) {
-//            url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
-//        }
-
-        //System.out.println(jsonString);
+        //String url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
+        String url = userRepository.findByUsername(username).orElseThrow(
+                () -> {throw new UserNotFoundExeption();}
+        ).getUserProfileImageUrl();
 
 
         return ResponseEntity.ok(new UserProfileImageUrlDto(url));
