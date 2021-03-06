@@ -1,4 +1,4 @@
-import './App.css';
+import '../App.css';
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,7 +9,7 @@ import 'react-awesome-slider/dist/styles.css';
 import './MainPage.css';
 
 
-import Header from './Header';
+import Header from '../Header';
 
 class MainPage extends Component {
     constructor(props) {
