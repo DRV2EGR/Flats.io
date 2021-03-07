@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../Header';
 import './nullStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserProfile.css'
@@ -16,7 +17,9 @@ class UserProfile extends Component {
     render() {
         // const {code, description} = this.state;
         return (
+
             <div>
+                <Header/>
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="container bootstrap snippets bootdeys">
                 <div className="row" id="user-profile">
