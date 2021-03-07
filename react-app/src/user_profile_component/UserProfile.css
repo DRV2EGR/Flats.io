@@ -1,6 +1,6 @@
 body {
     margin-top: 20px;
-    /*background: linear-gradient(234.09deg, #0C1940 -1.45%, #F21665 116.59%);*/
+    background: url('../background74.jpg');
 }
 
 h2 {
@@ -45,6 +45,7 @@ h5 {
     padding: 4px;
     margin-top: 10px;
     margin-bottom: 10px;
+    max-width: 100%;
 }
 
 #user-profile .profile-label {
@@ -104,7 +105,8 @@ h5 {
 }
 
 #user-profile .profile-header>h3 {
-    margin-top: 10px
+    margin-top: 10px;
+    font-size: x-large;
 }
 
 
@@ -119,6 +121,7 @@ h5 {
 #user-profile .profile-user-info .profile-user-details {
     position: relative;
     padding: 4px 0;
+    line-height: 15px;
 }
 
 #user-profile .profile-user-info .profile-user-details .profile-user-details-label {
@@ -146,7 +149,43 @@ h5 {
     padding-top: 6px;
 }
 
-@media only screen and (max-width: 767px) {
+.nav-tabs>li>a:hover {
+    border-color: #eee #eee #ddd;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #eee;
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+a:hover, a:focus {
+    color: #02051f;
+}
+
+
+
+.btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .modal-header:after, .modal-header:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 769px) {
     #user-profile .profile-user-info .profile-user-details .profile-user-details-label {
         float: none;
         position: relative;
@@ -165,11 +204,11 @@ h5 {
 
 .main-box {
     background: #FFFFFF;
-    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    -ms-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -webkit-box-shadow: 3px 3px 5px 2px #CCCCCC;
+    -moz-box-shadow: 3px 3px 5px 2px #CCCCCC;
+    -o-box-shadow: 3px 3px 5px 2px #CCCCCC;
+    -ms-box-shadow: 3px 3px 5px 2px #CCCCCC;
+    box-shadow: 3px 3px 5px 2px #CCCCCC;
     margin-bottom: 16px;
     padding: 20px;
     border-radius: 1em;
@@ -217,7 +256,7 @@ a:focus {
 
 .table tbody>tr>td {
     font-size: 1.1em;
-    font-family: "Roboto sans-serif";
+    font-family: "Roboto", sans-serif;
     background: #ffffff;
 
     border-bottom: 1px solid rgb(0, 0, 0);
@@ -245,7 +284,7 @@ a:focus {
 .table thead>tr>th>a span:after {
     content: "\f0dc";
     /*font-family: FontAwesome;*/
-    font-family: "Roboto sans-serif";
+    font-family: "Roboto", sans-serif;
     font-weight: normal;
     text-decoration: inherit;
     margin-left: 5px;
@@ -449,7 +488,7 @@ a:focus {
 /* RECENT - USERS */
 .widget-users {
     list-style: none;
-    font-family: "Roboto sans-serif";
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -516,7 +555,7 @@ a:focus {
     background-clip: border-box;
     border: 0 solid rgba(0, 0, 0, .125);
     border-radius: 1em;
-    font-family: "Roboto sans-serif";
+    font-family: "Roboto", sans-serif;
 
 }
 
