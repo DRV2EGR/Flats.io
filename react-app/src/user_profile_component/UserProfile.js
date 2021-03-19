@@ -3,6 +3,7 @@ import Header from '../Header';
 import './nullStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserProfile.css'
+import Cookies from "universal-cookie";
 
 
 class UserProfile extends Component {
@@ -14,7 +15,32 @@ class UserProfile extends Component {
         }
     }
 
+    componentDidMount() {
+        const cookies = new Cookies();
+        let a = cookies.get('accessToken');
+        let b = cookies.get('username');
+
+        if (b) {
+
+            fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+                method: 'post',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + a,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify(cookies.get('username'))
+            }).then(response => response.json())
+                .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
+        } else {
+            this.setState({user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'}); //TODO: update img
+        }
+
+        this.setState({username : cookies.get('username')});
+    }
+
     render() {
+        const { username } = this.state;
+        const { user_image } = this.state;
         // const {code, description} = this.state;
         return (
 
@@ -25,11 +51,11 @@ class UserProfile extends Component {
                 <div className="row" id="user-profile">
                     <div className="col-lg-3 col-md-4 col-sm-4">
                         <div className="main-box clearfix">
-                            <h2>Павел Павлов </h2>
+                            <h2>{username} </h2>
                             <div className="profile-status">
                                 <i className="fa fa-check-circle"></i> Онлайн
                             </div>
-                            <img src="https://2.bp.blogspot.com/-iaHl5TDyqBg/W_22yrrHtxI/AAAAAAAAJSc/71tQ9aJijrUaOVpzemjWqefCbh5IQbPSgCLcBGAs/s1600/%25D0%259B%25D1%2583%25D1%2587%25D1%2588%25D0%25B8%25D0%25B9%2B%25D1%2587%25D0%25B0%25D1%2581%25D1%2582%25D0%25BD%25D1%258B%25D0%25B9%2B%25D0%25B8%25D0%25BD%25D0%25B2%25D0%25B5%25D1%2581%25D1%2582%25D0%25BE%25D1%2580.png"
+                            <img src={user_image}
                                 alt="" className="profile-img img-responsive center-block"/>
                             <div className="profile-label">
                                 <span className="label label-success">Инвестор</span>
@@ -112,7 +138,7 @@ class UserProfile extends Component {
                             <div className="tabs-wrapper profile-tabs">
                                 <ul className="nav nav-tabs">
                                     <li className="active"><a href="#tab-activity" data-toggle="tab">Активность</a></li>
-                                    <li><a href="#tab-friends" data-toggle="tab">Инвестиции</a></li>
+                                    {/*<li><a href="#tab-friends" data-toggle="tab">Инвестиции</a></li>*/}
                                 </ul>
 
                                 <div className="tab-content">
