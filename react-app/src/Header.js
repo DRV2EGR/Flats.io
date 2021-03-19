@@ -88,7 +88,7 @@ class Header extends Component {
         if (b) { //войдено
             return (
                 <div className="dropdown-child">
-                    <a href="/user_cabinette">Мой кабинет</a>
+                    <a href="/user_profile">Мой кабинет</a>
                     <a href="/add_order">Разместить объявление</a>
                     <a href="/user_settings">Настройки</a>
                     <a href="/" onClick={this.handleRemoveCookie}>Выйти</a>
