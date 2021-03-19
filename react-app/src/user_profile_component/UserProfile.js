@@ -39,10 +39,10 @@ class UserProfile extends Component {
                     'Authorization': 'Bearer ' + a,
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify(cookies.get('username'))
+                body: JSON.stringify({'username':cookies.get('username')})
             }).then(response => response.json())
                 .then(res => /*console.log(result.imgUrl) );*/ this.setState({
-                    phoneNumber:res.phoneNumber,
+                    phoneNumber:res.phoneNumber
                 }));
 
         } else {
