@@ -1,5 +1,9 @@
 package io.flats.controller;
 
+import io.flats.JWT_AUTH.dto.UserDto;
+import io.flats.JWT_AUTH.jwt.JwtUser;
+import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
+import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.UserProfileImageUrlDto;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
@@ -10,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +33,13 @@ public class UserBasicController {
      */
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    JwtUserDetailsService authentication;
+
 
     /**
      * Gets user profile image url by username.
@@ -71,5 +83,22 @@ public class UserBasicController {
 
 
         return null;
+    }
+
+    @RequestMapping("get_user_info")
+    public ResponseEntity<io.flats.dto.UserDto> getUserInfo(@RequestBody UserDto userDto) {
+        User user = userService.findByUsername(userDto.getUsername()).get(); //TODO:
+
+        io.flats.dto.UserDto userResponce = new io.flats.dto.UserDto();
+
+        userResponce.setUsername(user.getUsername());
+        userResponce.setEmail(user.getEmail());
+        userResponce.setFirstName(user.getFirstName());
+        userResponce.setLastName(user.getLastName());
+        userResponce.setRole(user.getRole().getName());
+        userResponce.setSecondName(user.getSecondName());
+        userResponce.setPhoneNumber(user.getPhoneNumber());
+
+        return ResponseEntity.ok(userResponce);
     }
 }
