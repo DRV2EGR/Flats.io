@@ -22,40 +22,52 @@ class UserProfile extends Component {
 
         if (b) {
 
-            fetch('/api/user/get_user_img_url_by_username?username=' + b, {
-                method: 'post',
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + a,
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify(cookies.get('username'))
-            }).then(response => response.json())
-                .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
+        fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+            method: 'post',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + a,
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(cookies.get('username'))
+        }).then(response => response.json())
+            .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
 
+        fetch('/api/user/get_user_info', {
+            method: 'post',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + a,
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({'username': cookies.get('username')})
+        }).then(response => response.json())
+            .then(res => /*console.log(result.imgUrl) );*/ this.setState({
+                phoneNumber: res.phoneNumber,
+                firstName: res.firstName,
+                secondName: res.secondName,
+                lastName: res.lastName,
+                username: res.username,
+                email: res.email,
+                role: res.role,
+            }));
+    } else
+        {
+            this.setState({
 
-            fetch('/api/user/get_user_info', {
-                method: 'post',
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + a,
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify({'username':cookies.get('username')})
-            }).then(response => response.json())
-                .then(res => /*console.log(result.imgUrl) );*/ this.setState({
-                    phoneNumber:res.phoneNumber
-                }));
-
-        } else {
-            this.setState({user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'}); //TODO: update img
+                user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'
+            }); //TODO: update img;
         }
-
-        this.setState({username : cookies.get('username')});
     }
+
 
     render() {
         const { username } = this.state;
         const { user_image } = this.state;
         const { phoneNumber } = this.state;
+        const { firstName } = this.state;
+        const { secondName } = this.state;
+        const { lastName } = this.state;
+        const { email } = this.state;
+        const { role } = this.state;
         // const {code, description} = this.state;
         return (
 
