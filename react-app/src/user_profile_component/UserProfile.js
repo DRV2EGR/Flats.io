@@ -41,7 +41,7 @@ class UserProfile extends Component {
             }),
             body: JSON.stringify({'username': cookies.get('username')})
         }).then(response => response.json())
-            .then(res => /*console.log(result.imgUrl) );*/ this.setState({
+            .then(res => /*console.log(result.imgUrl) );*/{ this.setState({
                 phoneNumber: res.phoneNumber,
                 firstName: res.firstName,
                 secondName: res.secondName,
@@ -49,9 +49,19 @@ class UserProfile extends Component {
                 username: res.username,
                 email: res.email,
                 role: res.role,
-            }));
-    } else
-        {
+            });
+            if (this.state.role == 'ROLE_ADMIN') {
+                this.setState({role:'Администратор'});
+            } else if (this.state.role == 'ROLE_SELLER') {
+                this.setState({role:'Собственник'});
+            } else  if (this.state.role == 'ROLE_REALTOR') {
+                this.setState({role:'Риелтор'});
+            } else  if (this.state.role == 'ROLE_USER') {
+                this.setState({role:'Пользователь'});
+            }
+            }
+            );
+        } else {
             this.setState({
 
                 user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'
@@ -73,7 +83,7 @@ class UserProfile extends Component {
         return (
 
             <div>
-                <CheckAcsessComponent />
+
                 <Header/>
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="container bootstrap snippets bootdeys">
@@ -87,17 +97,17 @@ class UserProfile extends Component {
                             <img src={user_image}
                                 alt="" className="profile-img img-responsive center-block"/>
                             <div className="profile-label">
-                                <span className="label label-success">Инвестор</span>
+                                <span className="label label-success">{role}</span>
                             </div>
 
-                            <div className="profile-stars">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <br/><span>Professional Investor</span>
-                            </div>
+                            {/*<div className="profile-stars">*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <br/><span>Professional Investor</span>*/}
+                            {/*</div>*/}
                             <div className="profile-stars">
                                 {/*<span className="label label-warning">hr</span>*/}
                                 {/*<span className="label label-primary">digital</span>*/}
@@ -110,9 +120,9 @@ class UserProfile extends Component {
 
                             <div className="profile-details">
                                 <ul className="fa-ul">
-                                    <li><i className="fa-li fa fa-comment"></i>Общение с инициаторами: <span>1700</span>
+                                    <li><i className="fa-li fa fa-comment"></i>Диалоги: <span>1700</span>
                                     </li>
-                                    <li><i className="fa-li fa fa-tasks"></i>Проинвестированные инициативы: <span>1100</span></li>
+                                    <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>110</span></li>
                                 </ul>
                             </div>
 
@@ -130,10 +140,19 @@ class UserProfile extends Component {
                                 <div className="col-sm-8">
                                     <div className="profile-user-details clearfix">
                                         <div className="profile-user-details-label">
-                                            Компания
+                                            Имя
                                         </div>
                                         <div className="profile-user-details-value">
-                                            ИНВЕСТ
+                                            {firstName}
+                                        </div>
+                                    </div>
+
+                                    <div className="profile-user-details clearfix">
+                                        <div className="profile-user-details-label">
+                                            Фамилия
+                                        </div>
+                                        <div className="profile-user-details-value">
+                                            {secondName}
                                         </div>
                                     </div>
 
@@ -145,21 +164,23 @@ class UserProfile extends Component {
                                             {phoneNumber}
                                         </div>
                                     </div>
+
                                     <div className="profile-user-details clearfix">
                                         <div className="profile-user-details-label">
                                             Email
                                         </div>
                                         <div className="profile-user-details-value">
-                                            pavel@google.com
+                                            {email}
                                         </div>
                                     </div>
 
                                 </div>
                                 <div className="col-sm-4 profile-social">
                                     <ul className="fa-ul">
-                                        <li><i className="fa-li fa fa-twitter-square"></i><a href="#">@pavelinvest</a></li>
-                                        <li><i className="fa-li fa fa-skype"></i><a href="#">money_more</a></li>
-                                        <li><i className="fa-li fa fa-instagram"></i><a href="#">business_investor</a></li>
+                                        {/*Определение соц.сетей пользователя.*/}
+                                        {/*<li><i className="fa-li fa fa-twitter-square"></i><a href="#">@pavelinvest</a></li>*/}
+                                        {/*<li><i className="fa-li fa fa-skype"></i><a href="#">money_more</a></li>*/}
+                                        {/*<li><i className="fa-li fa fa-instagram"></i><a href="#">business_investor</a></li>*/}
                                     </ul>
                                 </div>
                             </div>

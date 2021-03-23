@@ -41,6 +41,7 @@ class Header extends Component {
 
 
     componentDidMount() {
+        React.createElement(CheckAcsessComponent);
 
         //TODO: вставить получение картинки.
         // fetch('/api/user/get_user_img_url?userId=22' )
@@ -117,6 +118,7 @@ class Header extends Component {
 
 
             <div>
+                <CheckAcsessComponent />
 
                 <div className='d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm'>
                     <h5 className='my-0 mr-md-auto font-weight-bold'><a className='p-2 text-dark' href='/'>Flats.io</a></h5>
