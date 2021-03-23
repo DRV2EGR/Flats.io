@@ -219,7 +219,7 @@ class SignUP extends Component {
 
         return (
             <div>
-                <Header />
+                <Header {...this.props}/>
 
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />

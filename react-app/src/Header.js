@@ -2,7 +2,9 @@ import './App.css';
 import React, {Component, useRef} from 'react';
 import Cookies from "universal-cookie";
 import {withCookies} from "react-cookie";
-import { instanceOf } from "prop-types";
+import PropTypes, { instanceOf } from "prop-types";
+import {withRouter} from "react-router";
+import CheckAcsessComponent from "./CheckAcsessComponent";
 
 // function getUserAvatar() {
 //     const cookies = new Cookies();
@@ -34,9 +36,12 @@ class Header extends Component {
             code: props.code ? props.code : '999',
             description: props.description ? props.description : 'Unknown error'
         };
+
     }
 
+
     componentDidMount() {
+        React.createElement(CheckAcsessComponent);
 
         //TODO: вставить получение картинки.
         // fetch('/api/user/get_user_img_url?userId=22' )
@@ -110,7 +115,11 @@ class Header extends Component {
         const { userhref } = this.state;
 
         return (
+
+
             <div>
+                <CheckAcsessComponent />
+
                 <div className='d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm'>
                     <h5 className='my-0 mr-md-auto font-weight-bold'><a className='p-2 text-dark' href='/'>Flats.io</a></h5>
 

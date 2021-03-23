@@ -9,6 +9,7 @@ import Header from './Header';
 import Login from "./login_component/Login";
 import SignUP from "./login_component/SignUP";
 import UserProfile from "./user_profile_component/UserProfile";
+import {withRouter} from "react-router";
 
 class App extends Component {
   render() {
@@ -40,7 +41,7 @@ class App extends Component {
             <Route exact path='/admin/lessons' render={props => <AdminLessons{...props}/>}/>
 
             <Route exact path='/verdicts'>
-              <Header />
+              <Header {...this.props}/>
               <VerdictsInfo/>
             </Route>
 
@@ -81,4 +82,4 @@ class App extends Component {
 
 }
 
-export default App;
+export default (App);

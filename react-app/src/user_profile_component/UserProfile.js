@@ -3,6 +3,8 @@ import Header from '../Header';
 import './nullStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserProfile.css'
+import Cookies from "universal-cookie";
+import CheckAcsessComponent from "../CheckAcsessComponent";
 
 
 class UserProfile extends Component {
@@ -14,35 +16,98 @@ class UserProfile extends Component {
         }
     }
 
+    componentDidMount() {
+        const cookies = new Cookies();
+        let a = cookies.get('accessToken');
+        let b = cookies.get('username');
+
+        if (b) {
+
+        fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+            method: 'post',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + a,
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(cookies.get('username'))
+        }).then(response => response.json())
+            .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
+
+        fetch('/api/user/get_user_info', {
+            method: 'post',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + a,
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({'username': cookies.get('username')})
+        }).then(response => response.json())
+            .then(res => /*console.log(result.imgUrl) );*/{ this.setState({
+                phoneNumber: res.phoneNumber,
+                firstName: res.firstName,
+                secondName: res.secondName,
+                lastName: res.lastName,
+                username: res.username,
+                email: res.email,
+                role: res.role,
+            });
+            if (this.state.role == 'ROLE_ADMIN') {
+                this.setState({role:'Администратор'});
+            } else if (this.state.role == 'ROLE_SELLER') {
+                this.setState({role:'Собственник'});
+            } else  if (this.state.role == 'ROLE_REALTOR') {
+                this.setState({role:'Риелтор'});
+            } else  if (this.state.role == 'ROLE_USER') {
+                this.setState({role:'Пользователь'});
+            }
+            }
+            );
+        } else {
+            this.setState({
+
+                user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'
+            }); //TODO: update img;
+        }
+    }
+
+
     render() {
+        const { username } = this.state;
+        const { user_image } = this.state;
+        const { phoneNumber } = this.state;
+        const { firstName } = this.state;
+        const { secondName } = this.state;
+        const { lastName } = this.state;
+        const { email } = this.state;
+        const { role } = this.state;
         // const {code, description} = this.state;
         return (
 
             <div>
+
                 <Header/>
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="container bootstrap snippets bootdeys">
                 <div className="row" id="user-profile">
                     <div className="col-lg-3 col-md-4 col-sm-4">
                         <div className="main-box clearfix">
-                            <h2>Павел Павлов </h2>
+                            <h2>{username} </h2>
                             <div className="profile-status">
                                 <i className="fa fa-check-circle"></i> Онлайн
                             </div>
-                            <img src="https://2.bp.blogspot.com/-iaHl5TDyqBg/W_22yrrHtxI/AAAAAAAAJSc/71tQ9aJijrUaOVpzemjWqefCbh5IQbPSgCLcBGAs/s1600/%25D0%259B%25D1%2583%25D1%2587%25D1%2588%25D0%25B8%25D0%25B9%2B%25D1%2587%25D0%25B0%25D1%2581%25D1%2582%25D0%25BD%25D1%258B%25D0%25B9%2B%25D0%25B8%25D0%25BD%25D0%25B2%25D0%25B5%25D1%2581%25D1%2582%25D0%25BE%25D1%2580.png"
+                            <img src={user_image}
                                 alt="" className="profile-img img-responsive center-block"/>
                             <div className="profile-label">
-                                <span className="label label-success">Инвестор</span>
+                                <span className="label label-success">{role}</span>
                             </div>
 
-                            <div className="profile-stars">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <br/><span>Professional Investor</span>
-                            </div>
+                            {/*<div className="profile-stars">*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <i className="fa fa-star"></i>*/}
+                            {/*    <br/><span>Professional Investor</span>*/}
+                            {/*</div>*/}
                             <div className="profile-stars">
                                 {/*<span className="label label-warning">hr</span>*/}
                                 {/*<span className="label label-primary">digital</span>*/}
@@ -55,9 +120,9 @@ class UserProfile extends Component {
 
                             <div className="profile-details">
                                 <ul className="fa-ul">
-                                    <li><i className="fa-li fa fa-comment"></i>Общение с инициаторами: <span>1700</span>
+                                    <li><i className="fa-li fa fa-comment"></i>Диалоги: <span>1700</span>
                                     </li>
-                                    <li><i className="fa-li fa fa-tasks"></i>Проинвестированные инициативы: <span>1100</span></li>
+                                    <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>110</span></li>
                                 </ul>
                             </div>
 
@@ -75,10 +140,19 @@ class UserProfile extends Component {
                                 <div className="col-sm-8">
                                     <div className="profile-user-details clearfix">
                                         <div className="profile-user-details-label">
-                                            Компания
+                                            Имя
                                         </div>
                                         <div className="profile-user-details-value">
-                                            ИНВЕСТ
+                                            {firstName}
+                                        </div>
+                                    </div>
+
+                                    <div className="profile-user-details clearfix">
+                                        <div className="profile-user-details-label">
+                                            Фамилия
+                                        </div>
+                                        <div className="profile-user-details-value">
+                                            {secondName}
                                         </div>
                                     </div>
 
@@ -87,24 +161,26 @@ class UserProfile extends Component {
                                             Номер
                                         </div>
                                         <div className="profile-user-details-value">
-                                            +7-XXX-XXX-XX-XX
+                                            {phoneNumber}
                                         </div>
                                     </div>
+
                                     <div className="profile-user-details clearfix">
                                         <div className="profile-user-details-label">
                                             Email
                                         </div>
                                         <div className="profile-user-details-value">
-                                            pavel@google.com
+                                            {email}
                                         </div>
                                     </div>
 
                                 </div>
                                 <div className="col-sm-4 profile-social">
                                     <ul className="fa-ul">
-                                        <li><i className="fa-li fa fa-twitter-square"></i><a href="#">@pavelinvest</a></li>
-                                        <li><i className="fa-li fa fa-skype"></i><a href="#">money_more</a></li>
-                                        <li><i className="fa-li fa fa-instagram"></i><a href="#">business_investor</a></li>
+                                        {/*Определение соц.сетей пользователя.*/}
+                                        {/*<li><i className="fa-li fa fa-twitter-square"></i><a href="#">@pavelinvest</a></li>*/}
+                                        {/*<li><i className="fa-li fa fa-skype"></i><a href="#">money_more</a></li>*/}
+                                        {/*<li><i className="fa-li fa fa-instagram"></i><a href="#">business_investor</a></li>*/}
                                     </ul>
                                 </div>
                             </div>
@@ -112,7 +188,7 @@ class UserProfile extends Component {
                             <div className="tabs-wrapper profile-tabs">
                                 <ul className="nav nav-tabs">
                                     <li className="active"><a href="#tab-activity" data-toggle="tab">Активность</a></li>
-                                    <li><a href="#tab-friends" data-toggle="tab">Инвестиции</a></li>
+                                    {/*<li><a href="#tab-friends" data-toggle="tab">Инвестиции</a></li>*/}
                                 </ul>
 
                                 <div className="tab-content">
