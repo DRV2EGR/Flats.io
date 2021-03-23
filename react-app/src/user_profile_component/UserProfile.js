@@ -4,6 +4,7 @@ import './nullStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserProfile.css'
 import Cookies from "universal-cookie";
+import CheckAcsessComponent from "../CheckAcsessComponent";
 
 
 class UserProfile extends Component {
@@ -72,6 +73,7 @@ class UserProfile extends Component {
         return (
 
             <div>
+                <CheckAcsessComponent />
                 <Header/>
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="container bootstrap snippets bootdeys">
