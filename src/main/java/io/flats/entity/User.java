@@ -83,6 +83,11 @@ public class User extends BaseEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     protected Role role;
 
+    public User(long id, String firstName) {
+        this.setId(id);
+        this.setFirstName(firstName);
+    }
+
     @Override
     public String toString() {
         return "User{" +
