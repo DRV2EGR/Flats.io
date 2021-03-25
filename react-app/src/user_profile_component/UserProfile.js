@@ -49,6 +49,7 @@ class UserProfile extends Component {
                 username: res.username,
                 email: res.email,
                 role: res.role,
+                accountCreationTime: res.accountCreationTime,
             });
             if (this.state.role == 'ROLE_ADMIN') {
                 this.setState({role:'Администратор'});
@@ -79,6 +80,7 @@ class UserProfile extends Component {
         const { lastName } = this.state;
         const { email } = this.state;
         const { role } = this.state;
+        const { accountCreationTime } = this.state;
         // const {code, description} = this.state;
         return (
 
@@ -115,7 +117,7 @@ class UserProfile extends Component {
 
                             </div>
                             <div className="profile-since">
-                                На сайте с: Фев 2021
+                                На сайте с: {accountCreationTime}
                             </div>
 
                             <div className="profile-details">
