@@ -14,10 +14,10 @@ public class UserDto {
     private String username;
     private String email;
     private String phoneNumber;
-    private LocalDateTime accountCreationTime;
+    private String accountCreationTime;
     private String role;
 
-    public UserDto(String firstName, String secondName, String lastName, String username, String email, String phoneNumber, LocalDateTime accountCreationTime, String role) {
+    public UserDto(String firstName, String secondName, String lastName, String username, String email, String phoneNumber, String accountCreationTime, String role) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;

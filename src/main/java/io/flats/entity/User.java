@@ -83,6 +83,12 @@ public class User extends BaseEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     protected Role role;
 
+    public String getBeautifulDate() {
+
+
+        return null;
+    }
+
     public User(long id, String username) {
         this.setId(id);
         this.setUsername(username);
