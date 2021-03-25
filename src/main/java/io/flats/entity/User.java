@@ -6,6 +6,10 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 /**
  * The type User.
@@ -83,10 +87,15 @@ public class User extends BaseEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     protected Role role;
 
-    public String getBeautifulDate() {
+    public String getBeautifulDateOfAccountCreation() {
+        if (this.timeOfAccountCreation == null) {
+            return "Еще не с нами.";
+        }
+        String formattedDate = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+                         .withLocale(new Locale("ru"))
+                         .format(this.timeOfAccountCreation);
 
-
-        return null;
+        return formattedDate;
     }
 
     public User(long id, String username) {

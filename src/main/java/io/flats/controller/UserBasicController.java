@@ -98,7 +98,7 @@ public class UserBasicController {
         userResponce.setRole(user.getRole().getName());
         userResponce.setSecondName(user.getSecondName());
         userResponce.setPhoneNumber(user.getPhoneNumber());
-        userResponce.setAccountCreationTime(user.getTimeOfAccountCreation());
+        userResponce.setAccountCreationTime(user.getBeautifulDateOfAccountCreation());
 
         return ResponseEntity.ok(userResponce);
     }
