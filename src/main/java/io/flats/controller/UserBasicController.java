@@ -34,9 +34,15 @@ public class UserBasicController {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
+    /**
+     * The Authentication.
+     */
     @Autowired
     JwtUserDetailsService authentication;
 
@@ -85,6 +91,12 @@ public class UserBasicController {
         return null;
     }
 
+    /**
+     * Gets user info.
+     *
+     * @param userDto the user dto
+     * @return the user info
+     */
     @RequestMapping("get_user_info")
     public ResponseEntity<io.flats.dto.UserDto> getUserInfo(@RequestBody UserDto userDto) {
         User user = userService.findByUsername(userDto.getUsername()).get(); //TODO:

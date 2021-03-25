@@ -83,6 +83,12 @@ public class User extends BaseEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     protected Role role;
 
+    /**
+     * Instantiates a new User.
+     *
+     * @param id       the id
+     * @param username the username
+     */
     public User(long id, String username) {
         this.setId(id);
         this.setUsername(username);
