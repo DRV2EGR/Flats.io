@@ -53,20 +53,9 @@ public class FlatDto {
      */
     protected long id;
 
-    /**
-     * Instantiates a new Flat dto.
-     *
-     * @param country     the country
-     * @param town        the town
-     * @param street      the street
-     * @param houseNom    the house nom
-     * @param floor       the floor
-     * @param price       the price
-     * @param description the description
-     * @param images      the images
-     * @param id          the id
-     */
-    public FlatDto(String country, String town, String street, int houseNom, int floor, float price, String description, List<String> images, long id) {
+    protected String ownername;
+
+    public FlatDto(String country, String town, String street, int houseNom, int floor, float price, String description, List<String> images, long id, String ownername) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -76,6 +65,7 @@ public class FlatDto {
         this.description = description;
         this.images = new ArrayList<>();
         this.id = id;
+        this.ownername = ownername;
     }
 
     public void setImageListToNew() {

@@ -53,9 +53,11 @@ public class FlatController {
         fdto.setStreet(flat.getStreet());
         fdto.setHouseNom(flat.getHouseNom());
         fdto.setFloor(flat.getFloor());
+        fdto.setId(flat.getId());
 
         fdto.setDescription(flat.getDescription());
         fdto.setPrice(flat.getPrice());
+        fdto.setOwnername(flat.getOwner().getUsername());
 
         fdto.setImageListToNew();
         for (FlatsImages image: flat.getFlatsImages()) {
