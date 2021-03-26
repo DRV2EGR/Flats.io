@@ -45,23 +45,9 @@ public class FlatDtoPayload {
      * The User id.
      */
 //TODO: исправить на получение юзверя из авторизации
-    protected long userId;
+    protected String username;
 
-    /**
-     * Instantiates a new Flat dto payload.
-     *
-     * @param country     the country
-     * @param town        the town
-     * @param street      the street
-     * @param houseNom    the house nom
-     * @param floor       the floor
-     * @param price       the price
-     * @param description the description
-     * @param userId      the user id
-     */
-    public FlatDtoPayload(String country, String town, String street,
-                          int houseNom, int floor, float price,
-                          String description, long userId) {
+    public FlatDtoPayload(String country, String town, String street, int houseNom, int floor, float price, String description, String username) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -69,6 +55,6 @@ public class FlatDtoPayload {
         this.floor = floor;
         this.price = price;
         this.description = description;
-        this.userId = userId;
+        this.username = username;
     }
 }

@@ -96,7 +96,7 @@ public class FlatService {
         newFlat.setOrderType(flatOrderTypeRepository.findById(1L).get());
 
         //TODO: исправить на получение юзверя из авторизации
-        newFlat.setOwner(userRepository.findById(newFlatDao.getUserId()).orElseThrow(
+        newFlat.setOwner(userRepository.findByUsername(newFlatDao.getUsername()).orElseThrow(
                 () -> { throw new UserNotFoundExeption(); }
         ));
 
