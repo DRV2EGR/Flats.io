@@ -106,4 +106,27 @@ public class FlatService {
 
         return true;
     }
+
+    public boolean addRentFlat(FlatDtoPayload newFlatDao) {
+        Flat newFlat = new Flat();
+        newFlat.setCountry(newFlatDao.getCountry());
+        newFlat.setTown(newFlatDao.getTown());
+        newFlat.setStreet(newFlatDao.getStreet());
+        newFlat.setHouseNom(newFlatDao.getHouseNom());
+        newFlat.setFloor(newFlatDao.getFloor());
+        newFlat.setPrice(newFlatDao.getPrice());
+        newFlat.setDescription(newFlatDao.getDescription());
+        newFlat.setOrderType(flatOrderTypeRepository.findById(2L).get());
+
+        //TODO: исправить на получение юзверя из авторизации
+        newFlat.setOwner(userRepository.findByUsername(newFlatDao.getUsername()).orElseThrow(
+                () -> { throw new UserNotFoundExeption(); }
+        ));
+
+        //TODO: проверка на то, что такая квартира уже существует
+
+        flatRepository.save(newFlat);
+
+        return true;
+    }
 }

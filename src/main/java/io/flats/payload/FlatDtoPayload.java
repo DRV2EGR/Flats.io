@@ -41,13 +41,19 @@ public class FlatDtoPayload {
      */
     protected String description;
 
+    protected boolean isForSale;
+
+    protected boolean isForRent;
+
     /**
      * The User id.
      */
 //TODO: исправить на получение юзверя из авторизации
     protected String username;
 
-    public FlatDtoPayload(String country, String town, String street, int houseNom, int floor, float price, String description, String username) {
+    public FlatDtoPayload(String country, String town, String street, int houseNom,
+                          int floor, float price, String description,
+                          boolean isForSale, boolean isForRent, String username) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -55,6 +61,8 @@ public class FlatDtoPayload {
         this.floor = floor;
         this.price = price;
         this.description = description;
+        this.isForSale = isForSale;
+        this.isForRent = isForRent;
         this.username = username;
     }
 }
