@@ -21,7 +21,6 @@ public class FlatController {
 
     @RequestMapping(value = "/add_flat", method = RequestMethod.POST)
     public ResponseEntity<BasicResponce> addFlat(@RequestBody FlatDtoPayload newFlat) {
-        //TODO: addFlat
         if (newFlat.isForSale() && !newFlat.isForRent()) {
             flatService.addSaleFlat(newFlat);
         } else if (!newFlat.isForSale() && newFlat.isForRent()) {

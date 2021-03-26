@@ -41,9 +41,9 @@ public class FlatDtoPayload {
      */
     protected String description;
 
-    protected boolean isForSale;
+    protected boolean forSale;
 
-    protected boolean isForRent;
+    protected boolean forRent;
 
     /**
      * The User id.
@@ -53,7 +53,7 @@ public class FlatDtoPayload {
 
     public FlatDtoPayload(String country, String town, String street, int houseNom,
                           int floor, float price, String description,
-                          boolean isForSale, boolean isForRent, String username) {
+                          boolean forSale, boolean forRent, String username) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -61,8 +61,8 @@ public class FlatDtoPayload {
         this.floor = floor;
         this.price = price;
         this.description = description;
-        this.isForSale = isForSale;
-        this.isForRent = isForRent;
+        this.forSale = forSale;
+        this.forRent = forRent;
         this.username = username;
     }
 }
