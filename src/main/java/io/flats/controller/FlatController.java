@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("")
 public class FlatController {
-    /*
-        addFlat
-        delete flat
-        flat/id - see flat = getFlat
-
-     */
 
     public ResponseEntity<BasicResponce> addFlat(@RequestBody FlatDtoPayload newFlat) {
         //TODO: addFlat
