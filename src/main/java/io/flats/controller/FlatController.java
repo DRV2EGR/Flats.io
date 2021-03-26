@@ -1,10 +1,16 @@
 package io.flats.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.BasicResponce;
 import io.flats.dto.FlatDto;
 import io.flats.dto.ResponceCompletedDto;
 import io.flats.entity.Flat;
+import io.flats.entity.FlatsImages;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +56,11 @@ public class FlatController {
 
         fdto.setDescription(flat.getDescription());
         fdto.setPrice(flat.getPrice());
+
+        fdto.setImageListToNew();
+        for (FlatsImages image: flat.getFlatsImages()) {
+            fdto.getImages().add(image.getImgUrl());
+        }
 
         return ResponseEntity.ok(fdto);
     }

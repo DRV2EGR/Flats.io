@@ -3,6 +3,7 @@ package io.flats.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,7 +74,11 @@ public class FlatDto {
         this.floor = floor;
         this.price = price;
         this.description = description;
-        this.images = images;
+        this.images = new ArrayList<>();
         this.id = id;
+    }
+
+    public void setImageListToNew() {
+        this.images = new ArrayList<>();
     }
 }
