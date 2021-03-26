@@ -1,5 +1,6 @@
 package io.flats.service;
 
+import io.flats.JWT_AUTH.exeption.NotFoundException;
 import io.flats.dto.FlatDto;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * The type Flat service.
@@ -128,5 +130,11 @@ public class FlatService {
         flatRepository.save(newFlat);
 
         return true;
+    }
+
+    public Flat findFlatById(long id) {
+        return flatRepository.findById(id).orElseThrow(
+                () -> { throw new NotFoundException(); }
+        );
     }
 }

@@ -2,16 +2,14 @@ package io.flats.controller;
 
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.BasicResponce;
+import io.flats.dto.FlatDto;
 import io.flats.dto.ResponceCompletedDto;
 import io.flats.entity.Flat;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/flats") //TODO: изменить на /api/private/flats и в остальных мапингах тоже.
@@ -40,9 +38,19 @@ public class FlatController {
     }
 
     @RequestMapping(value = "/get_flat", method = RequestMethod.GET)
-    public ResponseEntity<BasicResponce> getFlat(@RequestBody Long id) {
-        //TODO: getFlat
+    public ResponseEntity<FlatDto> getFlat(@RequestParam Long id) {
+        Flat flat = flatService.findFlatById(id);
 
-        return null;
+        FlatDto fdto = new FlatDto();
+        fdto.setCountry(flat.getCountry());
+        fdto.setTown(flat.getTown());
+        fdto.setStreet(flat.getStreet());
+        fdto.setHouseNom(flat.getHouseNom());
+        fdto.setFloor(flat.getFloor());
+
+        fdto.setDescription(flat.getDescription());
+        fdto.setPrice(flat.getPrice());
+
+        return ResponseEntity.ok(fdto);
     }
 }
