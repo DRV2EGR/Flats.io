@@ -10,6 +10,7 @@ import io.flats.repository.FlatOrderTypeRepository;
 import io.flats.repository.FlatRepository;
 import io.flats.repository.FlatsImagesRepository;
 import io.flats.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.Optional;
  * The type Flat service.
  */
 @Service
+@Slf4j
 public class FlatService {
     /**
      * The Flat repository.
@@ -148,9 +150,11 @@ public class FlatService {
             flatsImagesRepository.delete(image);
         }
 
-        flatRepository.delete(flatRepository.findById(id).orElseThrow(
-                 () -> { throw new NotFoundException(); }
-        ));
+        Flat deletingFlat = flatRepository.findById(id).orElseThrow(
+                () -> { throw new NotFoundException(); });
+
+        flatRepository.delete(deletingFlat);
+        log.info("Deleted flat " + (Object)deletingFlat);
 
         return flatRepository.findById(id).isEmpty();
     }
