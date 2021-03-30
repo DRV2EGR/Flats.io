@@ -53,9 +53,12 @@ public class FlatDto {
      */
     protected long id;
 
-    protected String ownername;
+    protected String ownerUsername;
 
-    public FlatDto(String country, String town, String street, int houseNom, int floor, float price, String description, List<String> images, long id, String ownername) {
+    protected long ownerID;
+
+    public FlatDto(String country, String town, String street, int houseNom,
+                   int floor, float price, String description, List<String> images, long id, String ownerUsername, long ownerID) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -63,9 +66,10 @@ public class FlatDto {
         this.floor = floor;
         this.price = price;
         this.description = description;
-        this.images = new ArrayList<>();
+        this.images = images;
         this.id = id;
-        this.ownername = ownername;
+        this.ownerUsername = ownerUsername;
+        this.ownerID = ownerID;
     }
 
     public void setImageListToNew() {

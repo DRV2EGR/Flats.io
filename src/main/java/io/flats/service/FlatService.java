@@ -137,4 +137,13 @@ public class FlatService {
                 () -> { throw new NotFoundException(); }
         );
     }
+
+    public boolean deleteFlatById(long id) {
+
+        flatRepository.delete(flatRepository.findById(id).orElseThrow(
+                 () -> { throw new NotFoundException(); }
+        ));
+
+        return flatRepository.findById(id).isEmpty();
+    }
 }

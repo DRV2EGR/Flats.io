@@ -57,7 +57,9 @@ public class FlatController {
 
         fdto.setDescription(flat.getDescription());
         fdto.setPrice(flat.getPrice());
-        fdto.setOwnername(flat.getOwner().getUsername());
+
+        fdto.setOwnerUsername(flat.getOwner().getUsername());
+        fdto.setOwnerID(flat.getOwner().getId());
 
         fdto.setImageListToNew();
         for (FlatsImages image: flat.getFlatsImages()) {
