@@ -1,9 +1,11 @@
 package io.flats.service;
 
 import io.flats.JWT_AUTH.exeption.NotFoundException;
+import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.FlatDto;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
+import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.repository.FlatOrderTypeRepository;
@@ -12,6 +14,8 @@ import io.flats.repository.FlatsImagesRepository;
 import io.flats.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -45,6 +49,9 @@ public class FlatService {
 
     @Autowired
     FlatsImagesRepository flatsImagesRepository;
+
+    @Autowired
+    UserService userService;
 
     /**
      * Find images by flat id list.
@@ -102,10 +109,13 @@ public class FlatService {
         newFlat.setDescription(newFlatDao.getDescription());
         newFlat.setOrderType(flatOrderTypeRepository.findById(1L).get());
 
-        //TODO: исправить на получение юзверя из авторизации
-        newFlat.setOwner(userRepository.findByUsername(newFlatDao.getUsername()).orElseThrow(
-                () -> { throw new UserNotFoundExeption(); }
-        ));
+        //Установка прав владения на объявление на пользователя через его авторизацию.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User currentUser = userService.findByUsername(currentPrincipalName).orElseThrow(
+                () -> {throw new UserNotFoundExeption();
+                });
+        newFlat.setOwner(currentUser);
 
         //TODO: проверка на то, что такая квартира уже существует
 
@@ -125,10 +135,13 @@ public class FlatService {
         newFlat.setDescription(newFlatDao.getDescription());
         newFlat.setOrderType(flatOrderTypeRepository.findById(2L).get());
 
-        //TODO: исправить на получение юзверя из авторизации
-        newFlat.setOwner(userRepository.findByUsername(newFlatDao.getUsername()).orElseThrow(
-                () -> { throw new UserNotFoundExeption(); }
-        ));
+        //Установка прав владения на объявление на пользователя через его ваторизацию.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User currentUser = userService.findByUsername(currentPrincipalName).orElseThrow(
+                () -> {throw new UserNotFoundExeption();
+                });
+        newFlat.setOwner(currentUser);
 
         //TODO: проверка на то, что такая квартира уже существует
 
