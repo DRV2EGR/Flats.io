@@ -8,6 +8,7 @@ import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.repository.FlatOrderTypeRepository;
 import io.flats.repository.FlatRepository;
+import io.flats.repository.FlatsImagesRepository;
 import io.flats.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,8 @@ public class FlatService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    FlatsImagesRepository flatsImagesRepository;
 
     /**
      * Find images by flat id list.
@@ -139,6 +142,11 @@ public class FlatService {
     }
 
     public boolean deleteFlatById(long id) {
+
+        List<FlatsImages> flatsImagesList = flatRepository.findById(id).get().getFlatsImages();
+        for (FlatsImages image: flatsImagesList) {
+            flatsImagesRepository.delete(image);
+        }
 
         flatRepository.delete(flatRepository.findById(id).orElseThrow(
                  () -> { throw new NotFoundException(); }

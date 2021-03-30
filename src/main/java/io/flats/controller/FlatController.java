@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import io.flats.JWT_AUTH.jwt.JwtUser;
+import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.BasicResponce;
 import io.flats.dto.FlatDto;
@@ -16,6 +18,8 @@ import io.flats.payload.FlatDtoPayload;
 import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,7 +42,10 @@ public class FlatController {
     }
 
     @RequestMapping(value = "/delete_flat", method = RequestMethod.DELETE)
-    public ResponseEntity<BasicResponce> deleteFlat(@RequestBody Long id) {
+    public ResponseEntity<BasicResponce> deleteFlat(@RequestParam Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
         boolean flag = flatService.deleteFlatById(id);
 
         return (flag) ? ResponseEntity.ok(new ResponceCompletedDto()) : ResponseEntity.ok(new ResponceNotCompletedDto());
