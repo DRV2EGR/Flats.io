@@ -9,6 +9,7 @@ import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.BasicResponce;
 import io.flats.dto.FlatDto;
 import io.flats.dto.ResponceCompletedDto;
+import io.flats.dto.ResponceNotCompletedDto;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
 import io.flats.payload.FlatDtoPayload;
@@ -38,9 +39,9 @@ public class FlatController {
 
     @RequestMapping(value = "/delete_flat", method = RequestMethod.DELETE)
     public ResponseEntity<BasicResponce> deleteFlat(@RequestBody Long id) {
-        //TODO: deleteFlat
+        boolean flag = flatService.deleteFlatById(id);
 
-        return null;
+        return (flag) ? ResponseEntity.ok(new ResponceCompletedDto()) : ResponseEntity.ok(new ResponceNotCompletedDto());
     }
 
     @RequestMapping(value = "/get_flat", method = RequestMethod.GET)
