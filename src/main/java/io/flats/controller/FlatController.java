@@ -14,6 +14,8 @@ import io.flats.dto.ResponceCompletedDto;
 import io.flats.dto.ResponceNotCompletedDto;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
+import io.flats.entity.User;
+import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ import org.springframework.web.bind.annotation.*;
 public class FlatController {
     @Autowired
     FlatService flatService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/add_flat", method = RequestMethod.POST)
     public ResponseEntity<BasicResponce> addFlat(@RequestBody FlatDtoPayload newFlat) {
@@ -45,8 +50,14 @@ public class FlatController {
     public ResponseEntity<BasicResponce> deleteFlat(@RequestParam Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
+        User currentUser = userService.findByUsername(currentPrincipalName).orElseThrow(
+                    () -> {throw new UserNotFoundExeption();
+                });
 
-        boolean flag = flatService.deleteFlatById(id);
+        boolean flag = false;
+        if (currentUser.getRole().getName().equals("ROLE_ADMIN") || flatService.findFlatById(id).getOwner().getId() == currentUser.getId()) {
+            flag = flatService.deleteFlatById(id);
+        }
 
         return (flag) ? ResponseEntity.ok(new ResponceCompletedDto()) : ResponseEntity.ok(new ResponceNotCompletedDto());
     }
