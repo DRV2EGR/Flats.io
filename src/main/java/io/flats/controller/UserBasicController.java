@@ -5,20 +5,21 @@ import io.flats.JWT_AUTH.jwt.JwtUser;
 import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.BasicResponce;
+import io.flats.dto.ResponceCompletedDto;
 import io.flats.dto.UserProfileImageUrlDto;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.repository.UserRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import io.flats.service.FlatService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.AuthProvider;
 import java.util.ArrayList;
@@ -46,6 +47,9 @@ public class UserBasicController {
      */
     @Autowired
     JwtUserDetailsService authentication;
+
+    @Autowired
+    FlatService flatService;
 
 
     /**
@@ -115,10 +119,14 @@ public class UserBasicController {
         return ResponseEntity.ok(userResponce);
     }
 
-    @RequestMapping("set_like")
-    public ResponseEntity<BasicResponce> setLike(@RequestParam long id){
-        //TODO:
-
-        return null;
+    @PostMapping("set_like")
+    public ResponseEntity<BasicResponce> setLike(@RequestParam long id_to){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        User currentUser = userService.findByUsername(currentUserName).orElseThrow(
+                () -> {throw new UserNotFoundExeption();}
+        );
+        flatService.setLike(currentUser.getId(), id_to);
+        return ResponseEntity.ok(new ResponceCompletedDto());
     }
 }
