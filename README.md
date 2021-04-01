@@ -22,7 +22,7 @@
     2. Перейти в папку target
     3. Выполнить команду java -jar <имя собранного jar файла>
 
-## 1. Для сборки проекта необходимо: 
+## 2. Для сборки проекта необходимо: 
 ```Необходима версия java >= 15, Apache Maven версия >= 3.6.3```
 
     1. Скачать репозиторий проекта
@@ -34,7 +34,7 @@
     4. Запустить команду mvn clean install
     5. В папке target выполнить команду java -jar <имя собранного jar файла>
 
-#### 2. Зависимости проекта (Java версия)
+#### 3. Зависимости проекта (Java версия)
 - [spring-boot-starter-web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
 - [spring-boot-starter-tomcat](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat)
 - [spring-data-jpa](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa)
