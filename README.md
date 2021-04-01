@@ -68,6 +68,26 @@
 - [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
 - [spring-test](https://mvnrepository.com/artifact/org.springframework/spring-test)
 
+## 4. Зависимости проекта (React версия)
+- testing-library/react ```ver: ^5.11.9```
+- testing-library/react ```ver: ^11.2.5```
+- testing-library/user-event ```ver: ^12.7.1```
+- bootstrap ```ver: ^4.0.0-alpha.6```
+- react ```ver: ^17.0.1```
+- react-awesome-slider ```ver: ^4.1.0```
+- react-bootstrap ```ver: ^0.32.1```
+- react-cookie ```ver: ^4.0.3 ```
+- react-dom ```ver: ^17.0.1```
+- react-router ```ver: ^5.2.0```
+- react-scripts ```ver: 4.0.2```
+- web-vitals ```ver: ^1.1.0```
+- material-ui/core ```ver: ^4.11.3```
+- material-ui/icons ```ver: ^4.11.2```
+- formik ```ver: ^2.2.6```
+- prop-types ```ver: ^15.7.2```
+- react-router-dom ```ver: ^5.2.0```
+- universal-cookie ```ver: ^4.0.4```
+- yup ```ver: ^0.32.9```
 
 
 ***
