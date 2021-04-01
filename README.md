@@ -16,15 +16,25 @@
 <br>
 
 ## 1. Для запуска проекта: 
+Запуск backend части
 ```Необходима версия java >= 15```
 
     1. Скачать репозиторий проекта
     2. Перейти в папку target
     3. Выполнить команду java -jar <имя собранного jar файла>
 
-## 2. Для сборки проекта необходимо: 
-```Необходима версия java >= 15, Apache Maven версия >= 3.6.3```
+Запуск frontend части
+```Необходима версия npm```
+   
+    1. Скачать репозиторий проекта
+    2. Скачать и применить все зависимости для npm
+    3. Из папки react-app выполнить комманду npm run start
 
+## 2. Для сборки проекта необходимо: 
+
+   Сборка backend части
+```Необходима версия java >= 15, Apache Maven версия >= 3.6.3```
+    
     1. Скачать репозиторий проекта
       1.1 Обращаем ваше внимание, что проект состоит из 2х подпроектов
         1.1.1 Backend Java Spring
@@ -34,7 +44,14 @@
     4. Запустить команду mvn clean install
     5. В папке target выполнить команду java -jar <имя собранного jar файла>
 
-#### 3. Зависимости проекта (Java версия)
+   Сборка frontend части
+```Необходима версия npm```
+   
+    1. Скачать репозиторий проекта
+    2. Скачать и применить все зависимости для npm
+    3. Из папки react-app выполнить комманду npm run start
+
+## 3. Зависимости проекта (Java версия)
 - [spring-boot-starter-web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
 - [spring-boot-starter-tomcat](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat)
 - [spring-data-jpa](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa)
