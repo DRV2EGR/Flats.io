@@ -14,6 +14,23 @@
 
 ### Flats.io - сайт по продаже _недвижимого_ имущества
 
+#### 1. Зависимости проекта (Java версия)
+- [spring-boot-starter-web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
+- [spring-boot-starter-tomcat](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat)
+- [spring-data-jpa](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa)
+- [lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
+- [postgresql](https://mvnrepository.com/artifact/org.postgresql/postgresql)
+- [spring-boot-starter](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter)
+- [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
+- [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
+- [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
+- [junit](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api)
+- [json](https://mvnrepository.com/artifact/org.json/json)
+- [jjwt](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt)
+- [mockito-core](https://mvnrepository.com/artifact/org.mockito/mockito-core)
+- [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
+- [spring-test](https://mvnrepository.com/artifact/org.springframework/spring-test)
+
 
 
 ***
