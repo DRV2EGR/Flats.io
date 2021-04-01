@@ -3,10 +3,12 @@ package io.flats.service;
 import io.flats.dto.FlatDto;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
+import io.flats.entity.Likes;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.repository.FlatOrderTypeRepository;
 import io.flats.repository.FlatRepository;
+import io.flats.repository.LikesRepository;
 import io.flats.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,9 @@ public class FlatService {
      */
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    LikesRepository likesRepository;
 
 
     /**
@@ -104,6 +109,18 @@ public class FlatService {
 
         flatRepository.save(newFlat);
 
+        return true;
+    }
+
+    public boolean setLike(long id_from, long id_to){
+        Likes like = new Likes();
+        like.setUser(userRepository.findById(id_from).orElseThrow(
+                () -> { throw new UserNotFoundExeption(); }
+        ));
+        like.setFlat(flatRepository.findById(id_to).orElseThrow(
+                () -> { throw new UserNotFoundExeption(); }
+        ));
+        likesRepository.save(like);
         return true;
     }
 }
