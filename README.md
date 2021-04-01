@@ -54,19 +54,20 @@
 ## 3. Зависимости проекта (Java версия)
 - [spring-boot-starter-web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
 - [spring-boot-starter-tomcat](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat)
-- [spring-data-jpa](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa)
-- [lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
-- [postgresql](https://mvnrepository.com/artifact/org.postgresql/postgresql)
+- [spring-data-jpa](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa)  ```ver: 2.4.3```
+- [lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)  ```ver: 1.18.18```
+- [javax.persistence-api](https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api)  ```ver: 2.2```
+- [postgresql](https://mvnrepository.com/artifact/org.postgresql/postgresql)  ```ver: 42.2.18```
 - [spring-boot-starter](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter)
 - [spring-boot-starter-data-jpa](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa)
 - [spring-boot-devtools](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools)
 - [spring-boot-starter-test](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test)
-- [junit](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api)
-- [json](https://mvnrepository.com/artifact/org.json/json)
-- [jjwt](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt)
-- [mockito-core](https://mvnrepository.com/artifact/org.mockito/mockito-core)
+- [junit](https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api)  ```ver: 4.13.1```
+- [json](https://mvnrepository.com/artifact/org.json/json)  ```ver: 20201115```
+- [jjwt](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt)  ```ver: 0.9.1```
+- [mockito-core](https://mvnrepository.com/artifact/org.mockito/mockito-core)  ```ver: 3.6.28```
 - [spring-boot-starter-security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
-- [spring-test](https://mvnrepository.com/artifact/org.springframework/spring-test)
+- [spring-test](https://mvnrepository.com/artifact/org.springframework/spring-test)  ```ver: 5.3.4```
 
 ## 4. Зависимости проекта (React версия)
 - testing-library/react ```ver: ^5.11.9```
