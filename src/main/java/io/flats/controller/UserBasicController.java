@@ -4,6 +4,7 @@ import io.flats.JWT_AUTH.dto.UserDto;
 import io.flats.JWT_AUTH.jwt.JwtUser;
 import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
+import io.flats.dto.BasicResponce;
 import io.flats.dto.UserProfileImageUrlDto;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
@@ -112,5 +113,12 @@ public class UserBasicController {
         userResponce.setPhoneNumber(user.getPhoneNumber());
 
         return ResponseEntity.ok(userResponce);
+    }
+
+    @RequestMapping("set_like")
+    public ResponseEntity<BasicResponce> setLike(@RequestParam long id){
+        //TODO:
+
+        return null;
     }
 }

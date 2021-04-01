@@ -69,4 +69,9 @@ public class Flat extends BaseEntity {
      */
     @OneToMany(mappedBy="flat")
     protected List<FlatsImages> flatsImages;
+
+    //TODO: продумать название таблицы
+    @OneToMany(mappedBy="flat")
+    protected List<Likes> flatsLikes;
+
 }
