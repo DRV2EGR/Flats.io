@@ -12,9 +12,29 @@
 
 
 
-### Flats.io - сайт по продаже _недвижимого_ имущества
+## Flats.io - сайт по продаже _недвижимого_ имущества
+<br>
 
-#### 1. Зависимости проекта (Java версия)
+## 1. Для запуска проекта: 
+```Необходима версия java >= 15```
+
+    1. Скачать репозиторий проекта
+    2. Перейти в папку target
+    3. Выполнить команду java -jar <имя собранного jar файла>
+
+## 1. Для сборки проекта необходимо: 
+```Необходима версия java >= 15, Apache Maven версия >= 3.6.3```
+
+    1. Скачать репозиторий проекта
+      1.1 Обращаем ваше внимание, что проект состоит из 2х подпроектов
+        1.1.1 Backend Java Spring
+        1.1.2 ReactJs
+    2. Запустить проект в вашей IDE
+    3. Скачать и применить все зависимости проекта для Maven
+    4. Запустить команду mvn clean install
+    5. В папке target выполнить команду java -jar <имя собранного jar файла>
+
+#### 2. Зависимости проекта (Java версия)
 - [spring-boot-starter-web](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web)
 - [spring-boot-starter-tomcat](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat)
 - [spring-data-jpa](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa)
