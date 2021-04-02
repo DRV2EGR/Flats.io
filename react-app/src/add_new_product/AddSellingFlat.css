@@ -1,0 +1,76 @@
+/**{*/
+/*    font-family: Areal;*/
+/*}*/
+
+.b-container{
+    width:200px;
+    height:150px;
+    background-color: #ccc;
+    margin:0px auto;
+    padding:10px;
+    font-size:30px;
+    color: #fff;
+}
+
+.b-popup{
+    width:100%;
+    min-height:100%;
+    background-color: rgba(0,0,0,0.1);
+    overflow:hidden;
+    position:fixed;
+    top:0px;
+
+    z-index: 50;
+}
+
+.b-popup .b-popup-content{
+    /*position: absolute;*/
+
+    margin:40px auto 0px auto;
+    width:80%;
+    height: 80%;
+    padding:10px;
+    background-color: #ffffff;
+    border-radius:5px;
+    box-shadow: 0px 0px 10px #000;
+
+    animation-duration: 0.4s;
+    animation-name: slidein;
+}
+
+.b-popup-hidden {
+    width:100%;
+    min-height:100%;
+    background-color: rgba(0,0,0,0.1);
+    overflow:hidden;
+    position:fixed;
+    top:0px;
+
+    animation-duration: 0.4s;
+    animation-name: slidein-reverse;
+
+    display: none;
+
+}
+
+@keyframes slidein {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes slidein-reverse {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(0);
+        display: none;
+    }
+}
+

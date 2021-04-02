@@ -1,4 +1,4 @@
-import './App.css';
+
 import React, {Component, useRef} from 'react';
 import Cookies from "universal-cookie";
 import {withCookies} from "react-cookie";

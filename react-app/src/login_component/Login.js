@@ -98,7 +98,7 @@ class Login extends Component {
 
         //const [token, setToken] = useState();
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
