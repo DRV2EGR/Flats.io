@@ -130,134 +130,63 @@ class AddSellingFlat extends Component {
     }
 
     async handleSubmission() {
-        //console.log(this.state);
-        /*for (const file of this.state.files) {
-            let xhr = new XMLHttpRequest();
-            //console.log(file);
-            xhr.open('POST', 'https://api.cloudinary.com/v1_1/drv2vna/upload');
-
-            xhr.onload = await (async (e) => {
-                //await console.log(xhr.readyState);
-                //await console.log(xhr.status);
-                //await console.log(this.state.file_urls);
-                //await console.log(xhr.responseText);
-
-                //let resp = await JSON.parse(xhr.responseText);
-                await this.state.file_urls.push(JSON.parse(xhr.responseText).secure_url);
-            });
-
-            let formData = new FormData();
+        const FIELD = 'secure_url';
+        const PROMISES = await this.state.files.map(file => {
+            const formData = new FormData();
             formData.append('file', file);
-            //(this.state.files[i])
-            // console.log(i + ' - ' + this.state.files[i])
             formData.append('upload_preset', 'fxqt4ulu');
 
-            await xhr.send(formData);
-        }*/
+            return fetch('https://api.cloudinary.com/v1_1/drv2vna/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => data[FIELD]);
+        });
 
-        const PROMISES = await this.state.files.map(file => new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            //console.log(file);
-            xhr.open('POST', 'https://api.cloudinary.com/v1_1/drv2vna/upload');
+        Promise.all(PROMISES)
+        .then(file_urls => this.setState({ file_urls: file_urls}))
+        .then(() => {
+            const cookies = new Cookies();
 
-            xhr.onload = (e) => {
-                resolve(xhr.responseText);
+            const {country, town, street, houseNom, floor, price, description} = this.state;
+
+            const USERNAME = cookies.get('username');
+            const flatsImages = this.state.file_urls;
+            let forSale = false;
+            let forRent = false;
+
+            if (this.state.variant == "Выставить на продажу") {
+                forSale = true;
+            } else if (this.state.variant == "Сдать в аренду") {
+                forRent = true;
+            }
+
+            const credentials = {
+                country,
+                town,
+                street,
+                houseNom,
+                floor,
+                price,
+                description,
+                forSale,
+                forRent,
+                USERNAME,
+                flatsImages
             };
 
-            let formData = new FormData();
-            formData.append('file', file);
-            //(this.state.files[i])
-            // console.log(i + ' - ' + this.state.files[i])
-            formData.append('upload_preset', 'fxqt4ulu');
-
-            xhr.send(formData);
-        }));
-
-        await console.log(PROMISES);
-
-        const file_urls = [];
-        let i = 0;
-
-        await Promise.all(PROMISES)
-            .then(async (result) => {
-                await result.map(res => file_urls.push(JSON.parse(res).secure_url))
+            fetch('/api/flats/add_flat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + cookies.get('accessToken')
+                },
+                body: JSON.stringify(credentials)
             })
-            .then(() => this.setState({ file_urls: file_urls}));
-
-        //await console.log('file_urls', await this.state.file_urls);
-
-        const cookies = new Cookies();
-
-        let {country, town, street, houseNom, floor, price, description} = await this.state;
-
-        let username = cookies.get('username');
-        let flatsImages = await this.state.file_urls;
-
-        //await console.log('flatsImages', flatsImages);
-
-        // const test = {}; // Object
-        // test.a = 'test';
-        // test.b = []; // Array
-        // test.b.push('item');
-        // test.b.push('item2');
-        // test.b.push('item3');
-        // test.b.item4 = "A value"; // Ignored by JSON.stringify
-        // const json = JSON.stringify(test);
-        // console.log(json);
-
-        let forSale = false;
-        let forRent = false;
-
-        if (this.state.variant == "Выставить на продажу") {
-            forSale = true;
-        } else if (this.state.variant == "Сдать в аренду") {
-            forRent = true;
-        }
-
-        // console.log(this.state.file_urls);
-
-        //await console.log('data', credentials);
-        await console.log('flatsImages', flatsImages);
-
-        //await console.log(flatStrings);
-
-        let credentials = {
-            country,
-            town,
-            street,
-            houseNom,
-            floor,
-            price,
-            description,
-            forSale,
-            forRent,
-            username,
-            flatsImages
-        };
-
-        //await console.log('credentials', credentials);
-
-        let _credentials = await JSON.stringify(credentials);
-        await console.log('OLD CRED', credentials);
-        await console.log('CREDENTIALS', _credentials);
-
-        //await console.log(JSON.stringify(flatsImages));
-
-        //await console.log('before fetch\n', _credentials);
-
-        //const cookies = new Cookies();
-        let a = cookies.get('accessToken');
-
-        await fetch('/api/flats/add_flat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + a
-            },
-            body: _credentials
-        })
-        .then(data => data.json())
-        .then(result => this.setState({res: result.username}))
+                .then(data => data.json())
+                .then(result => this.setState({res: result.username}))
+        });
     }
 
     // // Обработка файлов в файлохранилище
@@ -340,75 +269,75 @@ class AddSellingFlat extends Component {
     //
     // }
 
-    doCompleteFetch() {
-
-        // "country":"TestCountry",
-        // "town":"TestTown",
-        // "street":"моя улица",
-        // "houseNom":25,
-        // "floor":7,
-        // "price":8520000,
-        // "description":"оыыщуаоыщуащыущашыащшыуоащыоуащшыоущаоытумшмшаыиураиуаишыуми",
-        // "ForSale":true,
-        // "ForRent":false,
-        // "username":"john_the_admin"
-        // "flatsImages": [
-        //     "1",
-        //     "2",
-        //     "3"
-        // ]
-
-        console.log(this.state.file_urls);
-
-        const cookies = new Cookies();
-
-        let country = this.state.country;
-        let town = this.state.town;
-        let street = this.state.street;
-        let houseNom = this.state.houseNom;
-        let floor = this.state.floor;
-        let price = this.state.price;
-        let description = this.state.description;
-
-        let username = cookies.get('username');
-        let flatsImages = this.state.file_urls;
-
-        // const test = {}; // Object
-        // test.a = 'test';
-        // test.b = []; // Array
-        // test.b.push('item');
-        // test.b.push('item2');
-        // test.b.push('item3');
-        // test.b.item4 = "A value"; // Ignored by JSON.stringify
-        // const json = JSON.stringify(test);
-        // console.log(json);
-
-        let forSale = false;
-        let forRent = false;
-
-        if (this.state.variant == "Выставить на продажу") {
-            forSale = true;
-        } else if (this.state.variant == "Сдать в аренду") {
-            forRent = true;
-        }
-
-        // console.log(this.state.file_urls);
-        const token = this.sendRequestToPostOrder({
-            country,
-            town,
-            street,
-            houseNom,
-            floor,
-            price,
-            description,
-            forSale,
-            forRent,
-            username,
-            flatsImages
-        }).then(result => {
-            this.setState({res: result.username})
-        })
-    }
+    // doCompleteFetch() {
+    //
+    //     // "country":"TestCountry",
+    //     // "town":"TestTown",
+    //     // "street":"моя улица",
+    //     // "houseNom":25,
+    //     // "floor":7,
+    //     // "price":8520000,
+    //     // "description":"оыыщуаоыщуащыущашыащшыуоащыоуащшыоущаоытумшмшаыиураиуаишыуми",
+    //     // "ForSale":true,
+    //     // "ForRent":false,
+    //     // "username":"john_the_admin"
+    //     // "flatsImages": [
+    //     //     "1",
+    //     //     "2",
+    //     //     "3"
+    //     // ]
+    //
+    //     console.log(this.state.file_urls);
+    //
+    //     const cookies = new Cookies();
+    //
+    //     let country = this.state.country;
+    //     let town = this.state.town;
+    //     let street = this.state.street;
+    //     let houseNom = this.state.houseNom;
+    //     let floor = this.state.floor;
+    //     let price = this.state.price;
+    //     let description = this.state.description;
+    //
+    //     let username = cookies.get('username');
+    //     let flatsImages = this.state.file_urls;
+    //
+    //     // const test = {}; // Object
+    //     // test.a = 'test';
+    //     // test.b = []; // Array
+    //     // test.b.push('item');
+    //     // test.b.push('item2');
+    //     // test.b.push('item3');
+    //     // test.b.item4 = "A value"; // Ignored by JSON.stringify
+    //     // const json = JSON.stringify(test);
+    //     // console.log(json);
+    //
+    //     let forSale = false;
+    //     let forRent = false;
+    //
+    //     if (this.state.variant == "Выставить на продажу") {
+    //         forSale = true;
+    //     } else if (this.state.variant == "Сдать в аренду") {
+    //         forRent = true;
+    //     }
+    //
+    //     // console.log(this.state.file_urls);
+    //     const token = this.sendRequestToPostOrder({
+    //         country,
+    //         town,
+    //         street,
+    //         houseNom,
+    //         floor,
+    //         price,
+    //         description,
+    //         forSale,
+    //         forRent,
+    //         username,
+    //         flatsImages
+    //     }).then(result => {
+    //         this.setState({res: result.username})
+    //     })
+    // }
 
     render() {
         const {classes} = this.props;
@@ -431,7 +360,6 @@ class AddSellingFlat extends Component {
                         <Typography variant='h6'>Введите адрес</Typography>
                         <AddressSuggestions token="a18978f22558055e59462541d6f1d382ea5bee9a"
                                             value="Введите адрес"
-
                                             onChange={this.onChangeAdress}/>
                         {/*<TextField*/}
                         {/*    id="standard-textarea"*/}
