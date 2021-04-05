@@ -117,9 +117,20 @@ public class FlatService {
                 });
         newFlat.setOwner(currentUser);
 
+
+
         //TODO: проверка на то, что такая квартира уже существует
 
         flatRepository.save(newFlat);
+
+//        System.out.println(newFlat.getId());
+
+        for (String image: newFlatDao.getFlatsImages()) {
+            FlatsImages fi = new FlatsImages();
+            fi.setImgUrl(image);
+            fi.setFlat(findFlatById(newFlat.getId()));
+            flatsImagesRepository.save(fi);
+        }
 
         return true;
     }

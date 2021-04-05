@@ -1,5 +1,8 @@
 package io.flats.payload;
 
+import java.util.List;
+
+import io.flats.entity.FlatsImages;
 import io.flats.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,15 +48,19 @@ public class FlatDtoPayload {
 
     protected boolean forRent;
 
+
+
     /**
      * The User id.
      */
 //TODO: исправить на получение юзверя из авторизации
     protected String username;
 
+    protected List<String> flatsImages;
+
     public FlatDtoPayload(String country, String town, String street, int houseNom,
-                          int floor, float price, String description,
-                          boolean forSale, boolean forRent, String username) {
+                          int floor, float price, String description, boolean forSale,
+                          boolean forRent, String username, List<String> flatsImages) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -64,5 +71,6 @@ public class FlatDtoPayload {
         this.forSale = forSale;
         this.forRent = forRent;
         this.username = username;
+        this.flatsImages = flatsImages;
     }
 }
