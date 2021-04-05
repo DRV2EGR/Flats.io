@@ -87,6 +87,20 @@ class AddSellingFlat extends Component {
         this.setState({ address });
     };
 
+    sendRequestToPostOrder(credentials) { //credentials as param
+        //console.log(JSON.stringify(credentials));
+
+        let data = '';
+        return fetch('/api/flats/add_flat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+            .then(data => data.json())
+    }
+
     // Обработка файлов в файлохранилище
     handleSubmission = () => {
         for (let i = 0; i < this.state.files.length; i++) {
@@ -102,31 +116,22 @@ class AddSellingFlat extends Component {
 
             let formData = new FormData();
             formData.append('file', this.state.files[i]);
-            console.log(i + ' - ' + this.state.files[i])
+            // console.log(i + ' - ' + this.state.files[i])
             formData.append('upload_preset', 'docs_upload_example_us_preset');
 
             xhr.send(formData);
-
-            // let formData = new FormData();
-            //
-            // formData.append('File', this.state.files[i]);
-            // console.log(formData[i])
-            //
-            //
-            // fetch(
-            //     'https://cors-anywhere.herokuapp.com/http://freeimage.host/api/1/upload/?key=6d207e02198a847aa98d0a2a901485a5&source=' + this.state.source + '&format=json',
-            //     {
-            //         method: 'GET',
-            //     }
-            // )
-            //     .then((response) => response.json())
-            //     .then((result) => {
-            //         console.log('Success:', result);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //     });
         }
+
+            // "country":"TestCountry",
+            // "town":"TestTown",
+            // "street":"моя улица",
+            // "houseNom":25,
+            // "floor":7,
+            // "price":8520000,
+            // "description":"оыыщуаоыщуащыущашыащшыуоащыоуащшыоущаоытумшмшаыиураиуаишыуми",
+            // "ForSale":true,
+            // "ForRent":false,
+            // "username":"john_the_admin"
     };
 
     render() {
