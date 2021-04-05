@@ -23,13 +23,15 @@ import CurrencyInput from 'react-currency-input-field';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 import './UploadPhotoComponent'
 
-import { AddressSuggestions } from 'react-dadata';
+import {AddressSuggestions} from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 
-import { green, purple } from '@material-ui/core/colors';
+import {green, purple} from '@material-ui/core/colors';
 import UploadPhotoComponent from "./UploadPhotoComponent";
 import {DropzoneArea} from "material-ui-dropzone";
+import Cookies from "universal-cookie";
 
+import NumericInput from 'react-numeric-input';
 
 const useStyles = (theme) => ({
     margin: {
@@ -46,6 +48,11 @@ const useStyles = (theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    floor: {
+        height: '50px',
+        width: '150px',
+        fontSize: 'xx-large',
+    }
 });
 
 class AddSellingFlat extends Component {
@@ -65,6 +72,10 @@ class AddSellingFlat extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleReset = this.handleReset.bind(this);
 
+        this.onChangeAdress = this.onChangeAdress.bind(this);
+
+        this.handleSubmission = this.handleSubmission.bind(this);
+        this.doCompleteFetch = this.doCompleteFetch.bind(this);
     }
 
     handleChoseVariantSale() {
@@ -84,96 +95,372 @@ class AddSellingFlat extends Component {
     }
 
     handleChange = address => {
-        this.setState({ address });
+        this.setState({address});
     };
 
-    sendRequestToPostOrder(credentials) { //credentials as param
-        //console.log(JSON.stringify(credentials));
+    // async sendRequestToPostOrder(credentials) { //credentials as param
+    //     await console.log('data', credentials);
+    //     const _credentials = await JSON.stringify(credentials);
+    //     console.log(_credentials);
+    //
+    //     const cookies = new Cookies();
+    //     let a = cookies.get('accessToken');
+    //
+    //     let data = '';
+    //     return await fetch('/api/flats/add_flat', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + a
+    //         },
+    //         body: _credentials
+    //     })
+    //         .then(data => data.json())
+    // }
 
-        let data = '';
-        return fetch('/api/flats/add_flat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(credentials)
-        })
-            .then(data => data.json())
+    onChangeAdress(suggestion) {
+        // console.log(suggestion);
+        this.setState({
+            country: suggestion.data.country,
+            town: suggestion.data.city,
+            street: suggestion.data.street,
+            houseNom: suggestion.data.house
+            //TODO: добавить корпуса и прочее
+        });
     }
 
-    // Обработка файлов в файлохранилище
-    handleSubmission = () => {
-        for (let i = 0; i < this.state.files.length; i++) {
-
+    async handleSubmission() {
+        //console.log(this.state);
+        /*for (const file of this.state.files) {
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://api.cloudinary.com/v1_1/demo/image/upload');
+            //console.log(file);
+            xhr.open('POST', 'https://api.cloudinary.com/v1_1/drv2vna/upload');
 
+            xhr.onload = await (async (e) => {
+                //await console.log(xhr.readyState);
+                //await console.log(xhr.status);
+                //await console.log(this.state.file_urls);
+                //await console.log(xhr.responseText);
 
-            xhr.onload = () => {
-                let resp = JSON.parse(xhr.responseText);
-                this.state.file_urls.push(resp.secure_url)
+                //let resp = await JSON.parse(xhr.responseText);
+                await this.state.file_urls.push(JSON.parse(xhr.responseText).secure_url);
+            });
+
+            let formData = new FormData();
+            formData.append('file', file);
+            //(this.state.files[i])
+            // console.log(i + ' - ' + this.state.files[i])
+            formData.append('upload_preset', 'fxqt4ulu');
+
+            await xhr.send(formData);
+        }*/
+
+        const PROMISES = await this.state.files.map(file => new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            //console.log(file);
+            xhr.open('POST', 'https://api.cloudinary.com/v1_1/drv2vna/upload');
+
+            xhr.onload = (e) => {
+                resolve(xhr.responseText);
             };
 
             let formData = new FormData();
-            formData.append('file', this.state.files[i]);
+            formData.append('file', file);
+            //(this.state.files[i])
             // console.log(i + ' - ' + this.state.files[i])
-            formData.append('upload_preset', 'docs_upload_example_us_preset');
+            formData.append('upload_preset', 'fxqt4ulu');
 
             xhr.send(formData);
+        }));
+
+        await console.log(PROMISES);
+
+        const file_urls = [];
+        let i = 0;
+
+        await Promise.all(PROMISES)
+            .then(async (result) => {
+                await result.map(res => file_urls.push(JSON.parse(res).secure_url))
+            })
+            .then(() => this.setState({ file_urls: file_urls}));
+
+        //await console.log('file_urls', await this.state.file_urls);
+
+        const cookies = new Cookies();
+
+        let {country, town, street, houseNom, floor, price, description} = await this.state;
+
+        let username = cookies.get('username');
+        let flatsImages = await this.state.file_urls;
+
+        //await console.log('flatsImages', flatsImages);
+
+        // const test = {}; // Object
+        // test.a = 'test';
+        // test.b = []; // Array
+        // test.b.push('item');
+        // test.b.push('item2');
+        // test.b.push('item3');
+        // test.b.item4 = "A value"; // Ignored by JSON.stringify
+        // const json = JSON.stringify(test);
+        // console.log(json);
+
+        let forSale = false;
+        let forRent = false;
+
+        if (this.state.variant == "Выставить на продажу") {
+            forSale = true;
+        } else if (this.state.variant == "Сдать в аренду") {
+            forRent = true;
         }
 
-            // "country":"TestCountry",
-            // "town":"TestTown",
-            // "street":"моя улица",
-            // "houseNom":25,
-            // "floor":7,
-            // "price":8520000,
-            // "description":"оыыщуаоыщуащыущашыащшыуоащыоуащшыоущаоытумшмшаыиураиуаишыуми",
-            // "ForSale":true,
-            // "ForRent":false,
-            // "username":"john_the_admin"
-    };
+        // console.log(this.state.file_urls);
+
+        //await console.log('data', credentials);
+        await console.log('flatsImages', flatsImages);
+
+        //await console.log(flatStrings);
+
+        let credentials = {
+            country,
+            town,
+            street,
+            houseNom,
+            floor,
+            price,
+            description,
+            forSale,
+            forRent,
+            username,
+            flatsImages
+        };
+
+        //await console.log('credentials', credentials);
+
+        let _credentials = await JSON.stringify(credentials);
+        await console.log('OLD CRED', credentials);
+        await console.log('CREDENTIALS', _credentials);
+
+        //await console.log(JSON.stringify(flatsImages));
+
+        //await console.log('before fetch\n', _credentials);
+
+        //const cookies = new Cookies();
+        let a = cookies.get('accessToken');
+
+        await fetch('/api/flats/add_flat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + a
+            },
+            body: _credentials
+        })
+        .then(data => data.json())
+        .then(result => this.setState({res: result.username}))
+    }
+
+    // // Обработка файлов в файлохранилище
+    // async _handleSubmission() {
+    //     //for (let i = 0; i < this.state.files.length; i++) {
+    //     for await (const file of this.state.files) {
+    //         let xhr = await new XMLHttpRequest();
+    //         // xhr.addEventListener('load', () => {
+    //         //     // update the state of the component with the result here
+    //         //     let resp = JSON.parse(xhr.responseText);
+    //         //     this.state.file_urls.push(resp.secure_url);
+    //         // })
+    //
+    //         await xhr.open('POST', 'https://api.cloudinary.com/v1_1/drv2vna/upload');
+    //
+    //         xhr.onload = async () => {
+    //             let resp = await JSON.parse(xhr.responseText);
+    //             await this.state.file_urls.push(resp.secure_url);
+    //         };
+    //
+    //         let formData = await new FormData();
+    //         await formData.append('file', file);
+    //         //(this.state.files[i])
+    //         // console.log(i + ' - ' + this.state.files[i])
+    //         await formData.append('upload_preset', 'fxqt4ulu');
+    //
+    //         await xhr.send(formData);
+    //     }
+    //
+    //     console.log(this.state.file_urls);
+    //
+    //     const cookies = new Cookies();
+    //
+    //     // let country=this.state.country;
+    //     // let town=this.state.town;
+    //     // let street=this.state.street;
+    //     // let houseNom=this.state.houseNom;
+    //     // let floor=this.state.floor;
+    //     // let price=this.state.price;
+    //     // let description=this.state.description;
+    //
+    //     let {country,town,street,houseNom,floor,price,description} = this.state;
+    //
+    //     let username=cookies.get('username');
+    //     let flatsImages=this.state.file_urls;
+    //
+    //     // const test = {}; // Object
+    //     // test.a = 'test';
+    //     // test.b = []; // Array
+    //     // test.b.push('item');
+    //     // test.b.push('item2');
+    //     // test.b.push('item3');
+    //     // test.b.item4 = "A value"; // Ignored by JSON.stringify
+    //     // const json = JSON.stringify(test);
+    //     // console.log(json);
+    //
+    //     let forSale = false;
+    //     let forRent = false;
+    //
+    //     if (this.state.variant == "Выставить на продажу") {
+    //         forSale = true;
+    //     } else if (this.state.variant == "Сдать в аренду") {
+    //         forRent = true;
+    //     }
+    //
+    //     // console.log(this.state.file_urls);
+    //     const token = await this.sendRequestToPostOrder({
+    //         country,
+    //         town,
+    //         street,
+    //         houseNom,
+    //         floor,
+    //         price,
+    //         description,
+    //         forSale,
+    //         forRent,
+    //         username,
+    //         flatsImages
+    //     }).then(result => {this.setState({res : result.username} ) } )
+    //
+    // }
+
+    doCompleteFetch() {
+
+        // "country":"TestCountry",
+        // "town":"TestTown",
+        // "street":"моя улица",
+        // "houseNom":25,
+        // "floor":7,
+        // "price":8520000,
+        // "description":"оыыщуаоыщуащыущашыащшыуоащыоуащшыоущаоытумшмшаыиураиуаишыуми",
+        // "ForSale":true,
+        // "ForRent":false,
+        // "username":"john_the_admin"
+        // "flatsImages": [
+        //     "1",
+        //     "2",
+        //     "3"
+        // ]
+
+        console.log(this.state.file_urls);
+
+        const cookies = new Cookies();
+
+        let country = this.state.country;
+        let town = this.state.town;
+        let street = this.state.street;
+        let houseNom = this.state.houseNom;
+        let floor = this.state.floor;
+        let price = this.state.price;
+        let description = this.state.description;
+
+        let username = cookies.get('username');
+        let flatsImages = this.state.file_urls;
+
+        // const test = {}; // Object
+        // test.a = 'test';
+        // test.b = []; // Array
+        // test.b.push('item');
+        // test.b.push('item2');
+        // test.b.push('item3');
+        // test.b.item4 = "A value"; // Ignored by JSON.stringify
+        // const json = JSON.stringify(test);
+        // console.log(json);
+
+        let forSale = false;
+        let forRent = false;
+
+        if (this.state.variant == "Выставить на продажу") {
+            forSale = true;
+        } else if (this.state.variant == "Сдать в аренду") {
+            forRent = true;
+        }
+
+        // console.log(this.state.file_urls);
+        const token = this.sendRequestToPostOrder({
+            country,
+            town,
+            street,
+            houseNom,
+            floor,
+            price,
+            description,
+            forSale,
+            forRent,
+            username,
+            flatsImages
+        }).then(result => {
+            this.setState({res: result.username})
+        })
+    }
 
     render() {
-        const { classes } = this.props;
-        const { currentChoseMenuStyle } = this.state;
-        const { variant } = this.state;
+        const {classes} = this.props;
+        const {currentChoseMenuStyle} = this.state;
+        const {variant} = this.state;
 
         return (
             <div>
-                <Header />
+                <Header/>
 
                 {/*<div className='b-container'>*/}
                 {/*    Sample Text*/}
                 {/*</div>*/}
-                <Container  maxWidth="false"  >
+                <Container maxWidth="false">
                     <form className={classes.form} noValidate>
                         <Typography variant='h2'>{variant}</Typography>
 
-                        <br />
+                        <br/>
 
-                        <Typography variant='h5'>Введите адрес</Typography>
+                        <Typography variant='h6'>Введите адрес</Typography>
                         <AddressSuggestions token="a18978f22558055e59462541d6f1d382ea5bee9a"
                                             value="Введите адрес"
-                                            onChange={ (suggestion) => console.log(suggestion) } />
-                        <TextField
+
+                                            onChange={this.onChangeAdress}/>
+                        {/*<TextField*/}
+                        {/*    id="standard-textarea"*/}
+                        {/*    label="Этаж"*/}
+                        {/*    onChange={this._handleChangeFloor}*/}
+                        {/*    placeholder="Введите этаж"*/}
+                        {/*/>*/}
+
+                        <br/>
+                        <NumericInput
                             id="standard-textarea"
                             label="Этаж"
                             placeholder="Введите этаж"
+                            className={classes.floor}
+                            onChange={(event, value) => this.setState({floor: value})}
                         />
 
-                        <br />
-                        <br />
-                            {/*<Typography variant="subtitle1" gutterBottom={true}>GBP £</Typography>*/}
-                            <CurrencyTextField
-                                label="Цена"
-                                variant="outlined"
-                                placeholder="Введите стоимость"
-                                currencySymbol="Руб"
-                                onChange={(event, value)=> console.log(value)}
-                            />
+                        <br/>
+                        <br/>
+                        {/*<Typography variant="subtitle1" gutterBottom={true}>GBP £</Typography>*/}
+                        <CurrencyTextField
+                            label="Цена"
+                            variant="outlined"
+                            placeholder="Введите стоимость"
+                            currencySymbol="Руб"
+                            onChange={(event, value) => this.setState({price: value})}
+                        />
 
-                        <br /><br /><br />
+                        <br/><br/><br/>
                         <TextField
                             id="outlined-textarea"
                             label="Описание"
@@ -181,15 +468,18 @@ class AddSellingFlat extends Component {
                             fullWidth
                             placeholder="Введите описание квартиры"
                             variant="outlined"
+                            onChange={(e) => this.setState({description: e.target.value})}
                         />
 
-                        <br />
-                        <br />
+                        <br/>
+                        <br/>
                         <DropzoneArea
                             acceptedFiles={['image/*']}
                             dropzoneText={"Перетащите сюда изображения или нажмите для выбора"}
                             filesLimit={15}
-                            onChange={(image) => {this.setState({files:image});}}
+                            onChange={(images) => {
+                                this.setState({files: images});
+                            }}
                         />
 
                         <Grid container justify="center" spacing={2}>
@@ -208,19 +498,21 @@ class AddSellingFlat extends Component {
                 </Container>
 
                 {/* Всплывающее окно */}
-                <div className={currentChoseMenuStyle} >
+                <div className={currentChoseMenuStyle}>
                     <div className='b-popup-content'>
                         {/*Text in Popup*/}
                         <div className='intrance-form'>
                             <Grid container justify="center" spacing={2}>
                                 <Typography variant="h3">Выберите тип объявления:</Typography>
                                 <Grid container justify="center" spacing={2}>
-                                    <Fab variant="extended" color="#ffffff" aria-label="add" className={classes.margin} onClick={this.handleChoseVariantSale}>
-                                        <NavigationIcon className={classes.extendedIcon} />
+                                    <Fab variant="extended" color="#ffffff" aria-label="add" className={classes.margin}
+                                         onClick={this.handleChoseVariantSale}>
+                                        <NavigationIcon className={classes.extendedIcon}/>
                                         Выставить на продажу
                                     </Fab>
-                                    <Fab variant="extended" color="primary" aria-label="add" className={classes.margin} onClick={this.handleChoseVariantSRent}>
-                                        <NavigationIcon className={classes.extendedIcon} />
+                                    <Fab variant="extended" color="primary" aria-label="add" className={classes.margin}
+                                         onClick={this.handleChoseVariantSRent}>
+                                        <NavigationIcon className={classes.extendedIcon}/>
                                         Сдать в аренду
                                     </Fab>
                                 </Grid>
