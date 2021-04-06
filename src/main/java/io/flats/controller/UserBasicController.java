@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * The type User basic controller.
  */
 @Controller
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/public")
 public class UserBasicController {
     /**
      * The User repository.
