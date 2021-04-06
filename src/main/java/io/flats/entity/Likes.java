@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="likes")
+@Table(name ="flats_likes")
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)

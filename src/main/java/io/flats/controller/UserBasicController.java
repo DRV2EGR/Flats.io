@@ -119,7 +119,7 @@ public class UserBasicController {
         return ResponseEntity.ok(userResponce);
     }
 
-    @PostMapping("set_like")
+    @PostMapping("set_like_to_flat")
     public ResponseEntity<BasicResponce> setLike(@RequestParam long id_to){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
