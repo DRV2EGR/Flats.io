@@ -23,7 +23,7 @@ class UserProfile extends Component {
 
         if (b) {
 
-        fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+        fetch('/api/user/public/get_user_img_url_by_username?username=' + b, {
             method: 'post',
             headers: new Headers({
                 'Authorization': 'Bearer ' + a,
@@ -33,7 +33,7 @@ class UserProfile extends Component {
         }).then(response => response.json())
             .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
 
-        fetch('/api/user/get_user_info', {
+        fetch('/api/user/public/get_user_info', {
             method: 'post',
             headers: new Headers({
                 'Authorization': 'Bearer ' + a,
