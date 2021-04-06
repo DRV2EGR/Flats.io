@@ -75,7 +75,6 @@ class AddSellingFlat extends Component {
         this.onChangeAdress = this.onChangeAdress.bind(this);
 
         this.handleSubmission = this.handleSubmission.bind(this);
-        this.doCompleteFetch = this.doCompleteFetch.bind(this);
     }
 
     handleChoseVariantSale() {
