@@ -96,7 +96,7 @@ class MainPage extends Component {
                     <AwesomeSlider animation="cubeAnimation">
                         {mappedImgs}
                     </AwesomeSlider>
-                    <a href={'flats/'+id}  className='main-a'>
+                    <a href={'flat/'+id}  className='main-a'>
                         <div className='my-div'>
                             <h3 className='font-weight-bold lead'>{price}</h3>
 
