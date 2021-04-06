@@ -13,6 +13,11 @@ class FlatPage extends Component {
     }
 
 
+    sayHello() {
+        let a = this.props.match.params.flatId;
+
+        return a;
+    }
 
 
     render() {
@@ -21,7 +26,7 @@ class FlatPage extends Component {
 
 
             <div>
-
+                {this.sayHello()}
             </div>
         );
     }
