@@ -68,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //.antMatchers(PUBLIC_USERS_ENDPOINT).permitAll()
                     .antMatchers(PRIVATE_USERS_ENDPOINT).hasAnyRole("ADMIN", "SELLER", "REALTOR")
                     .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                    .antMatchers("/api/flats/get_flat").permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
