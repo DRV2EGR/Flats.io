@@ -1,0 +1,88 @@
+.main-window-left {
+    margin-right: 8px;
+    width: calc(65% - 8px);
+
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+
+    background-color: rgba(255,255,255,0.2);
+
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.main-window-right {
+    width: 35%;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+
+    background-color: rgba(255,255,255,0.2);
+
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.container-main {
+    margin: 15px;
+    display: flex;
+}
+
+.price-container {
+    padding: 15px;
+
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.21;
+    color: #121212;
+}
+
+.rooms-container {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34px;
+}
+
+.description-container {
+    border-radius: 10px;
+    padding: 15px;
+    background-color: rgba(255,255,255,0.9);
+}
+
+.description-container p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: left;
+    white-space: pre-wrap;
+    color: black;
+}
+
+.show-phone-container {
+    align-content: center;
+    display: grid;
+}
+
+.show-phone {
+    border-radius: 40px;
+    padding: 10px;
+    align-content: center;
+
+    border: none;
+
+    background-color: #33a8db;
+}
+
+.show-phone:hover {
+    background-color: #2e6da2;
+}
+
+.phone-button-text {
+    font-weight: 700;
+    white-space: nowrap;
+    color: #fff;
+    border: none;
+}
