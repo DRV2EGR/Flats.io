@@ -162,6 +162,7 @@ class FlatPage extends Component {
                 <div className={main_container}>
 
                     <div className='main-window-left'>
+                        <span>вчера, 11:17</span>
                         <div className='rooms-container'>
                             n - комн. квартира, 56,4 м²
                         </div>
