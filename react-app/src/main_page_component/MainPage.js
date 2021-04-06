@@ -85,7 +85,7 @@ class MainPage extends Component {
 
 
             userList.push(
-                <div className='card col m-1'>
+                <div className='ocard m-md-auto'>
                     <AwesomeSlider animation="cubeAnimation">
                         {mappedImgs}
                     </AwesomeSlider>
@@ -121,7 +121,7 @@ class MainPage extends Component {
 
 
 
-                <div className='page-wrap d-flex flex-row align-items-center m-3'>
+                <div className='page-wrap d-flex flex-row align-items-center ml-lg-3'>
                     <div className='container'>
                         <div className='row'>
                                     {this.renderFlats()}
