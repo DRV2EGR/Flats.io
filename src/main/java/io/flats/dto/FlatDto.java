@@ -27,7 +27,7 @@ public class FlatDto {
     /**
      * The House nom.
      */
-    protected int houseNom;
+    protected String houseNom;
     /**
      * The Floor.
      */
@@ -57,7 +57,7 @@ public class FlatDto {
 
     protected long ownerID;
 
-    public FlatDto(String country, String town, String street, int houseNom,
+    public FlatDto(String country, String town, String street, String houseNom,
                    int floor, float price, String description, List<String> images, long id, String ownerUsername, long ownerID) {
         this.country = country;
         this.town = town;

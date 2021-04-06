@@ -28,7 +28,7 @@ public class FlatDtoPayload {
     /**
      * The House nom.
      */
-    protected int houseNom;
+    protected String houseNom;
     /**
      * The Floor.
      */
@@ -58,7 +58,7 @@ public class FlatDtoPayload {
 
     protected List<String> flatsImages;
 
-    public FlatDtoPayload(String country, String town, String street, int houseNom,
+    public FlatDtoPayload(String country, String town, String street, String houseNom,
                           int floor, float price, String description, boolean forSale,
                           boolean forRent, String username, List<String> flatsImages) {
         this.country = country;
