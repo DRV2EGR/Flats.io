@@ -1,1 +1,0 @@
-//TODO: AddRentFlat.js

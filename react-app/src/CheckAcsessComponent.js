@@ -30,7 +30,7 @@ class CheckAcsessComponent extends Component {
 
     checkPageForRedirectToLogin = () => {
         let current_location = window.location.pathname;
-        let protectedUrls = ['/user_profile', '/user_settings'];
+        let protectedUrls = ['/user_profile', '/user_settings', '/add_order'];
 
         if (protectedUrls.indexOf( current_location ) !== -1) {
             this.goToAuth();

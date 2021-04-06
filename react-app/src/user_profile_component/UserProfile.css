@@ -1,5 +1,5 @@
 body {
-    margin-top: 20px;
+    margin: 0 auto;
     background: url('../background74.jpg');
 }
 
@@ -227,10 +227,10 @@ a:hover, a:focus {
 
 
 
-a {
-    color: #0f3a88;
-    outline: none !important;
-}
+/*a {*/
+/*    color: #0f3a88;*/
+/*    outline: none !important;*/
+/*}*/
 
 a:hover,
 a:focus {

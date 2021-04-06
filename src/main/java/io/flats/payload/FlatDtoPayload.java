@@ -1,5 +1,8 @@
 package io.flats.payload;
 
+import java.util.List;
+
+import io.flats.entity.FlatsImages;
 import io.flats.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +28,7 @@ public class FlatDtoPayload {
     /**
      * The House nom.
      */
-    protected int houseNom;
+    protected String houseNom;
     /**
      * The Floor.
      */
@@ -41,27 +44,23 @@ public class FlatDtoPayload {
      */
     protected String description;
 
+    protected boolean forSale;
+
+    protected boolean forRent;
+
+
+
     /**
      * The User id.
      */
 //TODO: исправить на получение юзверя из авторизации
-    protected long userId;
+    protected String username;
 
-    /**
-     * Instantiates a new Flat dto payload.
-     *
-     * @param country     the country
-     * @param town        the town
-     * @param street      the street
-     * @param houseNom    the house nom
-     * @param floor       the floor
-     * @param price       the price
-     * @param description the description
-     * @param userId      the user id
-     */
-    public FlatDtoPayload(String country, String town, String street,
-                          int houseNom, int floor, float price,
-                          String description, long userId) {
+    protected List<String> flatsImages;
+
+    public FlatDtoPayload(String country, String town, String street, String houseNom,
+                          int floor, float price, String description, boolean forSale,
+                          boolean forRent, String username, List<String> flatsImages) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -69,6 +68,9 @@ public class FlatDtoPayload {
         this.floor = floor;
         this.price = price;
         this.description = description;
-        this.userId = userId;
+        this.forSale = forSale;
+        this.forRent = forRent;
+        this.username = username;
+        this.flatsImages = flatsImages;
     }
 }

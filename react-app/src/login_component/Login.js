@@ -98,7 +98,7 @@ class Login extends Component {
 
         //const [token, setToken] = useState();
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -250,7 +250,7 @@ class Login extends Component {
                                     label="Запомнить меня"
                                 />
                                 <Button
-                                    // type="submit"
+                                    type="submit"
                                     onClick={this.handleSubmit}
                                     fullWidth
                                     variant="contained"

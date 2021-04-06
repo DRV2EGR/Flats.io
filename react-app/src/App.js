@@ -5,11 +5,11 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainPage from "./main_page_component/MainPage";
-import Header from './Header';
 import Login from "./login_component/Login";
 import SignUP from "./login_component/SignUP";
 import UserProfile from "./user_profile_component/UserProfile";
 import {withRouter} from "react-router";
+import AddSellingFlat from "./add_new_product/AddSellingFlat";
 
 class App extends Component {
   render() {
@@ -23,6 +23,9 @@ class App extends Component {
               <Route exact path={'/signup'} component={SignUP}/>
 
               <Route exact path={'/user_profile'} component={UserProfile}/>
+
+              <Route exact path={'/add_order'} component={AddSellingFlat}/>
+
 
             {/*<Route exact path='/'>*/}
             {/*  <Header/>*/}

@@ -34,7 +34,7 @@ public class Flat extends BaseEntity {
     /**
      * The House nom.
      */
-    protected int houseNom;
+    protected String houseNom;
     /**
      * The Floor.
      */
