@@ -7,10 +7,15 @@ import React, {Component} from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 
+import Loader from 'react-loader-spinner';
+import LoadingIcons from 'react-loading-icons';
+
 import './MainPage.css';
 
 
 import Header from '../Header';
+
+import { Preloader, TailSpin } from 'react-preloader-icon';
 
 class MainPage extends Component {
     constructor(props) {
@@ -20,6 +25,7 @@ class MainPage extends Component {
         this.state = {
             flats: [],
             slideIndex: 1,
+            loading: true,
             //code: props.code ? props.code : '999',
             //description: props.description ? props.description : 'Unknown error'
         };
@@ -48,6 +54,7 @@ class MainPage extends Component {
         console.log(_flats);
         this.setState({ flats: [..._flats] });
 
+        this.setState({loading: false});
     }
 
 
@@ -102,11 +109,13 @@ class MainPage extends Component {
             );
         }
 
+
         return userList;
     }
 
     render() {
         const { flats } = this.state;
+        const { loading } = this.state;
 
         return (
             <div>
@@ -124,7 +133,16 @@ class MainPage extends Component {
                 <div className='page-wrap d-flex flex-row align-items-center ml-lg-3'>
                     <div className='container'>
                         <div className='row'>
-                                    {this.renderFlats()}
+                            {loading ? <div className='m-md-auto'><Preloader
+                                use={TailSpin}
+                                size={200}
+                                strokeWidth={6}
+                                strokeColor="#262626"
+                                duration={2000}
+                            /></div> : <div></div> }
+
+
+                            {this.renderFlats()}
                         </div>
                     </div>
                 </div>

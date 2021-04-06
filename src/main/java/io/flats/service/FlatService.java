@@ -82,7 +82,7 @@ public class FlatService {
         List<Flat> resArray = new ArrayList<>();
 
         for (int i = 1; i <= flatRepository.count(); ++i) {
-            Flat curFlat = flatRepository.findById(Long.valueOf(i)).orElseThrow(
+            Flat curFlat = flatRepository.findById((long) i).orElseThrow(
                     () -> { throw new NoSuchElementException("No such role found."); }
             );
 

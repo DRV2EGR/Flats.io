@@ -427,7 +427,9 @@ class AddSellingFlat extends Component {
                 {/* Всплывающее окно */}
                 <div className={currentChoseMenuStyle}>
                     <div className='b-popup-content'>
+
                         {/*Text in Popup*/}
+
                         <div className='intrance-form'>
                             <Grid container justify="center" spacing={2}>
                                 <Typography variant="h3">Выберите тип объявления:</Typography>
@@ -445,8 +447,11 @@ class AddSellingFlat extends Component {
                                 </Grid>
                             </Grid>
                         </div>
+
+                    {/*    POPUP END    */}
                     </div>
                 </div>
+
             </div>
         );
     }
