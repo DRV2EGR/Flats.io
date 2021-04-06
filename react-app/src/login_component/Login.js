@@ -250,7 +250,7 @@ class Login extends Component {
                                     label="Запомнить меня"
                                 />
                                 <Button
-                                    // type="submit"
+                                    type="submit"
                                     onClick={this.handleSubmit}
                                     fullWidth
                                     variant="contained"
