@@ -45,7 +45,7 @@ class CheckAcsessComponent extends Component {
             try {
                 console.log("DETECTED REFRESH");
 
-                fetch('/api/user/get_user_info', {
+                fetch('/api/user/public/get_user_info', {
                     method: 'post',
                     headers: new Headers({
                         'Authorization': 'Bearer ' + a,
@@ -90,7 +90,7 @@ class CheckAcsessComponent extends Component {
             try {
                 console.log("DETECTED ACCESS");
 
-                fetch('/api/user/get_user_info', {
+                fetch('/api/user/public/get_user_info', {
                     method: 'post',
                     headers: new Headers({
                         'Authorization': 'Bearer ' + a,

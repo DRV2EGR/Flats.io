@@ -10,6 +10,7 @@ import SignUP from "./login_component/SignUP";
 import UserProfile from "./user_profile_component/UserProfile";
 import {withRouter} from "react-router";
 import AddSellingFlat from "./add_new_product/AddSellingFlat";
+import FlatPage from "./flat_page_component/FlatPage";
 
 class App extends Component {
   render() {
@@ -25,6 +26,8 @@ class App extends Component {
               <Route exact path={'/user_profile'} component={UserProfile}/>
 
               <Route exact path={'/add_order'} component={AddSellingFlat}/>
+
+              <Route exact path='/flat/:flatId' component={FlatPage}/>
 
 
             {/*<Route exact path='/'>*/}

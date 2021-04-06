@@ -65,7 +65,7 @@ class Header extends Component {
 
             //console.log(b)
 
-            fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+            fetch('/api/user/public/get_user_img_url_by_username?username=' + b, {
                 method: 'post',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + a,

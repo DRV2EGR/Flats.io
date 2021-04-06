@@ -48,6 +48,7 @@ public class Flat extends BaseEntity {
     /**
      * The Description.
      */
+    @Column(columnDefinition="TEXT")
     protected String description;
 
     /**
