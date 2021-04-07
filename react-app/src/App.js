@@ -11,6 +11,7 @@ import UserProfile from "./user_profile_component/UserProfile";
 import {withRouter} from "react-router";
 import AddSellingFlat from "./add_new_product/AddSellingFlat";
 import FlatPage from "./flat_page_component/FlatPage";
+import RealtorsPage from "./rieltors_page_component/RealtorsPage";
 
 class App extends Component {
   render() {
@@ -28,6 +29,8 @@ class App extends Component {
               <Route exact path={'/add_order'} component={AddSellingFlat}/>
 
               <Route exact path='/flat/:flatId' component={FlatPage}/>
+
+              <Route exact path='/realtors' component={RealtorsPage}/>
 
 
             {/*<Route exact path='/'>*/}
