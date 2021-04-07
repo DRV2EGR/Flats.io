@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.AuthProvider;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type User basic controller.
@@ -112,5 +113,26 @@ public class UserBasicController {
         userResponce.setPhoneNumber(user.getPhoneNumber());
 
         return ResponseEntity.ok(userResponce);
+    }
+
+    @RequestMapping("/get_all_realtors")
+    public ResponseEntity<List<io.flats.dto.UserDto>> getAllRieltors() {
+        List<io.flats.dto.UserDto> responseDto = new ArrayList<>();
+
+        List<User> rieltors = userService.findAllRieltors();
+        for (User user : rieltors) {
+            io.flats.dto.UserDto userResponce = new io.flats.dto.UserDto();
+            userResponce.setUsername(user.getUsername());
+            userResponce.setEmail(user.getEmail());
+            userResponce.setFirstName(user.getFirstName());
+            userResponce.setLastName(user.getLastName());
+            userResponce.setRole(user.getRole().getName());
+            userResponce.setSecondName(user.getSecondName());
+            userResponce.setPhoneNumber(user.getPhoneNumber());
+
+            responseDto.add(userResponce);
+        }
+
+        return ResponseEntity.ok(responseDto);
     }
 }
