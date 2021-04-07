@@ -1,0 +1,16 @@
+.main-container {
+    margin: 0 auto;
+
+    background-color: #7bff00;
+}
+
+.realtor-container{
+    display: flex;
+
+    align-content: center;
+}
+
+.tap-realtor-peace {
+    width: 30%;
+    margin: 0 auto;
+}

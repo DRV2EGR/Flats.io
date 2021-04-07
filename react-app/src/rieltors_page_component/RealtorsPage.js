@@ -1,6 +1,8 @@
 //ToDo: RealtorsPage.js
 import React, {Component} from 'react';
 import Cookies from "universal-cookie";
+import Header from "../Header";
+import './RealtorPage.css';
 
 class RealtorsPage extends Component {
     constructor(props) {
@@ -53,8 +55,19 @@ class RealtorsPage extends Component {
                 await this.getUserAwatar(res[i].username).then(img_url => res[i].img_url = img_url)
 
                 await lemma.push(
-                    <div>
-                        {res[i].firstName}
+                    // <div>
+                    //     {res[i].firstName}
+                    // </div>
+                    <div className='realtor-container'>
+                        <div className='realtor-credentials tap-realtor-peace'>
+                            e
+                        </div>
+                        <div className='realtor-review tap-realtor-peace'>
+                            w
+                        </div>
+                        <div className='realtor-objects tap-realtor-peace'>
+                            q
+                        </div>
                     </div>
                 );
 
@@ -97,7 +110,15 @@ class RealtorsPage extends Component {
 
         return (
             <div>
-                {page}
+                <Header />
+
+                <div className='main-container'>
+
+                    {page}
+
+                </div>
+
+
             </div>
         );
     }
