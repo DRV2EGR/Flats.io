@@ -56,7 +56,7 @@ public class UserBasicController {
      */
     @RequestMapping("get_user_img_url_by_username")
     public ResponseEntity<UserProfileImageUrlDto> getUserProfileImageUrlByUsername(@RequestParam String username) { //TODO: сменить id на токен
-        System.out.println("d");
+//        System.out.println("d");
 
         //String url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
         String url = userRepository.findByUsername(username).orElseThrow(
