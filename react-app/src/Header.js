@@ -126,7 +126,7 @@ class Header extends Component {
 
                     <nav className='my-2 my-md-0 mr-md-3'>
                         {/*<a className='p-2 text-dark' href='/user/1'>Личный кабинет</a>*/}
-                        <a className='p-2 text-dark' href='/rieltors'>Риелторы</a>
+                        <a className='p-2 text-dark' href='/realtors'>Риелторы</a>
                         <a className='p-2 text-dark' href='/about'>О нас</a>
 
                         {/*<a href={userhref} >*/}

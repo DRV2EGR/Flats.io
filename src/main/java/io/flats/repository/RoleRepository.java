@@ -12,8 +12,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     /**
      * Find by name optional.
      *
-     * @param role_curator the role curator
+     * @param role the role curator
      * @return the optional
      */
-    Optional<Object> findByName(String role_curator);
+    Optional<Role> findByName(String role);
 }

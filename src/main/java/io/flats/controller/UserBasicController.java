@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.security.AuthProvider;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type User basic controller.
@@ -55,7 +56,7 @@ public class UserBasicController {
      */
     @RequestMapping("get_user_img_url_by_username")
     public ResponseEntity<UserProfileImageUrlDto> getUserProfileImageUrlByUsername(@RequestParam String username) { //TODO: сменить id на токен
-        System.out.println("d");
+//        System.out.println("d");
 
         //String url = "https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg";
         String url = userRepository.findByUsername(username).orElseThrow(
@@ -103,6 +104,7 @@ public class UserBasicController {
 
         io.flats.dto.UserDto userResponce = new io.flats.dto.UserDto();
 
+        userResponce.setId(user.getId());
         userResponce.setUsername(user.getUsername());
         userResponce.setEmail(user.getEmail());
         userResponce.setFirstName(user.getFirstName());
@@ -112,5 +114,27 @@ public class UserBasicController {
         userResponce.setPhoneNumber(user.getPhoneNumber());
 
         return ResponseEntity.ok(userResponce);
+    }
+
+    @RequestMapping("/get_all_realtors")
+    public ResponseEntity<List<io.flats.dto.UserDto>> getAllRieltors() {
+        List<io.flats.dto.UserDto> responseDto = new ArrayList<>();
+
+        List<User> rieltors = userService.findAllRieltors();
+        for (User user : rieltors) {
+            io.flats.dto.UserDto userResponce = new io.flats.dto.UserDto();
+            userResponce.setId(user.getId());
+            userResponce.setUsername(user.getUsername());
+            userResponce.setEmail(user.getEmail());
+            userResponce.setFirstName(user.getFirstName());
+            userResponce.setLastName(user.getLastName());
+            userResponce.setRole(user.getRole().getName());
+            userResponce.setSecondName(user.getSecondName());
+            userResponce.setPhoneNumber(user.getPhoneNumber());
+
+            responseDto.add(userResponce);
+        }
+
+        return ResponseEntity.ok(responseDto);
     }
 }
