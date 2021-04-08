@@ -104,6 +104,7 @@ public class UserBasicController {
 
         io.flats.dto.UserDto userResponce = new io.flats.dto.UserDto();
 
+        userResponce.setId(user.getId());
         userResponce.setUsername(user.getUsername());
         userResponce.setEmail(user.getEmail());
         userResponce.setFirstName(user.getFirstName());
@@ -122,6 +123,7 @@ public class UserBasicController {
         List<User> rieltors = userService.findAllRieltors();
         for (User user : rieltors) {
             io.flats.dto.UserDto userResponce = new io.flats.dto.UserDto();
+            userResponce.setId(user.getId());
             userResponce.setUsername(user.getUsername());
             userResponce.setEmail(user.getEmail());
             userResponce.setFirstName(user.getFirstName());
