@@ -90,7 +90,7 @@ public class UserServiceTests {
                 "Username", "Username", "Username",
                 "6668855", "Username");
 
-        User created = userService.registerNewSailor(udp);
+        User created = userService.registerNewRealtor(udp);
 
         assertThat(created.getRole().getName()).isEqualTo("ROLE_REALTOR");
 
