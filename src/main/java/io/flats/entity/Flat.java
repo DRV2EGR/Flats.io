@@ -70,4 +70,13 @@ public class Flat extends BaseEntity {
      */
     @OneToMany(mappedBy="flat")
     protected List<FlatsImages> flatsImages;
+
+    public Flat(long id) {
+        this.id = id;
+    }
+
+    public Flat(long id, List<FlatsImages> flatsImages) {
+        this.id = id;
+        this.flatsImages = flatsImages;
+    }
 }
