@@ -79,17 +79,17 @@ public class FlatService {
      * @return the list
      */
     public List<Flat> findAll() {
-        List<Flat> resArray = new ArrayList<>();
+//        List<Flat> resArray = new ArrayList<>();
+//
+//        for (int i = 1; i <= flatRepository.count(); ++i) {
+//            Flat curFlat = flatRepository.findById((long) i).orElseThrow(
+//                    () -> { throw new NoSuchElementException("No such role found."); }
+//            );
+//
+//            resArray.add(curFlat);
+//        }
 
-        for (int i = 1; i <= flatRepository.count(); ++i) {
-            Flat curFlat = flatRepository.findById((long) i).orElseThrow(
-                    () -> { throw new NoSuchElementException("No such role found."); }
-            );
-
-            resArray.add(curFlat);
-        }
-
-        return resArray;
+        return flatRepository.findAll();
     }
 
     /**
@@ -98,7 +98,7 @@ public class FlatService {
      * @param newFlatDao the new flat dao
      * @return the boolean
      */
-    public boolean addSaleFlat(FlatDtoPayload newFlatDao) {
+    public Flat addSaleFlat(FlatDtoPayload newFlatDao) {
         Flat newFlat = new Flat();
         newFlat.setCountry(newFlatDao.getCountry());
         newFlat.setTown(newFlatDao.getTown());
@@ -121,7 +121,7 @@ public class FlatService {
 
         //TODO: проверка на то, что такая квартира уже существует
 
-        flatRepository.save(newFlat);
+        Flat created = flatRepository.save(newFlat);
 
 //        System.out.println(newFlat.getId());
 
@@ -132,10 +132,10 @@ public class FlatService {
             flatsImagesRepository.save(fi);
         }
 
-        return true;
+        return created;
     }
 
-    public boolean addRentFlat(FlatDtoPayload newFlatDao) {
+    public Flat addRentFlat(FlatDtoPayload newFlatDao) {
         Flat newFlat = new Flat();
         newFlat.setCountry(newFlatDao.getCountry());
         newFlat.setTown(newFlatDao.getTown());
@@ -156,9 +156,16 @@ public class FlatService {
 
         //TODO: проверка на то, что такая квартира уже существует
 
-        flatRepository.save(newFlat);
+        Flat created = flatRepository.save(newFlat);
 
-        return true;
+        for (String image: newFlatDao.getFlatsImages()) {
+            FlatsImages fi = new FlatsImages();
+            fi.setImgUrl(image);
+            fi.setFlat(findFlatById(newFlat.getId()));
+            flatsImagesRepository.save(fi);
+        }
+
+        return created;
     }
 
     public Flat findFlatById(long id) {
@@ -179,6 +186,7 @@ public class FlatService {
 
         flatRepository.delete(deletingFlat);
         log.info("Deleted flat " + (Object)deletingFlat);
+        //log.info(String.valueOf(flatRepository.findById(id).isEmpty()));
 
         return flatRepository.findById(id).isEmpty();
     }

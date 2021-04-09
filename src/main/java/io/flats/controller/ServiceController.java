@@ -82,9 +82,9 @@ public class ServiceController {
     @RequestMapping("add-sale-flat")
     public ResponseEntity<BasicResponce> addFilterredFlats(@RequestBody FlatDtoPayload newFlatDao) {
 
-        boolean stat = flatService.addSaleFlat(newFlatDao);
+        Flat stat = flatService.addSaleFlat(newFlatDao);
 
-        if (!stat) {
+        if (!(stat.getId() > 0)) {
             return ResponseEntity.ok(new ResponceNotCompletedDto());
         }
 

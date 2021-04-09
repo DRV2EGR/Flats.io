@@ -73,4 +73,11 @@ public class FlatDtoPayload {
         this.username = username;
         this.flatsImages = flatsImages;
     }
+
+    public FlatDtoPayload(String street, boolean forSale, boolean forRent, List<String> flatsImages) {
+        this.street = street;
+        this.forSale = forSale;
+        this.forRent = forRent;
+        this.flatsImages = flatsImages;
+    }
 }
