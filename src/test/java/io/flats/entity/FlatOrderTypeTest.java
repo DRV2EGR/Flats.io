@@ -12,6 +12,7 @@ public class FlatOrderTypeTest {
     @Test
     public void testCanEqual() {
         assertFalse((new FlatOrderType()).canEqual("Other"));
+        assertFalse((new FlatOrderType()).canEqual("Other"));
     }
 
     @Test
@@ -25,7 +26,18 @@ public class FlatOrderTypeTest {
     }
 
     @Test
+    public void testCanEqual3() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+
+        FlatOrderType flatOrderType1 = new FlatOrderType();
+        flatOrderType1.setId(123L);
+        flatOrderType1.setName("Name");
+        assertTrue(flatOrderType.canEqual(flatOrderType1));
+    }
+
+    @Test
     public void testEquals() {
+        assertFalse((new FlatOrderType()).equals("42"));
         assertFalse((new FlatOrderType()).equals("42"));
     }
 
@@ -68,12 +80,58 @@ public class FlatOrderTypeTest {
     }
 
     @Test
+    public void testEquals6() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+
+        FlatOrderType flatOrderType1 = new FlatOrderType();
+        flatOrderType1.setId(123L);
+        flatOrderType1.setName("Name");
+        assertFalse(flatOrderType.equals(flatOrderType1));
+    }
+
+    @Test
+    public void testEquals7() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+        assertTrue(flatOrderType.equals(new FlatOrderType()));
+    }
+
+    @Test
+    public void testEquals8() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+        flatOrderType.setName("Name");
+
+        FlatOrderType flatOrderType1 = new FlatOrderType();
+        flatOrderType1.setId(123L);
+        flatOrderType1.setName("Name");
+        assertTrue(flatOrderType.equals(flatOrderType1));
+    }
+
+    @Test
+    public void testEquals9() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+        flatOrderType.setName("Name");
+
+        FlatOrderType flatOrderType1 = new FlatOrderType();
+        flatOrderType1.setId(123L);
+        flatOrderType1.setName(null);
+        assertFalse(flatOrderType.equals(flatOrderType1));
+    }
+
+    @Test
     public void testHashCode() {
+        assertEquals(102, (new FlatOrderType()).hashCode());
         assertEquals(102, (new FlatOrderType()).hashCode());
     }
 
     @Test
     public void testHashCode2() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+        flatOrderType.setName("Name");
+        assertEquals(2420454, flatOrderType.hashCode());
+    }
+
+    @Test
+    public void testHashCode3() {
         FlatOrderType flatOrderType = new FlatOrderType();
         flatOrderType.setName("Name");
         assertEquals(2420454, flatOrderType.hashCode());
@@ -87,7 +145,15 @@ public class FlatOrderTypeTest {
     }
 
     @Test
+    public void testSetName2() {
+        FlatOrderType flatOrderType = new FlatOrderType();
+        flatOrderType.setName("Name");
+        assertEquals("FlatOrderType(name=Name)", flatOrderType.toString());
+    }
+
+    @Test
     public void testToString() {
+        assertEquals("FlatOrderType(name=null)", (new FlatOrderType()).toString());
         assertEquals("FlatOrderType(name=null)", (new FlatOrderType()).toString());
     }
 }
