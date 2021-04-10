@@ -11,5 +11,26 @@ public class BasicResponceTest {
         responceCompletedDto.setResponse("Response");
         assertEquals("Response", responceCompletedDto.getResponse());
     }
+
+    @Test
+    public void testSetResponse2() {
+        ResponceCompletedDto responceCompletedDto = new ResponceCompletedDto();
+        responceCompletedDto.setResponse("Response");
+        assertEquals("Response", responceCompletedDto.getResponse());
+    }
+
+    @Test
+    public void testSetResponse3() {
+        ResponceCompletedDto responceCompletedDto = new ResponceCompletedDto();
+        responceCompletedDto.setResponse("Response");
+        assertEquals("Response", responceCompletedDto.getResponse());
+    }
+
+    @Test
+    public void testSetResponse4() {
+        ResponceCompletedDto responceCompletedDto = new ResponceCompletedDto();
+        responceCompletedDto.setResponse("Response");
+        assertEquals("Response", responceCompletedDto.getResponse());
+    }
 }
 
