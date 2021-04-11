@@ -129,4 +129,15 @@ public class UserBasicController {
         flatService.setLike(currentUser.getId(), id_to);
         return ResponseEntity.ok(new ResponceCompletedDto());
     }
+
+    @PostMapping("set_comment_to_user")
+    public ResponseEntity<BasicResponce> setComment(@RequestParam long id_to){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        User currentUser = userService.findByUsername(currentUserName).orElseThrow(
+                () -> {throw new UserNotFoundExeption();}
+        );
+        flatService.setLike(currentUser.getId(), id_to);
+        return ResponseEntity.ok(new ResponceCompletedDto());
+    }
 }
