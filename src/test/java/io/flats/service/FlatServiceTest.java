@@ -478,71 +478,87 @@ public class FlatServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-//    @org.junit.Test
-//    @WithMockUser(username = "john_the_admin", roles = "ADMIN")
-//    public void _testAddSaleFlat() {
-//
-//        when(flatRepository.save(any(Flat.class))).thenReturn(
-//                new Flat(20L, List.of(
-//                        new FlatsImages("S1CR1T", new Flat(20L)),
-//                        new FlatsImages("OWO_UWU", new Flat(20L))
-//                ))
-//        );
-//
-//        given(flatRepository.findById(any())).willReturn(
-//                java.util.Optional.of(new Flat(20L, List.of(
-//                        new FlatsImages("S1CR1T", new Flat(20L)),
-//                        new FlatsImages("OWO_UWU", new Flat(20L))
-//                )))
-//        );
-//
-//        when(flatsImagesRepository.save(any())).thenReturn(
-//                new FlatsImages("S1CR1T", new Flat(20L))
-//        );
-//
-//
-//        Flat created = flatService.addSaleFlat(
-//                new FlatDtoPayload("freya", true, false, List.of("S1CR1T", "OWO_UWU"))
-//        );
-//
-//        assert(created.getId() == 20L);
-//        assert (created.getFlatsImages().size() == 2);
-//        assert (created.getFlatsImages().get(0).getImgUrl().equals("S1CR1T"));
-//        assert (created.getFlatsImages().get(1).getImgUrl().equals("OWO_UWU"));
-//    }
+    @org.junit.Test
+    @WithMockUser(username = "john_the_admin", roles = "ADMIN")
+    public void _testAddSaleFlat() {
 
-//    @org.junit.Test
-//    @WithMockUser(username = "john_the_admin", roles = "ADMIN")
-//    public void _testAddRentFlat() {
-//
-//        when(flatRepository.save(any(Flat.class))).thenReturn(
-//                new Flat(20L, List.of(
-//                        new FlatsImages("S1CR1T", new Flat(20L)),
-//                        new FlatsImages("OWO_UWU", new Flat(20L))
-//                ))
-//        );
-//
-//        given(flatRepository.findById(any())).willReturn(
-//                java.util.Optional.of(new Flat(20L, List.of(
-//                        new FlatsImages("S1CR1T", new Flat(20L)),
-//                        new FlatsImages("OWO_UWU", new Flat(20L))
-//                )))
-//        );
-//
-//        when(flatsImagesRepository.save(any())).thenReturn(
-//                new FlatsImages("S1CR1T", new Flat(20L))
-//        );
-//
-//
-//        Flat created = flatService.addRentFlat(
-//                new FlatDtoPayload("freya", true, false, List.of("S1CR1T", "OWO_UWU"))
-//        );
-//
-//        assert(created.getId() == 20L);
-//        assert (created.getFlatsImages().size() == 2);
-//        assert (created.getFlatsImages().get(0).getImgUrl().equals("S1CR1T"));
-//        assert (created.getFlatsImages().get(1).getImgUrl().equals("OWO_UWU"));
-//    }
+        when(flatRepository.save(any(Flat.class))).thenReturn(
+                new Flat(20L, List.of(
+                        new FlatsImages("S1CR1T", new Flat(20L)),
+                        new FlatsImages("OWO_UWU", new Flat(20L))
+                ))
+        );
+
+        given(flatRepository.findById(any())).willReturn(
+                java.util.Optional.of(new Flat(20L, List.of(
+                        new FlatsImages("S1CR1T", new Flat(20L)),
+                        new FlatsImages("OWO_UWU", new Flat(20L))
+                )))
+        );
+
+        when(flatsImagesRepository.save(any())).thenReturn(
+                new FlatsImages("S1CR1T", new Flat(20L))
+        );
+
+        when(flatOrderTypeRepository.findById(any())).thenReturn(
+                Optional.of(new FlatOrderType())
+        );
+
+        when(this.userService.findByUsername(any())).thenReturn(
+                Optional.of(new User(20L, "awd"))
+        );
+
+
+        Flat created = flatService.addSaleFlat(
+                new FlatDtoPayload("freya", true, false, List.of("S1CR1T", "OWO_UWU"))
+        );
+
+        assert(created.getId() == 20L);
+        assert (created.getFlatsImages().size() == 2);
+        assert (created.getFlatsImages().get(0).getImgUrl().equals("S1CR1T"));
+        assert (created.getFlatsImages().get(1).getImgUrl().equals("OWO_UWU"));
+    }
+
+    @org.junit.Test
+    @WithMockUser(username = "john_the_admin", roles = "ADMIN")
+    public void _testAddRentFlat() {
+
+        when(flatRepository.save(any(Flat.class))).thenReturn(
+                new Flat(20L, List.of(
+                        new FlatsImages("S1CR1T", new Flat(20L)),
+                        new FlatsImages("OWO_UWU", new Flat(20L))
+                ))
+        );
+
+        given(flatRepository.findById(any())).willReturn(
+                java.util.Optional.of(new Flat(20L, List.of(
+                        new FlatsImages("S1CR1T", new Flat(20L)),
+                        new FlatsImages("OWO_UWU", new Flat(20L))
+                )))
+        );
+
+        when(flatsImagesRepository.save(any())).thenReturn(
+                new FlatsImages("S1CR1T", new Flat(20L))
+        );
+
+        when(flatOrderTypeRepository.findById(any())).thenReturn(
+                Optional.of(new FlatOrderType())
+        );
+
+        when(this.userService.findByUsername(any())).thenReturn(
+                Optional.of(new User(20L, "awd"))
+        );
+
+
+        Flat created = flatService.addRentFlat(
+                new FlatDtoPayload("freya", true, false, List.of("S1CR1T", "OWO_UWU"))
+        );
+
+        assert(created.getId() == 20L);
+        assert (created.getFlatsImages().size() == 2);
+        assert (created.getFlatsImages().get(0).getImgUrl().equals("S1CR1T"));
+        assert (created.getFlatsImages().get(1).getImgUrl().equals("OWO_UWU"));
+    }
 
     @org.junit.Test
     public void _testFindFlatById() {
