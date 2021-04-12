@@ -146,9 +146,18 @@ public class JwtTokenProviderTest {
 
     @Test
     public void testRefreshPairOfTokens() {
-        User user = new User(20L, "awd");
-        String tiktok = this.jwtTokenProvider.createRefreshToken(user.getId());
-        assertNull(this.jwtTokenProvider.refreshPairOfTokens(tiktok));
+        Role role = new Role();
+        role.setId(123L);
+        role.setName("Name");
+        User user = new User(20L, "awd"); user.setRole(role);
+
+
+        RefreshToken rt = new RefreshToken();
+        rt.setRefreshToken(this.jwtTokenProvider.createRefreshToken(user.getId()));
+        when(this.refreshTokenRepository.findById(any())).thenReturn(java.util.Optional.of(rt));
+        when(this.userService.findById(any())).thenReturn(java.util.Optional.of(user));
+
+        assertNotNull(this.jwtTokenProvider.refreshPairOfTokens(rt.getRefreshToken()));
     }
 }
 
