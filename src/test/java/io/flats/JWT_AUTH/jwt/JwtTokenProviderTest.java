@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
@@ -130,24 +131,24 @@ public class JwtTokenProviderTest {
 //        this.jwtTokenProvider.getAuthentication("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.PcmVIPbcZl9j7qFzXRAeSyhtuBnHQNMuLHsaG5l804A");
 //    }
 
-//    @Test
-//    public void testGetAuthentication2() {
-//        Role role = new Role();
-//        role.setId(123L);
-//        role.setName("Name");
-//        User user = new User(20L, "awd"); user.setRole(role);
-//
-//        when(jwtUserDetailsService.loadUserByUsername(any())).thenReturn((UserDetails) user);
-//
-//        String tiktok = this.jwtTokenProvider.createAccessToken(user);
-//        assertNull(this.jwtTokenProvider.getAuthentication(tiktok));
-//    }
+    @Test
+    public void testGetAuthentication2() {
+        Role role = new Role();
+        role.setId(123L);
+        role.setName("Name");
+        User user = new User(20L, "awd"); user.setRole(role);
 
-//    @Test
-//    public void testRefreshPairOfTokens() {
-//        User user = new User(20L, "awd");
-//        String tiktok = this.jwtTokenProvider.createRefreshToken(user.getId());
-//        assertNull(this.jwtTokenProvider.refreshPairOfTokens(tiktok));
-//    }
+        when(jwtUserDetailsService.loadUserByUsername(any())).thenReturn(new JwtUser("awd","pass", new SimpleGrantedAuthority("ADMIN")));
+
+        String tiktok = this.jwtTokenProvider.createAccessToken(user);
+        assertNotNull(this.jwtTokenProvider.getAuthentication(tiktok));
+    }
+
+    @Test
+    public void testRefreshPairOfTokens() {
+        User user = new User(20L, "awd");
+        String tiktok = this.jwtTokenProvider.createRefreshToken(user.getId());
+        assertNull(this.jwtTokenProvider.refreshPairOfTokens(tiktok));
+    }
 }
 
