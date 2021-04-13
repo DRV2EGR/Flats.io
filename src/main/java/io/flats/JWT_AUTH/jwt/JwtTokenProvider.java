@@ -79,9 +79,13 @@ public class JwtTokenProvider {
         claims.put("role", user.getRole().getName());
 
         Date now = new Date();
+        if (this.accessTokenExpiration == null)
+            this.accessTokenExpiration = 900000L;
         Date expiration = new Date(now.getTime() + accessTokenExpiration);
 
         logger.info("Created access JWT for user " + user.toString());
+        if (secret == null)
+            secret = "secret"; //TODO: Replace it! TEST FIX REUIRED
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
