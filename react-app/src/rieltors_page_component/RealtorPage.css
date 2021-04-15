@@ -1,0 +1,148 @@
+.main-container {
+    margin: 0 auto;
+
+    background-color: rgba(255, 255, 255, 0.5);
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    border-radius: 10px;
+}
+
+.realtor-container{
+    display: flex;
+
+    position: relative;
+    align-content: center;
+}
+
+.realtor-container:hover {
+    background-color: rgba(70, 70, 70, 0.4);
+}
+
+.realtor-container::before {
+    position: absolute;
+    right: 8px;
+    left: 8px;
+    bottom: 0;
+    height: 1px;
+    content: "";
+    background-color: #e8e9ec;
+}
+
+.tap-realtor-peace {
+    width: 30%;
+    margin: 0 auto;
+
+    display: flex;
+
+    padding: 10px;
+}
+
+.realtor-avatar {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50%;
+}
+
+.realtor-avatar-div {
+    display: flex;
+
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50%;
+
+    align-items: center;
+    background-size: cover; /* Масштабируем фон */
+}
+
+.realtor-avatar-letter {
+    margin: 0 auto;
+
+    font-weight: 700;
+    line-height: 28px;
+    font-size: 22px;
+
+    opacity: 1;
+}
+
+.poabs {
+    position: absolute;
+
+    opacity: 0.2;
+}
+
+.realtor-fio-cred {
+    font-weight: 700;
+    line-height: 22px;
+    font-size: 16px;
+    color: #152242;
+}
+
+.realtor-fio-descr {
+    margin-left: 10px;
+}
+
+.nomber-of-objects-big {
+    font-weight: 700;
+    line-height: 20px;
+    font-size: 16px;
+    color: #152242;
+}
+
+.df {
+    list-style: none;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+    margin-left: 10px;
+}
+
+.dff {
+    display: flow-root;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+
+}
+
+ui {
+    padding: 0;
+    list-style: none;
+
+    display: contents;
+}
+
+.review-count-text {
+    letter-spacing: normal;
+    font-weight: 400;
+    line-height: 20px;
+    font-size: 14px;
+    color: rgba(21,34,66,.6);
+}
+
+.summary {
+    letter-spacing: normal;
+    font-weight: 700;
+    line-height: 20px;
+    font-size: 16px;
+    color: #152242;
+
+    margin-left: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.cent {
+    margin: 0 auto;
+    display: table;
+}

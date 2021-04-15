@@ -34,7 +34,7 @@ public class Flat extends BaseEntity {
     /**
      * The House nom.
      */
-    protected int houseNom;
+    protected String houseNom;
     /**
      * The Floor.
      */
@@ -48,6 +48,7 @@ public class Flat extends BaseEntity {
     /**
      * The Description.
      */
+    @Column(columnDefinition="TEXT")
     protected String description;
 
     /**
@@ -70,8 +71,18 @@ public class Flat extends BaseEntity {
     @OneToMany(mappedBy="flat")
     protected List<FlatsImages> flatsImages;
 
+
     //TODO: продумать название таблицы
     @OneToMany(mappedBy="flat")
     protected List<Likes> flatsLikes;
+
+    public Flat(long id) {
+        this.id = id;
+    }
+
+    public Flat(long id, List<FlatsImages> flatsImages) {
+        this.id = id;
+        this.flatsImages = flatsImages;
+    }
 
 }

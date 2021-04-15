@@ -1,6 +1,7 @@
 package io.flats.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="flats_images")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FlatsImages extends BaseEntity {
 
     /**

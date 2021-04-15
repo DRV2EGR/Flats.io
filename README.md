@@ -1,7 +1,7 @@
 # Flats.io \\ ![GitHub repo size](https://img.shields.io/github/repo-size/DRV2VNA/Flats.io)
 [![CircleCI](https://circleci.com/gh/DRV2VNA/Flats.io/tree/develop.png?style=svg)](https://app.circleci.com/pipelines/github/DRV2VNA/Flats.io?branch=develop) \
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/DRV2VNA/Flats.io)
-[![codecov](https://codecov.io/gh/DRV2VNA/Flats.io/branch/develop/graph/badge.svg?token=SKMPTASTM2)](https://codecov.io/gh/DRV2VNA/Flats.io) \
+[![codecov](https://codecov.io/gh/DRV2VNA/Flats.io/branch/feature-34-testing/graph/badge.svg?token=SKMPTASTM2)](https://codecov.io/gh/DRV2VNA/Flats.io) \
 [![GitHub issues](https://img.shields.io/github/issues-raw/DRV2VNA/Flats.io)](https://github.com/DRV2VNA/Flats.io/issues)
 
 ![GitHub contributors](https://img.shields.io/github/contributors/DRV2VNA/Flats.io)
@@ -24,7 +24,7 @@
     3. Выполнить команду java -jar <имя собранного jar файла>
 
 Запуск frontend части
-```Необходима версия npm```
+```Необходима версия npm >= 6.14.11```
    
     1. Скачать репозиторий проекта
     2. Скачать и применить все зависимости для npm
@@ -45,7 +45,7 @@
     5. В папке target выполнить команду java -jar <имя собранного jar файла>
 
    Сборка frontend части
-```Необходима версия npm```
+```Необходима версия npm >= 6.14.11```
    
     1. Скачать репозиторий проекта
     2. Скачать и применить все зависимости для npm

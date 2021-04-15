@@ -3,6 +3,7 @@ package io.flats.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class FlatDto {
     /**
      * The House nom.
      */
-    protected int houseNom;
+    protected String houseNom;
     /**
      * The Floor.
      */
@@ -52,20 +53,12 @@ public class FlatDto {
      */
     protected long id;
 
-    /**
-     * Instantiates a new Flat dto.
-     *
-     * @param country     the country
-     * @param town        the town
-     * @param street      the street
-     * @param houseNom    the house nom
-     * @param floor       the floor
-     * @param price       the price
-     * @param description the description
-     * @param images      the images
-     * @param id          the id
-     */
-    public FlatDto(String country, String town, String street, int houseNom, int floor, float price, String description, List<String> images, long id) {
+    protected String ownerUsername;
+
+    protected long ownerID;
+
+    public FlatDto(String country, String town, String street, String houseNom,
+                   int floor, float price, String description, List<String> images, long id, String ownerUsername, long ownerID) {
         this.country = country;
         this.town = town;
         this.street = street;
@@ -75,5 +68,11 @@ public class FlatDto {
         this.description = description;
         this.images = images;
         this.id = id;
+        this.ownerUsername = ownerUsername;
+        this.ownerID = ownerID;
+    }
+
+    public void setImageListToNew() {
+        this.images = new ArrayList<>();
     }
 }

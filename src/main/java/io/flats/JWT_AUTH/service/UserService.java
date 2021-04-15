@@ -4,6 +4,7 @@ import io.flats.JWT_AUTH.payload.BasicPayload;
 import io.flats.JWT_AUTH.payload.UserDtoPayload;
 import io.flats.entity.Role;
 import io.flats.entity.User;
+import io.flats.exception.UserNotFoundExeption;
 import io.flats.repository.RoleRepository;
 import io.flats.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -192,4 +194,11 @@ public class UserService {
 //
 //        userRepository.save(activatedUser);
 //    }
+
+    public List<User> findAllRieltors() {
+        return userRepository.findAllByRole(roleRepository.findByName("ROLE_REALTOR").orElseThrow(
+        () -> { throw new RuntimeException("NO SUCH ROLE!"); })).orElseThrow( () -> {
+            throw new UserNotFoundExeption();
+        });
+    }
 }

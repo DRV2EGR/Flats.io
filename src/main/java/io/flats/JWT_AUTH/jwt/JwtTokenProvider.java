@@ -182,7 +182,7 @@ public class JwtTokenProvider {
         UUID UUIDFromRefreshToken = UUID.fromString(Jwts.parser().setSigningKey(secret).parseClaimsJws(refreshTokenString).getBody().getSubject());
 
         RefreshToken currentRefreshToken = refreshTokenRepository.findById(refreshTokenString).orElseThrow(
-                                        () -> {throw new IllegalArgumentException("Refresh token is expired or invalid");}
+                                        () -> {throw new IllegalArgumentException("No such refresh token");}
                                     );
 
         User subject = userService.findById(currentRefreshToken.getUserId()).orElseThrow(IllegalArgumentException::new);

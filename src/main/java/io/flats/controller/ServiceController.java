@@ -42,7 +42,8 @@ public class ServiceController {
 
         for(Flat flat : lf) {
             fd.add(new FlatDto(flat.getCountry(), flat.getTown(), flat.getStreet(), flat.getHouseNom(), flat.getFloor(),
-                    flat.getPrice(), flat.getDescription(), flatService.findImagesByFlatId(flat.getId()), flat.getId()));
+                    flat.getPrice(), flat.getDescription(), flatService.findImagesByFlatId(flat.getId()), flat.getId(),
+                    flat.getOwner().getUsername(), flat.getOwner().getId()));
         }
 
         return ResponseEntity.ok(fd);
@@ -81,9 +82,9 @@ public class ServiceController {
     @RequestMapping("add-sale-flat")
     public ResponseEntity<BasicResponce> addFilterredFlats(@RequestBody FlatDtoPayload newFlatDao) {
 
-        boolean stat = flatService.addSaleFlat(newFlatDao);
+        Flat stat = flatService.addSaleFlat(newFlatDao);
 
-        if (!stat) {
+        if (!(stat.getId() > 0)) {
             return ResponseEntity.ok(new ResponceNotCompletedDto());
         }
 

@@ -1,8 +1,10 @@
 package io.flats.repository;
 
+import io.flats.entity.Role;
 import io.flats.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,4 +34,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return the optional
      */
     Optional<User> findByEmail(String email);
+
+    Optional<List<User>> findAllByRole(Role role);
 }

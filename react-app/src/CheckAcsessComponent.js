@@ -30,7 +30,7 @@ class CheckAcsessComponent extends Component {
 
     checkPageForRedirectToLogin = () => {
         let current_location = window.location.pathname;
-        let protectedUrls = ['/user_profile', '/user_settings'];
+        let protectedUrls = ['/user_profile', '/user_settings', '/add_order'];
 
         if (protectedUrls.indexOf( current_location ) !== -1) {
             this.goToAuth();
@@ -45,7 +45,7 @@ class CheckAcsessComponent extends Component {
             try {
                 console.log("DETECTED REFRESH");
 
-                fetch('/api/user/get_user_info', {
+                fetch('/api/user/public/get_user_info', {
                     method: 'post',
                     headers: new Headers({
                         'Authorization': 'Bearer ' + a,
@@ -90,7 +90,7 @@ class CheckAcsessComponent extends Component {
             try {
                 console.log("DETECTED ACCESS");
 
-                fetch('/api/user/get_user_info', {
+                fetch('/api/user/public/get_user_info', {
                     method: 'post',
                     headers: new Headers({
                         'Authorization': 'Bearer ' + a,
