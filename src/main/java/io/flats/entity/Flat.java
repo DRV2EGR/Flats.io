@@ -71,6 +71,11 @@ public class Flat extends BaseEntity {
     @OneToMany(mappedBy="flat")
     protected List<FlatsImages> flatsImages;
 
+
+    //TODO: продумать название таблицы
+    @OneToMany(mappedBy="flat")
+    protected List<Likes> flatsLikes;
+
     public Flat(long id) {
         this.id = id;
     }
@@ -79,4 +84,5 @@ public class Flat extends BaseEntity {
         this.id = id;
         this.flatsImages = flatsImages;
     }
+
 }

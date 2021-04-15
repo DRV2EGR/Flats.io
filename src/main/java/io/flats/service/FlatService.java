@@ -3,8 +3,15 @@ package io.flats.service;
 import io.flats.JWT_AUTH.exeption.NotFoundException;
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.FlatDto;
+import io.flats.entity.Comments;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
+
+import io.flats.entity.Likes;
+import io.flats.exception.UserNotFoundExeption;
+import io.flats.payload.FlatDtoPayload;
+import io.flats.repository.*;
+
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
@@ -13,11 +20,13 @@ import io.flats.repository.FlatRepository;
 import io.flats.repository.FlatsImagesRepository;
 import io.flats.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -48,10 +57,18 @@ public class FlatService {
     UserRepository userRepository;
 
     @Autowired
+
+    LikesRepository likesRepository;
+
+    @Autowired
+    CommentsRepository commentsRepository;
+
+
     FlatsImagesRepository flatsImagesRepository;
 
     @Autowired
     UserService userService;
+
 
     /**
      * Find images by flat id list.
@@ -190,4 +207,5 @@ public class FlatService {
 
         return flatRepository.findById(id).isEmpty();
     }
+
 }
