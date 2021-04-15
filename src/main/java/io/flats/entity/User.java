@@ -6,6 +6,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * The type User.
@@ -82,6 +83,9 @@ public class User extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     protected Role role;
+
+    @OneToMany(mappedBy="user")
+    protected List<Likes> puttedLikesToFlats;
 
     /**
      * Instantiates a new User.
