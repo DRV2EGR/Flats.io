@@ -9,8 +9,11 @@ import io.flats.dto.ResponceCompletedDto;
 import io.flats.dto.UserProfileImageUrlDto;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
+import io.flats.payload.CommentDtoPayload;
+import io.flats.payload.LikeDtoPayload;
 import io.flats.repository.UserRepository;
 import io.flats.service.FlatService;
+import io.flats.service.LikeAndCommentService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
@@ -50,6 +53,9 @@ public class UserBasicController {
 
     @Autowired
     FlatService flatService;
+
+    @Autowired
+    LikeAndCommentService likeAndCommentService;
 
 
     /**
@@ -120,24 +126,24 @@ public class UserBasicController {
     }
 
     @PostMapping("set_like_to_flat")
-    public ResponseEntity<BasicResponce> setLike(@RequestParam long id_to){
+    public ResponseEntity<BasicResponce> setLike(@RequestBody LikeDtoPayload likeDtoPayload){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         User currentUser = userService.findByUsername(currentUserName).orElseThrow(
                 () -> {throw new UserNotFoundExeption();}
         );
-        flatService.setLike(currentUser.getId(), id_to);
+        likeAndCommentService.setLike(currentUser.getId(), likeDtoPayload.getId_to());
         return ResponseEntity.ok(new ResponceCompletedDto());
     }
 
     @PostMapping("set_comment_to_user")
-    public ResponseEntity<BasicResponce> setComment(@RequestParam long id_to){
+    public ResponseEntity<BasicResponce> setComment(@RequestBody CommentDtoPayload commentDtoPayload){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         User currentUser = userService.findByUsername(currentUserName).orElseThrow(
                 () -> {throw new UserNotFoundExeption();}
         );
-        flatService.setLike(currentUser.getId(), id_to);
+        likeAndCommentService.setComment(currentUser.getId(), commentDtoPayload.getId_to(), commentDtoPayload.getCommentText());
         return ResponseEntity.ok(new ResponceCompletedDto());
     }
 }

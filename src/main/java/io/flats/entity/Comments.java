@@ -20,6 +20,7 @@ public class Comments extends BaseEntity{
     @JoinColumn(name = "user_id_to")
     protected User user_to;
 
+    @Column(columnDefinition = "TEXT")
     protected String commentText;
 
 }
