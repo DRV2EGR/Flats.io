@@ -79,9 +79,13 @@ public class JwtTokenProvider {
         claims.put("role", user.getRole().getName());
 
         Date now = new Date();
+        if (this.accessTokenExpiration == null)
+            this.accessTokenExpiration = 900000L;
         Date expiration = new Date(now.getTime() + accessTokenExpiration);
 
         logger.info("Created access JWT for user " + user.toString());
+        if (secret == null)
+            secret = "secret"; //TODO: Replace it! TEST FIX REUIRED
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -182,7 +186,7 @@ public class JwtTokenProvider {
         UUID UUIDFromRefreshToken = UUID.fromString(Jwts.parser().setSigningKey(secret).parseClaimsJws(refreshTokenString).getBody().getSubject());
 
         RefreshToken currentRefreshToken = refreshTokenRepository.findById(refreshTokenString).orElseThrow(
-                                        () -> {throw new IllegalArgumentException("Refresh token is expired or invalid");}
+                                        () -> {throw new IllegalArgumentException("No such refresh token");}
                                     );
 
         User subject = userService.findById(currentRefreshToken.getUserId()).orElseThrow(IllegalArgumentException::new);
