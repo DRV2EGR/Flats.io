@@ -114,27 +114,4 @@ public class FlatService {
         return true;
     }
 
-    public boolean setLike(long id_from, long id_to){
-        Likes like = new Likes();
-        like.setUser(userRepository.findById(id_from).orElseThrow(
-                () -> { throw new UserNotFoundExeption(); }
-        ));
-        like.setFlat(flatRepository.findById(id_to).orElseThrow(
-                () -> { throw new UserNotFoundExeption(); }
-        ));
-        likesRepository.save(like);
-        return true;
-    }
-
-    public boolean setComment(long id_from, long id_to){
-        Comments comment = new Comments();
-        comment.setUser_from(userRepository.findById(id_from).orElseThrow(
-                () -> { throw new UserNotFoundExeption(); }
-        ));
-        comment.setUser_to(userRepository.findById(id_to).orElseThrow(
-                () -> { throw new UserNotFoundExeption(); }
-        ));
-        commentsRepository.save(comment);
-        return true;
-    }
 }

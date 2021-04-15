@@ -19,4 +19,7 @@ public class Comments extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id_to")
     protected User user_to;
+
+    protected String commentText;
+
 }
