@@ -140,14 +140,17 @@ public class UserBasicController {
     }
 
     @PostMapping("set_comment_to_user")
-    public ResponseEntity<BasicResponce> setComment(@RequestBody CommentDtoPayload commentDtoPayload){
+    public ResponseEntity<BasicResponce> setComment(@RequestBody CommentDtoPayload commentDtoPayload) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         User currentUser = userService.findByUsername(currentUserName).orElseThrow(
-                () -> {throw new UserNotFoundExeption();}
+                () -> {
+                    throw new UserNotFoundExeption();
+                }
         );
         likeAndCommentService.setComment(currentUser.getId(), commentDtoPayload.getId_to(), commentDtoPayload.getCommentText());
         return ResponseEntity.ok(new ResponceCompletedDto());
+    }
 
     @RequestMapping("/get_all_realtors")
     public ResponseEntity<List<io.flats.dto.UserDto>> getAllRieltors() {
