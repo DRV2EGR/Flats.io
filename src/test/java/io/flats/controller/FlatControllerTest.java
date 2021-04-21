@@ -1,10 +1,19 @@
 package io.flats.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.flats.FlatsApplication;
+import io.flats.JWT_AUTH.config.SecurityConfig;
+import io.flats.JWT_AUTH.jwt.JwtTokenFilter;
+import io.flats.JWT_AUTH.jwt.JwtTokenProvider;
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatOrderType;
@@ -12,28 +21,49 @@ import io.flats.entity.FlatsImages;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 import io.flats.payload.FlatDtoPayload;
+import io.flats.repository.FlatRepository;
 import io.flats.service.FlatService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 @ContextConfiguration(classes = {FlatController.class})
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@AutoConfigureMockMvc
+@WebAppConfiguration
+//@TestPropertySource("/application-test.properties")
+//@Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@SpringBootTest(classes = SecurityConfig.class)
 public class FlatControllerTest {
     @Autowired
     private FlatController flatController;
@@ -42,7 +72,22 @@ public class FlatControllerTest {
     private FlatService flatService;
 
     @MockBean
+    private FlatRepository flatRepository;
+
+    @MockBean
     private UserService userService;
+
+    @MockBean
+    JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Before
+    @org.junit.Test
+    public void contextMvcLoads() {
+        assertThat(mockMvc).isNotNull();
+    }
 
     @Test
     public void testAddFlat() throws Exception {
@@ -456,6 +501,35 @@ public class FlatControllerTest {
                                 "{\"country\":\"Country\",\"town\":\"Oxford\",\"street\":\"Street\",\"houseNom\":\"House Nom\",\"floor\":1,\"price\":10.0"
                                         + ",\"description\":\"The characteristics of someone or something\",\"images\":[\"https://example.org/example\""
                                         + "],\"id\":123,\"ownerUsername\":\"janedoe\",\"ownerID\":123}")));
+    }
+
+    @Test
+    @WithMockUser(username = "username", roles = "ADMIN")
+    public void testDeleteFlat() throws Exception {
+        User user = new User(20L, "username");
+        Role r = new Role(); r.setName("ADMIN");
+        user.setRole(r);
+
+        Flat flat = new Flat();
+        flat.setOwner(user);
+
+        String aT = "iiiii";
+        System.out.println(jwtTokenProvider);
+        System.out.println("aT = " + aT);
+
+        when(userService.findByUsername(any())).thenReturn(java.util.Optional.of(user));
+        when(flatService.findFlatById(anyLong())).thenReturn(flat);
+        when(flatService.deleteFlatById(anyLong())).thenReturn(true);
+        when(jwtTokenProvider.validateAccessToken(any())).thenReturn(true);
+        when(jwtTokenProvider.resolveAccessToken(any())).thenReturn(aT);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/flats/delete_flat?id=2")
+                .header("Authorization", "Bearer "+aT )
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$.response").value("OK"))
+                .andReturn();
     }
 }
 

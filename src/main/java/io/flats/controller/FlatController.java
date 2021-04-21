@@ -19,6 +19,7 @@ import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
 import io.flats.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +47,9 @@ public class FlatController {
         return ResponseEntity.ok(new ResponceCompletedDto());
     }
 
-    @RequestMapping(value = "/delete_flat", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete_flat",
+            method = RequestMethod.GET
+    )
     public ResponseEntity<BasicResponce> deleteFlat(@RequestParam Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -59,6 +62,7 @@ public class FlatController {
             flag = flatService.deleteFlatById(id);
         }
 
+        System.out.println(new ResponceCompletedDto());
         return (flag) ? ResponseEntity.ok(new ResponceCompletedDto()) : ResponseEntity.ok(new ResponceNotCompletedDto());
     }
 

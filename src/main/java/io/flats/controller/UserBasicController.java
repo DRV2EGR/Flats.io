@@ -5,8 +5,10 @@ import io.flats.JWT_AUTH.jwt.JwtUser;
 import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
 import io.flats.dto.BasicResponce;
+import io.flats.dto.CommentDto;
 import io.flats.dto.ResponceCompletedDto;
 import io.flats.dto.UserProfileImageUrlDto;
+import io.flats.entity.Comments;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.CommentDtoPayload;
@@ -172,6 +174,22 @@ public class UserBasicController {
         }
 
         return ResponseEntity.ok(responseDto);
+    }
 
+    @RequestMapping("/get_comments_to_user_by_id")
+    public ResponseEntity<List<CommentDto>> getCommentsToUserById(@RequestParam long id) {
+
+        List<CommentDto> responseList = new ArrayList<>();
+        List<Comments> comments = likeAndCommentService.getReceivedCommentsByUserId(id);
+        for (Comments comment : comments) {
+            CommentDto cd = new CommentDto();
+            cd.setComment(comment.getCommentText());
+            cd.setUser_from(new io.flats.dto.UserDto(comment.getUser_from()));
+            cd.setImg_from(new UserProfileImageUrlDto(comment.getUser_from().getUserProfileImageUrl()));
+
+            responseList.add(cd);
+        }
+
+        return ResponseEntity.ok(responseList);
     }
 }

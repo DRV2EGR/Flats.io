@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="users_comments")
+@Table(name ="comments")
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class Comments extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id_from")

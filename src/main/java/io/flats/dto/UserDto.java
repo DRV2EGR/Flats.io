@@ -1,5 +1,6 @@
 package io.flats.dto;
 
+import io.flats.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -37,5 +38,15 @@ public class UserDto {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
+    }
+
+    public UserDto(User user) {
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+        this.lastName = user.getLastName();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+        this.role = user.getRole().getName();
     }
 }

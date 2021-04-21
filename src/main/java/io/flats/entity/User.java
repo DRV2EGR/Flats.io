@@ -87,6 +87,12 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy="user")
     protected List<Likes> puttedLikesToFlats;
 
+    @OneToMany(mappedBy="user_from")
+    protected List<Comments> puttedCommentsToFlats;
+
+    @OneToMany(mappedBy="user_to")
+    protected List<Comments> receivedCommentsToFlats;
+
     /**
      * Instantiates a new User.
      *
