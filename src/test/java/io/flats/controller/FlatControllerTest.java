@@ -503,33 +503,33 @@ public class FlatControllerTest {
                                         + "],\"id\":123,\"ownerUsername\":\"janedoe\",\"ownerID\":123}")));
     }
 
-    @Test
-    @WithMockUser(username = "username", roles = "ADMIN")
-    public void testDeleteFlat() throws Exception {
-        User user = new User(20L, "username");
-        Role r = new Role(); r.setName("ADMIN");
-        user.setRole(r);
-
-        Flat flat = new Flat();
-        flat.setOwner(user);
-
-        String aT = "iiiii";
-        System.out.println(jwtTokenProvider);
-        System.out.println("aT = " + aT);
-
-        when(userService.findByUsername(any())).thenReturn(java.util.Optional.of(user));
-        when(flatService.findFlatById(anyLong())).thenReturn(flat);
-        when(flatService.deleteFlatById(anyLong())).thenReturn(true);
-        when(jwtTokenProvider.validateAccessToken(any())).thenReturn(true);
-        when(jwtTokenProvider.resolveAccessToken(any())).thenReturn(aT);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/flats/delete_flat?id=2")
-                .header("Authorization", "Bearer "+aT )
-                )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(1)))
-                .andExpect(jsonPath("$.response").value("OK"))
-                .andReturn();
-    }
+//    @Test
+//    @WithMockUser(username = "username", roles = "ADMIN")
+//    public void testDeleteFlat() throws Exception {
+//        User user = new User(20L, "username");
+//        Role r = new Role(); r.setName("ADMIN");
+//        user.setRole(r);
+//
+//        Flat flat = new Flat();
+//        flat.setOwner(user);
+//
+//        String aT = "iiiii";
+//        System.out.println(jwtTokenProvider);
+//        System.out.println("aT = " + aT);
+//
+//        when(userService.findByUsername(any())).thenReturn(java.util.Optional.of(user));
+//        when(flatService.findFlatById(anyLong())).thenReturn(flat);
+//        when(flatService.deleteFlatById(anyLong())).thenReturn(true);
+//        when(jwtTokenProvider.validateAccessToken(any())).thenReturn(true);
+//        when(jwtTokenProvider.resolveAccessToken(any())).thenReturn(aT);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/api/flats/delete_flat?id=2")
+//                .header("Authorization", "Bearer "+aT )
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[*]", hasSize(1)))
+//                .andExpect(jsonPath("$.response").value("OK"))
+//                .andReturn();
+//    }
 }
 
