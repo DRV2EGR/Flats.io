@@ -1,23 +1,20 @@
 package io.flats.controller;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 import io.flats.JWT_AUTH.jwt.JwtUser;
 import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
-import io.flats.dto.BasicResponce;
-import io.flats.dto.FlatDto;
-import io.flats.dto.ResponceCompletedDto;
-import io.flats.dto.ResponceNotCompletedDto;
+import io.flats.dto.*;
 import io.flats.entity.Flat;
 import io.flats.entity.FlatsImages;
+import io.flats.entity.Likes;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.FlatDtoPayload;
+import io.flats.repository.LikesRepository;
 import io.flats.service.FlatService;
+import io.flats.service.LikeAndCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +30,9 @@ public class FlatController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    LikeAndCommentService likeAndCommentService;
 
     @RequestMapping(value = "/add_flat", method = RequestMethod.POST)
     public ResponseEntity<BasicResponce> addFlat(@RequestBody FlatDtoPayload newFlat) {
@@ -90,5 +90,24 @@ public class FlatController {
         }
 
         return ResponseEntity.ok(fdto);
+    }
+
+    @RequestMapping(value = "/get_likes_to_flat_by_id", method = RequestMethod.GET)
+    public ResponseEntity<List<LikeDto>> getLikesToFlatById(@RequestParam long id) {
+        List<Likes> likes = likeAndCommentService.getLikesOfFlatById(id);
+
+        List<LikeDto> likesDto = new ArrayList();
+        for (Likes like:likes) {
+            LikeDto ldto = new LikeDto();
+//            ldto.setFlat(
+//                    flatService.convertFlatToFlatDto(like.getFlat())
+//            );
+            ldto.setUser(
+                    userService.convertUserToUserDto(like.getUser())
+            );
+            likesDto.add(ldto);
+        }
+
+        return ResponseEntity.ok(likesDto);
     }
 }

@@ -11,10 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LikeDto {
     protected UserDto user;
-    protected FlatDto flat;
 
-    public LikeDto(UserDto user, FlatDto flat) {
+    public LikeDto(UserDto user) {
         this.user = user;
-        this.flat = flat;
     }
 }
