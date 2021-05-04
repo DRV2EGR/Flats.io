@@ -1,72 +1,79 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import './nullStyle.css';
+import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UserProfile.css'
 import Cookies from "universal-cookie";
 import CheckAcsessComponent from "../CheckAcsessComponent";
+import {Preloader, TailSpin} from "react-preloader-icon";
 
 
 class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            main_container:'hidden',
+            loading: true
             // code: props.code ? props.code : '999',
             // description: props.description ? props.description : 'Unknown error'
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
         let b = cookies.get('username');
 
         if (b) {
 
-        fetch('/api/user/public/get_user_img_url_by_username?username=' + b, {
-            method: 'post',
-            headers: new Headers({
-                'Authorization': 'Bearer ' + a,
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify(cookies.get('username'))
-        }).then(response => response.json())
-            .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
+            await fetch('/api/user/public/get_user_img_url_by_username?username=' + b, {
+                method: 'post',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + a,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify(cookies.get('username'))
+            }).then(response => response.json())
+                .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
 
-        fetch('/api/user/public/get_user_info', {
-            method: 'post',
-            headers: new Headers({
-                'Authorization': 'Bearer ' + a,
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({'username': cookies.get('username')})
-        }).then(response => response.json())
-            .then(res => /*console.log(result.imgUrl) );*/{ this.setState({
-                phoneNumber: res.phoneNumber,
-                firstName: res.firstName,
-                secondName: res.secondName,
-                lastName: res.lastName,
-                username: res.username,
-                email: res.email,
-                role: res.role,
-            });
-            if (this.state.role == 'ROLE_ADMIN') {
-                this.setState({role:'Администратор'});
-            } else if (this.state.role == 'ROLE_SELLER') {
-                this.setState({role:'Собственник'});
-            } else  if (this.state.role == 'ROLE_REALTOR') {
-                this.setState({role:'Риелтор'});
-            } else  if (this.state.role == 'ROLE_USER') {
-                this.setState({role:'Пользователь'});
-            }
-            }
-            );
+            await fetch('/api/user/public/get_user_info', {
+                method: 'post',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + a,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({'username': cookies.get('username')})
+            }).then(response => response.json())
+                .then(res => /*console.log(result.imgUrl) );*/ {
+                        this.setState({
+                            phoneNumber: res.phoneNumber,
+                            firstName: res.firstName,
+                            secondName: res.secondName,
+                            lastName: res.lastName,
+                            username: res.username,
+                            email: res.email,
+                            role: res.role,
+                        });
+                        if (this.state.role == 'ROLE_ADMIN') {
+                            this.setState({role: 'Администратор'});
+                        } else if (this.state.role == 'ROLE_SELLER') {
+                            this.setState({role: 'Собственник'});
+                        } else if (this.state.role == 'ROLE_REALTOR') {
+                            this.setState({role: 'Риелтор'});
+                        } else if (this.state.role == 'ROLE_USER') {
+                            this.setState({role: 'Пользователь'});
+                        }
+                    }
+                );
         } else {
             this.setState({
 
                 user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'
             }); //TODO: update img;
         }
+
+        this.setState({main_container:'container-main', loading:false})
     }
 
 
@@ -79,15 +86,27 @@ class UserProfile extends Component {
         const { lastName } = this.state;
         const { email } = this.state;
         const { role } = this.state;
+        const { loading, main_container } = this.state;
         // const {code, description} = this.state;
         return (
 
             <div>
-
                 <Header/>
+
+                {loading ? <div className='centerred-loader'><Preloader
+                    use={TailSpin}
+                    size={200}
+                    strokeWidth={6}
+                    strokeColor="#262626"
+                    duration={2000}
+                /></div> : <div></div> }
+
+                <div className={main_container}>
                 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
             <div className="container bootstrap snippets bootdeys">
                 <div className="row" id="user-profile">
+
+
                     <div className="col-lg-3 col-md-4 col-sm-4">
                         <div className="main-box clearfix">
                             <h2>{username} </h2>
@@ -120,8 +139,7 @@ class UserProfile extends Component {
 
                             <div className="profile-details">
                                 <ul className="fa-ul">
-                                    <li><i className="fa-li fa fa-comment"></i>Диалоги: <span>1700</span>
-                                    </li>
+                                    <li><i className="fa-li fa fa-comment"></i>Комментарии: <span>1700</span></li>
                                     <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>110</span></li>
                                 </ul>
                             </div>
@@ -188,6 +206,8 @@ class UserProfile extends Component {
                             <div className="tabs-wrapper profile-tabs">
                                 <ul className="nav nav-tabs">
                                     <li className="active"><a href="#tab-activity" data-toggle="tab">Активность</a></li>
+                                    <li className="active"><a href="#tab-comments" data-toggle="tab">Комментарии</a></li>
+                                    <li className="active"><a href="#tab-likes" data-toggle="tab">Понравившиеся</a></li>
                                     {/*<li><a href="#tab-friends" data-toggle="tab">Инвестиции</a></li>*/}
                                 </ul>
 
@@ -473,6 +493,7 @@ class UserProfile extends Component {
                     </div>
                 </div>
             </div>
+                </div>
             <script src="http://code.jquery.com/jquery-1.10.2.min.js"/>
             <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
             </div>
