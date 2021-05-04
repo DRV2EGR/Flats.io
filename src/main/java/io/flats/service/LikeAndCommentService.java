@@ -72,7 +72,7 @@ public class LikeAndCommentService {
         return user.getPuttedCommentsToFlats();
     }
 
-    public List<Likes> getPuttedLikesById(long id) {
+    public List<Likes> getLikesOfFlatById(long id) {
         Flat flat = flatRepository.findById(id).orElseThrow(
                 () -> { throw new NotFoundException(); }
         );
