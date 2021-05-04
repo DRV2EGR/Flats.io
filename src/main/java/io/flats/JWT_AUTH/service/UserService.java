@@ -2,6 +2,7 @@ package io.flats.JWT_AUTH.service;
 
 import io.flats.JWT_AUTH.payload.BasicPayload;
 import io.flats.JWT_AUTH.payload.UserDtoPayload;
+import io.flats.dto.UserDto;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
@@ -200,5 +201,19 @@ public class UserService {
         () -> { throw new RuntimeException("NO SUCH ROLE!"); })).orElseThrow( () -> {
             throw new UserNotFoundExeption();
         });
+    }
+
+    public UserDto convertUserToUserDto(User user) {
+        io.flats.dto.UserDto userDto = new io.flats.dto.UserDto();
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setRole(user.getRole().getName());
+        userDto.setSecondName(user.getSecondName());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+
+        return userDto;
     }
 }

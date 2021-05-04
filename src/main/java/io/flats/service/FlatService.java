@@ -208,4 +208,27 @@ public class FlatService {
         return flatRepository.findById(id).isEmpty();
     }
 
+    public FlatDto convertFlatToFlatDto(Flat flat) {
+        FlatDto fdto = new FlatDto();
+        fdto.setCountry(flat.getCountry());
+        fdto.setTown(flat.getTown());
+        fdto.setStreet(flat.getStreet());
+        fdto.setHouseNom(flat.getHouseNom());
+        fdto.setFloor(flat.getFloor());
+        fdto.setId(flat.getId());
+
+        fdto.setDescription(flat.getDescription());
+        fdto.setPrice(flat.getPrice());
+
+        fdto.setOwnerUsername(flat.getOwner().getUsername());
+        fdto.setOwnerID(flat.getOwner().getId());
+
+        fdto.setImageListToNew();
+        for (FlatsImages image: flat.getFlatsImages()) {
+            fdto.getImages().add(image.getImgUrl());
+        }
+
+        return fdto;
+    }
+
 }
