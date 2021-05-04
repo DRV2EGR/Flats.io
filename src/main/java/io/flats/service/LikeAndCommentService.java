@@ -1,9 +1,12 @@
 package io.flats.service;
 
+import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.flats.JWT_AUTH.exeption.NotFoundException;
 import io.flats.entity.Comments;
+import io.flats.entity.Flat;
 import io.flats.entity.Likes;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
@@ -67,5 +70,13 @@ public class LikeAndCommentService {
         );
 
         return user.getPuttedCommentsToFlats();
+    }
+
+    public List<Likes> getPuttedLikesById(long id) {
+        Flat flat = flatRepository.findById(id).orElseThrow(
+                () -> { throw new NotFoundException(); }
+        );
+
+        return flat.getFlatsLikes();
     }
 }
