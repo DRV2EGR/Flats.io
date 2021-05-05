@@ -186,6 +186,7 @@ public class UserBasicController {
             cd.setComment(comment.getCommentText());
             cd.setUser_from(new io.flats.dto.UserDto(comment.getUser_from()));
             cd.setImg_from(new UserProfileImageUrlDto(comment.getUser_from().getUserProfileImageUrl()));
+            cd.setRating(comment.getRating());
 
             responseList.add(cd);
         }
