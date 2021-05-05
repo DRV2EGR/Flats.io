@@ -22,4 +22,6 @@ public class Comments extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     protected String commentText;
 
+    protected float rating;
+
 }

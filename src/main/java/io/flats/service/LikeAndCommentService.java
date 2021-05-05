@@ -43,7 +43,7 @@ public class LikeAndCommentService {
         return true;
     }
 
-    public boolean setComment(long id_from, long id_to, String commentText){
+    public boolean setComment(long id_from, long id_to, String commentText, float rating){
         Comments comment = new Comments();
         comment.setUser_from(userRepository.findById(id_from).orElseThrow(
                 () -> { throw new UserNotFoundExeption(); }
@@ -51,6 +51,7 @@ public class LikeAndCommentService {
         comment.setUser_to(userRepository.findById(id_to).orElseThrow(
                 () -> { throw new UserNotFoundExeption(); }
         ));
+        comment.setRating(rating);
         comment.setCommentText(commentText);
         commentsRepository.save(comment);
         return true;

@@ -150,7 +150,7 @@ public class UserBasicController {
                     throw new UserNotFoundExeption();
                 }
         );
-        likeAndCommentService.setComment(currentUser.getId(), commentDtoPayload.getId_to(), commentDtoPayload.getCommentText());
+        likeAndCommentService.setComment(currentUser.getId(), commentDtoPayload.getId_to(), commentDtoPayload.getCommentText(), commentDtoPayload.getRating());
         return ResponseEntity.ok(new ResponceCompletedDto());
     }
 
