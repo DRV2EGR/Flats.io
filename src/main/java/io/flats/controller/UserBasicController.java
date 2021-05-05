@@ -4,11 +4,9 @@ import io.flats.JWT_AUTH.dto.UserDto;
 import io.flats.JWT_AUTH.jwt.JwtUser;
 import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
-import io.flats.dto.BasicResponce;
-import io.flats.dto.CommentDto;
-import io.flats.dto.ResponceCompletedDto;
-import io.flats.dto.UserProfileImageUrlDto;
+import io.flats.dto.*;
 import io.flats.entity.Comments;
+import io.flats.entity.Likes;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.CommentDtoPayload;
@@ -187,6 +185,22 @@ public class UserBasicController {
             cd.setUser_from(new io.flats.dto.UserDto(comment.getUser_from()));
             cd.setImg_from(new UserProfileImageUrlDto(comment.getUser_from().getUserProfileImageUrl()));
             cd.setRating(comment.getRating());
+
+            responseList.add(cd);
+        }
+
+        return ResponseEntity.ok(responseList);
+    }
+
+    @RequestMapping("/get_likes_from_user_by_id")
+    public ResponseEntity<List<LikeDto>> getLikesFromUserById(@RequestParam long id) {
+
+        List<LikeDto> responseList = new ArrayList<>();
+        List<Likes> likes = likeAndCommentService.getLikesOfUserById(id);
+        for (Likes like : likes) {
+            LikeDto cd = new LikeDto();
+            cd.setUser(userService.convertUserToUserDto( like.getUser()));
+            cd.setFlat(flatService.convertFlatToFlatDto(like.getFlat()));
 
             responseList.add(cd);
         }

@@ -80,4 +80,12 @@ public class LikeAndCommentService {
 
         return flat.getFlatsLikes();
     }
+
+    public List<Likes> getLikesOfUserById(long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> { throw new NotFoundException(); }
+        );
+
+        return user.getPuttedLikesToFlats();
+    }
 }
