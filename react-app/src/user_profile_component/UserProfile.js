@@ -17,7 +17,9 @@ class UserProfile extends Component {
         super(props);
         this.state = {
             main_container:'hidden',
-            loading: true
+            loading: true,
+
+            mappedImgs: []
             // code: props.code ? props.code : '999',
             // description: props.description ? props.description : 'Unknown error'
         }
@@ -272,7 +274,8 @@ class UserProfile extends Component {
         const { username, user_image, phoneNumber,
                 firstName, secondName,lastName,
                 email, role,
-                loading, main_container, page, summa } = this.state;
+                loading, main_container, page, summa,
+                mappedImgs } = this.state;
         // const {code, description} = this.state;
         return (
 
