@@ -25,6 +25,7 @@ class App extends Component {
               <Route exact path={'/signup'} component={SignUP}/>
 
               <Route exact path={'/user_profile'} component={UserProfile}/>
+              <Route exact path={'/user/:username'} component={UserProfile}/>
 
               <Route exact path={'/add_order'} component={AddSellingFlat}/>
 

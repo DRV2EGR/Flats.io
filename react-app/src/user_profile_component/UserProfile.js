@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import './nullStyle.css';
-import '../App.css'
+import '../rieltors_page_component/RealtorPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './UserProfile.css'
+import './UserProfile.css';
 import Cookies from "universal-cookie";
 import CheckAcsessComponent from "../CheckAcsessComponent";
 import {Preloader, TailSpin} from "react-preloader-icon";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import AwesomeSlider from "react-awesome-slider";
 
 
 class UserProfile extends Component {
@@ -20,10 +23,33 @@ class UserProfile extends Component {
         }
     }
 
+    async makeReplyes() {
+        const cookies = new Cookies();
+        let a = cookies.get('accessToken');
+
+        return await fetch('/api/user/public/get_comments_to_user_by_id?id=' + this.state.id, {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + a,
+                'Content-Type': 'application/json'
+            })
+        }).then(response => {
+            if (!response.ok) {
+                // this.checkValidRefresh();
+                // window.location.reload();
+            }
+            return response.json();
+        });
+    }
+
     async componentDidMount() {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
         let b = cookies.get('username');
+
+        if (this.props.match.params.username != null) {
+            b = this.props.match.params.username;
+        }
 
         if (b) {
 
@@ -33,7 +59,7 @@ class UserProfile extends Component {
                     'Authorization': 'Bearer ' + a,
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify(cookies.get('username'))
+                body: JSON.stringify({'username': b})
             }).then(response => response.json())
                 .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
 
@@ -43,10 +69,40 @@ class UserProfile extends Component {
                     'Authorization': 'Bearer ' + a,
                     'Content-Type': 'application/json'
                 }),
-                body: JSON.stringify({'username': cookies.get('username')})
+                body: JSON.stringify({'username': b})
+            }).then(response => response.json())
+                .then(res => /*console.log(result.imgUrl) );*/ {
+                    this.setState({
+                        phoneNumber: res.phoneNumber,
+                        firstName: res.firstName,
+                        secondName: res.secondName,
+                        lastName: res.lastName,
+                        username: res.username,
+                        email: res.email,
+                        role: res.role,
+                    });
+                    if (this.state.role == 'ROLE_ADMIN') {
+                        this.setState({role: 'Администратор'});
+                    } else if (this.state.role == 'ROLE_SELLER') {
+                        this.setState({role: 'Собственник'});
+                    } else if (this.state.role == 'ROLE_REALTOR') {
+                        this.setState({role: 'Риелтор'});
+                    } else if (this.state.role == 'ROLE_USER') {
+                        this.setState({role: 'Пользователь'});
+                    }
+                });
+
+            await fetch('/api/user/public/get_user_info', {
+                method: 'post',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + a,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({'username': b})
             }).then(response => response.json())
                 .then(res => /*console.log(result.imgUrl) );*/ {
                         this.setState({
+                            id: res.id,
                             phoneNumber: res.phoneNumber,
                             firstName: res.firstName,
                             secondName: res.secondName,
@@ -66,31 +122,161 @@ class UserProfile extends Component {
                         }
                     }
                 );
-        } else {
-            this.setState({
 
-                user_image: 'https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'
-            }); //TODO: update img;
+            const lemma = [];
+
+            await this.makeReplyes().then(async (res) => {
+
+                console.log(res);
+                this.setState({
+                    summa: res.length
+                });
+
+                for (let i = 0; i < res.length; ++i) {
+                    //await this.getUserAwatar(res[i].username).then(img_url => res[i].img_url = img_url)
+
+                    await console.log(res[i]);
+
+                    let erase = [];
+                    if (res[i].img_from.img == "") {
+                        await erase.push(
+                            <div>
+                                <img src='https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg'
+                                     className='realtor-avatar poabs'/>
+                                <div className='realtor-avatar-div'>
+                                <span className='realtor-avatar-letter'>
+                                    {res[i].user_from.firstName.charAt(0)}
+                                </span>
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        await erase.push(
+                            <img src={res[i].img_from.img} className='realtor-avatar'/>
+                        );
+                    }
+
+                    let rating_com = [];
+
+                    for (let j = 0; j < 5; ++j) {
+                        if (j < res[i].rating) {
+                            rating_com.push(
+                                <li className='df'>
+                                    <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%"
+                                         height="100%" viewBox="0 0 20 18">
+                                        <defs>
+                                            <linearGradient id="12596888-0" y2="0%" x2="100%" y1="0%" x1="0%">
+                                                <stop offset="0%" stop-opacity="1" stop-color="#ff7e00"></stop>
+                                                <stop offset="100%" stop-opacity="1"
+                                                      stop-color="#ff7e00"></stop>
+                                                <stop offset="100%" stop-opacity="0"
+                                                      stop-color="#ff7e00"></stop>
+                                                <stop offset="100%" stop-opacity="1"
+                                                      stop-color="#ff7e00"></stop>
+                                                <stop offset="100%" stop-opacity="1"
+                                                      stop-color="#ff7e00"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <path stroke="url(#12596888-0)" fill="url(#12596888-0)"
+                                              d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
+
+                                        </path>
+                                    </svg>
+                                </li>
+                            );
+                        } else {
+                            rating_com.push(
+                                <li>
+                                    <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%"
+                                         height="100%" viewBox="0 0 20 18">
+                                        <defs>
+                                            <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
+                                                <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
+                                                <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
+                                                <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
+                                                <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
+                                                <stop offset="100%" stop-opacity="1"
+                                                      stop-color="#e8e9ec"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <path stroke="url(#12596888-3)" fill="url(#12596888-3)"
+                                              d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
+
+                                        </path>
+                                    </svg>
+                                </li>
+                            );
+                        }
+                    }
+
+                    await lemma.push(
+                        // <div>
+                        //     {res[i].firstName}
+                        // </div>
+                        // <a href={'/user/' + res[i].id}>
+                            <div className='realtor-container'>
+                                <div className='realtor-credentials tap-realtor-peace right-zero nwarp'>
+                                    <div className='warp'>
+                                        <div className='realtor-avatar-container'>
+                                            {erase}
+                                        </div>
+                                        <div>
+                                            <span className='realtor-fio-cred'>{res[i].user_from.firstName} {res[i].user_from.secondName}</span>
+
+                                            {/*<div className='realtor-fio-descr'>*/}
+                                            {/*    {res[i].user_from.role}*/}
+                                            {/*</div>*/}
+                                        </div>
+                                    </div>
+
+                                    <div className='realtor-review tap-realtor-peace dff rierw'>
+                                        <ui>
+                                            {/*Оценка: <li> {res[i].rating}</li>*/}
+
+                                            {rating_com}
+                                        </ui>
+                                    </div>
+                                </div>
+
+                                <div className="cmt-mn">
+
+                                    <div className='realtor-objects tap-realtor-peace comment-main cm-mn'>
+                                        <div>
+                                            {/*<span className='nomber-of-objects-big'>N объектов</span> <br/>*/}
+                                            {/*<span style={{marginLeft: '10px'}}>в работе</span>*/}
+
+                                            <p className="rew-txt">{res[i].comment}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        // </a>
+                    );
+
+                    // console.log('pushed');
+                }
+
+                console.log(lemma);
+            });
+
+            this.setState(
+                {page: lemma}
+            );
+
+            this.setState({main_container: 'container-main', loading: false})
         }
-
-        this.setState({main_container:'container-main', loading:false})
     }
 
 
     render() {
-        const { username } = this.state;
-        const { user_image } = this.state;
-        const { phoneNumber } = this.state;
-        const { firstName } = this.state;
-        const { secondName } = this.state;
-        const { lastName } = this.state;
-        const { email } = this.state;
-        const { role } = this.state;
-        const { loading, main_container } = this.state;
+        const { username, user_image, phoneNumber,
+                firstName, secondName,lastName,
+                email, role,
+                loading, main_container, page, summa } = this.state;
         // const {code, description} = this.state;
         return (
 
-            <div>
+            <div className="mdv">
                 <Header/>
 
                 {loading ? <div className='centerred-loader'><Preloader
@@ -102,7 +288,7 @@ class UserProfile extends Component {
                 /></div> : <div></div> }
 
                 <div className={main_container}>
-                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+                {/*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>*/}
             <div className="container bootstrap snippets bootdeys">
                 <div className="row" id="user-profile">
 
@@ -139,8 +325,10 @@ class UserProfile extends Component {
 
                             <div className="profile-details">
                                 <ul className="fa-ul">
-                                    <li><i className="fa-li fa fa-comment"></i>Комментарии: <span>1700</span></li>
-                                    <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>110</span></li>
+                                    <li><i className="fa-li fa fa-comment"></i>Комментарии: <span>{summa}</span></li>
+                                    {this.props.match.params.username ? "" :
+                                        <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>110</span></li>
+                                    }
                                 </ul>
                             </div>
 
@@ -203,299 +391,51 @@ class UserProfile extends Component {
                                 </div>
                             </div>
 
-                            <div className="tabs-wrapper profile-tabs">
-                                <ul className="nav nav-tabs">
-                                    <li className="active"><a href="#tab-activity" data-toggle="tab">Активность</a></li>
-                                    <li className="active"><a href="#tab-comments" data-toggle="tab">Комментарии</a></li>
-                                    <li className="active"><a href="#tab-likes" data-toggle="tab">Понравившиеся</a></li>
-                                    {/*<li><a href="#tab-friends" data-toggle="tab">Инвестиции</a></li>*/}
-                                </ul>
 
-                                <div className="tab-content">
-                                    <div className="tab-pane fade in active" id="tab-activity">
+                            <div className="tbs-mn">
+                                <Tabs>
+                                    <TabList>
+                                        <Tab>Отзывы о пользователе</Tab>
+                                        {this.props.match.params.username ? "" :
+                                            <Tab>Понравившиеся квартиры</Tab>  }
+                                    </TabList>
 
-                                        <div className="table-responsive">
-                                            <table className="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td className="text-center">
-                                                            <i className="fa fa-search"></i>
-                                                        </td>
-                                                        <td>
-                                                            Павел Павлов начал поиск новых <a href="#"> инициатив</a>.
+                                    <TabPanel>
+                                        <div className="repl-container">
+                                            {/*<div className="repl-main">*/}
+                                            {/*    <div className="mar">*/}
+                                            {/*        <div className="repl-avatar-div">*/}
+                                            {/*            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/b561dc28-505f-426f-8a59-abec46161744/dbscvr2-c1a5e06a-2375-4dca-b7a0-8700279f9cbb.png/v1/fill/w_894,h_894,strp/sefsef_x_unnamed_by_cyacol_dbscvr2-pre.png" className='realtor-avatar' />*/}
+                                            {/*        </div>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
 
-                                                    </td>
-                                                        <td>
-                                                            2021/02/07 13:22
-                                                    </td>
-                                                    </tr>
-                                                    <td className="text-center">
-                                                        <i className="fa fa-users"></i>
-                                                    </td>
-                                                    <td>
-                                                        Павел Павлов просмотрел рейтинг инициаторов по обучению.
-
-                                                </td>
-                                                    <td>
-                                                        2021/02/07 13:22
-                                                </td>
-
-
-                                                    <tr>
-                                                        <td className="text-center">
-                                                            <i className="fa fa-check"></i>
-                                                        </td>
-                                                        <td>
-                                                            Павел Павлов успешно вложил инвестиции в <a
-                                                                href="#">"Инициатива1"</a>.
-                                                    </td>
-                                                        <td>
-                                                            2021/02/07 13:22
-                                                    </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td className="text-center">
-                                                            <i className="fa fa-check"></i>
-                                                        </td>
-                                                        <td>
-                                                            Павел Павлов успешно вложил инвестиции в <a
-                                                                href="#">"Инициатива7"</a>.
-                                                    </td>
-                                                        <td>
-                                                            2021/02/07 13:22
-                                                    </td>
-                                                    </tr>
-
-
-                                                    <tr>
-                                                        <td className="text-center">
-                                                            <i className="fa fa-heart"></i>
-                                                        </td>
-                                                        <td>
-                                                            Павлу Павлову были присвоены статусы в связи с выбором областей
-                                                            инвестирования
-                                                        <span className="label label-warning">hr</span>
-                                                            <span className="label label-danger">pr</span>
-                                                            <span className="label label-primary">digital</span>
-                                                        </td>
-                                                        <td>
-                                                            2021/02/07 13:22
-                                                    </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
+                                            {page}
                                         </div>
+                                    </TabPanel>
 
-                                    </div>
-
-                                    <div className="tab-pane fade" id="tab-friends">
-                                        <ul className="widget-users row">
-                                            <h5 className="d-flex align-items-center mb-3"><i
-                                                className="material-icons text-info mr-2"></i>Инициаторы, на которых подписан
-                                            инвестор</h5>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор1 </a>
-                                                    </div>
-                                                    <div className="time">
-                                                        <i className="fa fa-clock-o"></i> Был онлайн: 3 часа назад
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-primary">digital</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор2</a>
-                                                    </div>
-                                                    <div className="time online">
-                                                        <i className="fa fa-check-circle"></i> Онлайн
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-primary">digital</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор3</a>
-                                                    </div>
-                                                    <div className="time online">
-                                                        <i className="fa fa-check-circle"></i> Онлайн
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-primary">digital</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор4</a>
-                                                    </div>
-                                                    <div className="time">
-                                                        <i className="fa fa-clock-o"></i> Был онлайн: Среда
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-warning">hr</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор5</a>
-                                                    </div>
-                                                    <div className="time">
-                                                        <i className="fa fa-clock-o"></i> Был онлайн: 3 недели назад
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-warning">hr</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор6</a>
-                                                    </div>
-                                                    <div className="time">
-                                                        <i className="fa fa-clock-o"></i> Был онлайн: 1 месяц назад
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-warning">hr</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор7</a>
-                                                    </div>
-                                                    <div className="time online">
-                                                        <i className="fa fa-check-circle"></i> Онлайн
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-danger">pr</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li className="col-md-6">
-                                                <div className="img">
-                                                    <img src="https://pbs.twimg.com/profile_images/1296338780325056515/esn8pER-_400x400.jpg"
-                                                        className="img-responsive" alt="" />
-                                                </div>
-                                                <div className="details">
-                                                    <div className="name">
-                                                        <a href="#">Инициатор8</a>
-                                                    </div>
-                                                    <div className="time online">
-                                                        <i className="fa fa-check-circle"></i> Онлайн
-                                                </div>
-                                                    <div className="type">
-                                                        <span className="label label-danger">pr</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <div className="row gutters-sm">
-                                                <div className="col-sm-6 mb-3">
-                                                    <div className="card h-100">
-                                                        <div className="card-body">
-                                                            {/*<h5 className="d-flex align-items-center mb-3"><i*/}
-                                                            {/*    className="material-icons text-info mr-2"></i>Процесс*/}
-                                                            {/*    инвестирования инициатив</h5>*/}
-                                                            {/*<small>Инициатива1</small>*/}
-                                                            {/*<div className="progress mb-3" /!*style="height: 7px"*!/>*/}
-                                                            {/*    <div className="progress-bar bg-warning" role="progressbar"*/}
-                                                            {/*         /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                            {/*<small>Инициатива2</small>*/}
-                                                            {/*<div className="progress mb-3" /!*style="height: 7px"*!/>*/}
-                                                            {/*    <div className="progress-bar bg-primary" role="progressbar"*/}
-                                                            {/*         /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                            {/*<small>Инициатива3</small>*/}
-                                                            {/*<div className="progress mb-3" /!*style="height: 7px"*!/>*/}
-                                                            {/*    <div className="progress-bar bg-primary" role="progressbar"*/}
-                                                            {/*         /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                            {/*<small>Инициатива4</small>*/}
-                                                            {/*<div className="progress mb-3" /!*style="height: 7px"*!/>*/}
-                                                            {/*    <div className="progress-bar bg-primary" role="progressbar"*/}
-                                                            {/*         /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                            {/*<small>Инициатива5</small>*/}
-                                                            {/*<div className="progress mb-3" /!*style="height: 7px"*!/>*/}
-                                                            {/*    <div className="progress-bar bg-primary" role="progressbar"*/}
-                                                            {/*         /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                            {/*<small>Инициатива6</small>*/}
-                                                            {/*<div className="progress mb-3" style="height: 7px">*/}
-                                                            {/*    <div className="progress-bar bg-primary" role="progressbar"*/}
-                                                            {/*         /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                            {/*<small>Инициатива7</small>*/}
-                                                            {/*<div className="progress mb-3" /!*style="height: 7px"*!/>*/}
-                                                            {/*    <div className="progress-bar bg-primary" role="progressbar"*/}
-                                                            {/*        /!*style="width: 95%" aria-valuenow="95" aria-valuemin="0"*/}
-                                                            {/*         aria-valuemax="100"*!/></div>*/}
-                                                            {/*</div>*/}
-                                                        </div>
-                                                    </div>
+                                    {this.props.match.params.username ? "" :
+                                        <TabPanel>
+                                            <div className="likes-main">
+                                                <div className="liked-flat">
+                                                    <AwesomeSlider animation="cubeAnimation">
+                                                        {mappedImgs}
+                                                    </AwesomeSlider>
                                                 </div>
                                             </div>
-                                        </ul>
-                                        <br />
-                                    </div>
-                                </div>
+                                        </TabPanel>
+                                    }
+                                </Tabs>
                             </div>
+
 
                         </div>
                     </div>
                 </div>
             </div>
                 </div>
-            <script src="http://code.jquery.com/jquery-1.10.2.min.js"/>
-            <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+            {/*<script src="http://code.jquery.com/jquery-1.10.2.min.js"/>*/}
+            {/*<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>*/}
             </div>
         );
     }
