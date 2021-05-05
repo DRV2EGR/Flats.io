@@ -728,3 +728,22 @@ ui {
     display: flex;
     flex-direction: column;
 }
+
+.likes-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.liked-flat {
+    display: flex;
+    flex-direction: row;
+
+    margin: 10px;
+}
+
+.aws-sl {
+    max-width: 40%;
+    max-height: 40%;
+
+    margin-right: 20px;
+}

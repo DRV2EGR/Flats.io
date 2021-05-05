@@ -10,6 +10,9 @@ import {Preloader, TailSpin} from "react-preloader-icon";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import AwesomeSlider from "react-awesome-slider";
+import Typography from "@material-ui/core/Typography";
+import Box from '@material-ui/core/Box';
+import Rating from '@material-ui/lab/Rating';
 
 
 class UserProfile extends Component {
@@ -19,10 +22,14 @@ class UserProfile extends Component {
             main_container:'hidden',
             loading: true,
 
-            mappedImgs: []
+            mappedImgs: [],
+
+            stars: 0
             // code: props.code ? props.code : '999',
             // description: props.description ? props.description : 'Unknown error'
         }
+
+        this.renderFlats = this.renderFlats.bind(this);
     }
 
     async makeReplyes() {
@@ -30,6 +37,25 @@ class UserProfile extends Component {
         let a = cookies.get('accessToken');
 
         return await fetch('/api/user/public/get_comments_to_user_by_id?id=' + this.state.id, {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + a,
+                'Content-Type': 'application/json'
+            })
+        }).then(response => {
+            if (!response.ok) {
+                // this.checkValidRefresh();
+                // window.location.reload();
+            }
+            return response.json();
+        });
+    }
+
+    async makeLikedFlats() {
+        const cookies = new Cookies();
+        let a = cookies.get('accessToken');
+
+        return await fetch('/api/user/public/get_likes_from_user_by_id?id=' + this.state.id, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + a,
@@ -65,34 +91,7 @@ class UserProfile extends Component {
             }).then(response => response.json())
                 .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
 
-            await fetch('/api/user/public/get_user_info', {
-                method: 'post',
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + a,
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify({'username': b})
-            }).then(response => response.json())
-                .then(res => /*console.log(result.imgUrl) );*/ {
-                    this.setState({
-                        phoneNumber: res.phoneNumber,
-                        firstName: res.firstName,
-                        secondName: res.secondName,
-                        lastName: res.lastName,
-                        username: res.username,
-                        email: res.email,
-                        role: res.role,
-                    });
-                    if (this.state.role == 'ROLE_ADMIN') {
-                        this.setState({role: 'Администратор'});
-                    } else if (this.state.role == 'ROLE_SELLER') {
-                        this.setState({role: 'Собственник'});
-                    } else if (this.state.role == 'ROLE_REALTOR') {
-                        this.setState({role: 'Риелтор'});
-                    } else if (this.state.role == 'ROLE_USER') {
-                        this.setState({role: 'Пользователь'});
-                    }
-                });
+
 
             await fetch('/api/user/public/get_user_info', {
                 method: 'post',
@@ -160,56 +159,62 @@ class UserProfile extends Component {
 
                     let rating_com = [];
 
-                    for (let j = 0; j < 5; ++j) {
-                        if (j < res[i].rating) {
-                            rating_com.push(
-                                <li className='df'>
-                                    <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%"
-                                         height="100%" viewBox="0 0 20 18">
-                                        <defs>
-                                            <linearGradient id="12596888-0" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                <stop offset="0%" stop-opacity="1" stop-color="#ff7e00"></stop>
-                                                <stop offset="100%" stop-opacity="1"
-                                                      stop-color="#ff7e00"></stop>
-                                                <stop offset="100%" stop-opacity="0"
-                                                      stop-color="#ff7e00"></stop>
-                                                <stop offset="100%" stop-opacity="1"
-                                                      stop-color="#ff7e00"></stop>
-                                                <stop offset="100%" stop-opacity="1"
-                                                      stop-color="#ff7e00"></stop>
-                                            </linearGradient>
-                                        </defs>
-                                        <path stroke="url(#12596888-0)" fill="url(#12596888-0)"
-                                              d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
+                    rating_com.push(
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                            <Rating name="read-only" value={res[i].rating} readOnly />
+                        </Box>
+                    );
 
-                                        </path>
-                                    </svg>
-                                </li>
-                            );
-                        } else {
-                            rating_com.push(
-                                <li>
-                                    <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%"
-                                         height="100%" viewBox="0 0 20 18">
-                                        <defs>
-                                            <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
-                                                <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                <stop offset="100%" stop-opacity="1"
-                                                      stop-color="#e8e9ec"></stop>
-                                            </linearGradient>
-                                        </defs>
-                                        <path stroke="url(#12596888-3)" fill="url(#12596888-3)"
-                                              d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
-
-                                        </path>
-                                    </svg>
-                                </li>
-                            );
-                        }
-                    }
+                    // for (let j = 0; j < 5; ++j) {
+                    //     if (j < res[i].rating) {
+                    //         rating_com.push(
+                    //             <li className='df'>
+                    //                 <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%"
+                    //                      height="100%" viewBox="0 0 20 18">
+                    //                     <defs>
+                    //                         <linearGradient id="12596888-0" y2="0%" x2="100%" y1="0%" x1="0%">
+                    //                             <stop offset="0%" stop-opacity="1" stop-color="#ff7e00"></stop>
+                    //                             <stop offset="100%" stop-opacity="1"
+                    //                                   stop-color="#ff7e00"></stop>
+                    //                             <stop offset="100%" stop-opacity="0"
+                    //                                   stop-color="#ff7e00"></stop>
+                    //                             <stop offset="100%" stop-opacity="1"
+                    //                                   stop-color="#ff7e00"></stop>
+                    //                             <stop offset="100%" stop-opacity="1"
+                    //                                   stop-color="#ff7e00"></stop>
+                    //                         </linearGradient>
+                    //                     </defs>
+                    //                     <path stroke="url(#12596888-0)" fill="url(#12596888-0)"
+                    //                           d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
+                    //
+                    //                     </path>
+                    //                 </svg>
+                    //             </li>
+                    //         );
+                    //     } else {
+                    //         rating_com.push(
+                    //             <li>
+                    //                 <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%"
+                    //                      height="100%" viewBox="0 0 20 18">
+                    //                     <defs>
+                    //                         <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
+                    //                             <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
+                    //                             <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
+                    //                             <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
+                    //                             <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
+                    //                             <stop offset="100%" stop-opacity="1"
+                    //                                   stop-color="#e8e9ec"></stop>
+                    //                         </linearGradient>
+                    //                     </defs>
+                    //                     <path stroke="url(#12596888-3)" fill="url(#12596888-3)"
+                    //                           d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
+                    //
+                    //                     </path>
+                    //                 </svg>
+                    //             </li>
+                    //         );
+                    //     }
+                    //  }
 
                     await lemma.push(
                         // <div>
@@ -265,9 +270,73 @@ class UserProfile extends Component {
                 {page: lemma}
             );
 
+            if (this.props.match.params.username == null) {
+                await this.makeLikedFlats().then(async (res) => {
+                    const _flats = res;
+                    console.log('likes', _flats);
+                    this.setState({ flats: [..._flats], likes_summ: [..._flats].length  });
+                });
+            }
+
             this.setState({main_container: 'container-main', loading: false})
         }
     }
+
+
+    renderFlats() {
+
+        const userList = [];
+
+        let k = 0;
+        try {
+            k = this.state.flats.length;
+        } catch (e) {
+            k = 0;
+        }
+
+        // Проход по листу квартир
+        for(let i = 0; i < k; i++) {
+            // let name = `${this.state.flats_p[i].name.first} ${this.state.flats_p[i].name.last}`;
+            let country = this.state.flats[i].flat.country;
+            let town = this.state.flats[i].flat.town;
+            let street = this.state.flats[i].flat.street;
+            let houseNom = this.state.flats[i].flat.houseNom;
+            let floor = this.state.flats[i].flat.floor;
+            let price = this.state.flats[i].flat.price;
+            let description = this.state.flats[i].flat.description;
+
+            let id = this.state.flats[i].flat.id;
+
+            let images = this.state.flats[i].flat.images;
+            let mappedImgs = images.map((image) =>
+                <div data-src={image} key={Math.random()} />
+            );
+
+
+
+            userList.push(
+                <div className="liked-flat">
+                    <AwesomeSlider animation="cubeAnimation" className="aws-sl">
+                        {mappedImgs}
+                    </AwesomeSlider>
+
+                    <a href={'flat/'+id}  className='main-a'>
+                        <div className='my-div'>
+                            <h3 className='font-weight-bold lead'>Цена: {price}</h3>
+
+                            <p className='lead'>Улица: {street} <br />
+                                Дом: {houseNom}</p>
+                        </div>
+                    </a>
+                </div>
+
+            );
+        }
+
+
+        return userList;
+    }
+
 
 
     render() {
@@ -275,7 +344,7 @@ class UserProfile extends Component {
                 firstName, secondName,lastName,
                 email, role,
                 loading, main_container, page, summa,
-                mappedImgs } = this.state;
+                likes_summ } = this.state;
         // const {code, description} = this.state;
         return (
 
@@ -302,8 +371,13 @@ class UserProfile extends Component {
                             <div className="profile-status">
                                 <i className="fa fa-check-circle"></i> Онлайн
                             </div>
-                            <img src={user_image}
-                                alt="" className="profile-img img-responsive center-block"/>
+                            {user_image?
+                                <img src={user_image}
+                                     alt="" className="profile-img img-responsive center-block"/>:
+                                <img src="https://iconorbit.com/icons/256-watermark/1611201511385554301-Girl%20User.jpg"
+                                     alt="" className="profile-img img-responsive center-block"/>
+                            }
+
                             <div className="profile-label">
                                 <span className="label label-success">{role}</span>
                             </div>
@@ -330,7 +404,7 @@ class UserProfile extends Component {
                                 <ul className="fa-ul">
                                     <li><i className="fa-li fa fa-comment"></i>Комментарии: <span>{summa}</span></li>
                                     {this.props.match.params.username ? "" :
-                                        <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>110</span></li>
+                                        <li><i className="fa-li fa fa-tasks"></i>Лайки: <span>{likes_summ}</span></li>
                                     }
                                 </ul>
                             </div>
@@ -414,17 +488,26 @@ class UserProfile extends Component {
                                             {/*</div>*/}
 
                                             {page}
+
+                                            <div>
+                                                <h3>Напишите отзыв!</h3>
+                                                <Box component="fieldset" mb={3} borderColor="transparent">
+                                                    <Rating
+                                                        name="simple-controlled"
+                                                        value={this.state.stars}
+                                                        onChange={(event, newValue) => {
+                                                            this.setState({stars:newValue});
+                                                        }}
+                                                    />
+                                                </Box>
+                                            </div>
                                         </div>
                                     </TabPanel>
 
                                     {this.props.match.params.username ? "" :
                                         <TabPanel>
                                             <div className="likes-main">
-                                                <div className="liked-flat">
-                                                    <AwesomeSlider animation="cubeAnimation">
-                                                        {mappedImgs}
-                                                    </AwesomeSlider>
-                                                </div>
+                                                {this.renderFlats()}
                                             </div>
                                         </TabPanel>
                                     }
