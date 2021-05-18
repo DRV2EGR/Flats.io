@@ -12,6 +12,7 @@ import {withRouter} from "react-router";
 import AddSellingFlat from "./add_new_product/AddSellingFlat";
 import FlatPage from "./flat_page_component/FlatPage";
 import RealtorsPage from "./rieltors_page_component/RealtorsPage";
+import AboutPage from "./about_component/AboutPage";
 
 class App extends Component {
   render() {
@@ -32,6 +33,8 @@ class App extends Component {
               <Route exact path='/flat/:flatId' component={FlatPage}/>
 
               <Route exact path='/realtors' component={RealtorsPage}/>
+
+              <Route exact path='/about' component={AboutPage}/>
 
 
             {/*<Route exact path='/'>*/}

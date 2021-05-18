@@ -1,0 +1,13 @@
+h1 {
+    margin: 0 auto;
+
+    font-weight: bold;
+}
+
+.mn {
+    display: grid;
+}
+
+.main-cnt {
+    margin: 0 auto;
+}
