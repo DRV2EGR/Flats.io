@@ -8,6 +8,9 @@ import MuiImageSlider from 'mui-image-slider';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faCoffee, faHeart} from '@fortawesome/free-solid-svg-icons';
+
 // Import Swiper styles
 import 'swiper/swiper.scss';
 import {Preloader, TailSpin} from "react-preloader-icon";
@@ -28,10 +31,14 @@ class FlatPage extends Component {
             images: ["/fggf/gf/c"],
             awatar_rieltor:'',
             code: props.code ? props.code : '999',
-            description: props.description ? props.description : 'Unknown error'
+            description: props.description ? props.description : 'Unknown error',
+            liked:false
         };
 
         this.showContacts = this.showContacts.bind(this);
+        this.likepanelret = this.likepanelret.bind(this);
+        this.handleSetLike = this.handleSetLike.bind(this);
+
     }
 
 
@@ -100,7 +107,8 @@ class FlatPage extends Component {
             description:res.description,
             ownerId:res.ownerID,
             images:res.images,
-            ownerUsername:res.ownerUsername
+            ownerUsername:res.ownerUsername,
+            id:res.id
         })});
 
         let username = this.state.ownerUsername;
@@ -124,6 +132,24 @@ class FlatPage extends Component {
             });
         }
 
+        const cookies = new Cookies();
+        let ap = cookies.get('accessToken');
+        let bp = cookies.get('username');
+        if (bp) {
+            this.frt().then(res=>{
+                this.setState({likes:res.length})
+                res.forEach(
+                    el => {
+                        if (bp == el.user.username) {
+                            this.setState({liked:true})
+                        }
+                    }
+                )
+            });
+        } else {
+            this.frt().then(res => this.setState({likes: res.length}));
+        }
+
         this.setState({main_container:'container-main', loading:false})
     }
 
@@ -136,6 +162,68 @@ class FlatPage extends Component {
         });
     }
 
+    async frt() {
+        return await fetch('/api/flats/get_likes_to_flat_by_id?id=' + this.state.id, {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }).then(response => {
+            if (!response.ok) {
+                // this.checkValidRefresh();
+                //window.location.reload();
+            }
+            return response.json();
+        });
+    }
+
+    handleSetLike() {
+        const cookies = new Cookies();
+        let ap = cookies.get('accessToken');
+        let bp = cookies.get('username');
+        if (ap) {
+            fetch('/api/user/public/set_like_to_flat' , {
+                method: 'post',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + ap,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({'id_to': this.state.id})
+            }).then(response => response.json())
+                .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
+        }
+
+        this.setState({likes:true,liked:"red"})
+    }
+
+    likepanelret() {
+        let likes;
+        // Promise.resolve(this.frt()).then(res => likes=res);
+        // console.log(likes);
+
+        if (this.state.liked) {
+            return (
+                <div>
+                    <button className="button" >
+                        {/*<i className="fas fa-heart fa-lg" style={{color: "red"}}></i>*/}
+                        <FontAwesomeIcon icon={faHeart} size="1x" style={{color: "red"}}/> {this.state.likes}
+                    </button>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <button
+                        className="button"
+                        onClick={this.handleSetLike}
+                    >
+                        {/*<i className="fas fa-heart fa-lg" style={{color: "red"}}></i>*/}
+                        <FontAwesomeIcon icon={faHeart} size="1x" style={{color: this.state.liked}}/> {this.state.likes}
+                    </button>
+                </div>
+            );
+        }
+    }
 
     render() {
         const { price, country, town, street,
@@ -175,7 +263,7 @@ class FlatPage extends Component {
 
                         <br />
                         <div className='options-order-pallete'>
-                            LIKE PANEL
+                            {this.likepanelret()}
                         </div>
 
                         <div className='photoes-conteiner'>
