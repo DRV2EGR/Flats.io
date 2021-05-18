@@ -142,6 +142,13 @@ public class FlatService {
 
 //        System.out.println(newFlat.getId());
 
+        if (newFlatDao.getFlatsImages().size() == 0) {
+            FlatsImages fi = new FlatsImages();
+            fi.setImgUrl("");
+            fi.setFlat(findFlatById(newFlat.getId()));
+            flatsImagesRepository.save(fi);
+        }
+
         for (String image: newFlatDao.getFlatsImages()) {
             FlatsImages fi = new FlatsImages();
             fi.setImgUrl(image);

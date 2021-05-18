@@ -4,6 +4,11 @@ import Cookies from "universal-cookie";
 import Header from "../Header";
 import './RealtorPage.css';
 import {Preloader, TailSpin} from "react-preloader-icon";
+import Box from "@material-ui/core/Box";
+import Rating from "@material-ui/lab/Rating";
+
+import { DateTimeLocale } from 'dt-format';
+import {rudString} from "rud";
 
 class RealtorsPage extends Component {
     constructor(props) {
@@ -48,7 +53,41 @@ class RealtorsPage extends Component {
         });
     }
 
+    async makeReplyes(id) {
+        const cookies = new Cookies();
+        let a = cookies.get('accessToken');
 
+        return await fetch('/api/user/public/get_comments_to_user_by_id?id=' + id, {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }).then(response => {
+            if (!response.ok) {
+                // this.checkValidRefresh();
+                // window.location.reload();
+            }
+            return response.json();
+        });
+    }
+
+    async getAdditInf(id) {
+        const cookies = new Cookies();
+        let a = cookies.get('accessToken');
+
+        return await fetch('/api/user/public/get_additional_info_about_realtor?id=' + id, {
+            method: 'get',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }).then(response => {
+            if (!response.ok) {
+                // this.checkValidRefresh();
+                // window.location.reload();
+            }
+            return response.json();
+        });
+    }
 
     async componentDidMount() {
         const lemma = [];
@@ -62,7 +101,22 @@ class RealtorsPage extends Component {
             for (let i = 0; i < res.length; ++i) {
                 await this.getUserAwatar(res[i].username).then(img_url => res[i].img_url = img_url)
 
+                let dateFrom = new Date(res[i].dateUserFrom);
+                let frm = (rudString(dateFrom.getFullYear().toString() + ("0" + (dateFrom.getMonth() + 1)).slice(-2)));
+                frm = frm.slice(2);
+
+                let comnoma = 0;
+                await this.makeReplyes(res[i].id).then(async (res) => comnoma = res.length);
+
+                let numFlts = 0;
+                await this.getAdditInf(res[i].id).then(async (res) => numFlts = res);
+                console.log('f', numFlts)
+
                 await console.log(res[i]);
+
+                if (res[i].role == "ROLE_REALTOR") {
+                    res[i].role = "Риелтор";
+                }
 
                 let erase = [];
                 if (res[i].img_url.img == "") {
@@ -84,10 +138,10 @@ class RealtorsPage extends Component {
                 }
 
                 await lemma.push(
-                    // <div>
+                    // <div>s
                     //     {res[i].firstName}
                     // </div>
-                    <a href={'/user/'+res[i].id}>
+                    <a href={'/user/'+res[i].username}>
                         <div className='realtor-container'>
                             <div className='realtor-credentials tap-realtor-peace'>
                                 <div className='realtor-avatar-container'>
@@ -100,106 +154,24 @@ class RealtorsPage extends Component {
                                         {res[i].role}
                                     </div>
                                     <div className='realtor-fio-descr'>
-                                        на сайте с: янв. 2014
+                                        на сайте с: {frm}
                                     </div>
                                 </div>
 
                             </div>
                             <div className='realtor-review tap-realtor-peace dff'>
-                                <ui>
-                                    <li>X.Y</li>
-                                    <li className='df'>
-                                        <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 18">
-                                            <defs>
-                                                <linearGradient id="12596888-0" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#ff7e00"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#ff7e00"></stop>
-                                                    <stop offset="100%" stop-opacity="0" stop-color="#ff7e00"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#ff7e00"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#ff7e00"></stop>
-                                                </linearGradient>
-                                            </defs>
-                                            <path stroke="url(#12596888-0)" fill="url(#12596888-0)" d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
 
-                                            </path>
-                                        </svg>
-                                    </li>
+                                <Box component="fieldset" mb={3} borderColor="transparent">
+                                    <Rating name="read-only" value={res[i].rating} readOnly />
+                                </Box>
 
-                                    <li>
-                                        <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 18">
-                                            <defs>
-                                                <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                </linearGradient>
-                                            </defs>
-                                            <path stroke="url(#12596888-3)" fill="url(#12596888-3)" d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
-
-                                            </path>
-                                        </svg>
-                                    </li>
-
-                                    <li>
-                                        <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 18">
-                                            <defs>
-                                                <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                </linearGradient>
-                                            </defs>
-                                            <path stroke="url(#12596888-3)" fill="url(#12596888-3)" d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
-
-                                            </path>
-                                        </svg>
-                                    </li>
-
-                                    <li>
-                                        <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 18">
-                                            <defs>
-                                                <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                </linearGradient>
-                                            </defs>
-                                            <path stroke="url(#12596888-3)" fill="url(#12596888-3)" d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
-
-                                            </path>
-                                        </svg>
-                                    </li>
-
-                                    <li>
-                                        <svg data-name="Star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 18">
-                                            <defs>
-                                                <linearGradient id="12596888-3" y2="0%" x2="100%" y1="0%" x1="0%">
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="0" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="0%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                    <stop offset="100%" stop-opacity="1" stop-color="#e8e9ec"></stop>
-                                                </linearGradient>
-                                            </defs>
-                                            <path stroke="url(#12596888-3)" fill="url(#12596888-3)" d="M15.214 17.176l-.996-5.805 4.218-4.112-5.83-.847L10 1.13 7.393 6.412l-5.83.847 4.219 4.112-.996 5.805L10 14.436l5.214 2.74z">
-
-                                            </path>
-                                        </svg>
-                                    </li>
-                                </ui>
                                 <div>
-                                    <span className='review-count-text'>m отзывов</span>
+                                    <span className='review-count-text'>{comnoma} отзывов</span>
                                 </div>
                             </div>
                             <div className='realtor-objects tap-realtor-peace'>
                                 <div>
-                                    <span className='nomber-of-objects-big'>N объектов</span> <br />
+                                    <span className='nomber-of-objects-big'>{numFlts} объектов</span> <br />
                                     <span style={{marginLeft : '10px'}}>в работе</span>
                                 </div>
                             </div>

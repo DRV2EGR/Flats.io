@@ -6,6 +6,7 @@ import io.flats.dto.UserDto;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
+import io.flats.repository.FlatRepository;
 import io.flats.repository.RoleRepository;
 import io.flats.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -29,6 +31,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private FlatRepository flatRepository;
 
     /**
      * The B crypt password encoder.
@@ -85,6 +90,8 @@ public class UserService {
         user.setPhoneNumber(basicPayload.getPhoneNumber());
         user.setSecondName(basicPayload.getSecondName());
 
+        user.setRating(0f);
+
         return user;
     }
 
@@ -103,7 +110,7 @@ public class UserService {
 
         user.setUserProfileImageUrl(sailorDtoPayload.getUserProfileImageUrl());
         //user.setActivationCode(UUID.randomUUID().toString());
-        //user.setCreatedActivationCode(LocalDateTime.now());
+        user.setTimeOfAccountCreation(LocalDateTime.now());
 
         String encodedPassword = bCryptPasswordEncoder.encode(sailorDtoPayload.getPassword());
         user.setPassword(encodedPassword);
@@ -129,7 +136,7 @@ public class UserService {
 
         user.setUserProfileImageUrl(realtorDtoPayload.getUserProfileImageUrl());
         //user.setActivationCode(UUID.randomUUID().toString());
-        //user.setCreatedActivationCode(LocalDateTime.now());
+        user.setTimeOfAccountCreation(LocalDateTime.now());
 
         String encodedPassword = bCryptPasswordEncoder.encode(realtorDtoPayload.getPassword());
         user.setPassword(encodedPassword);
@@ -215,5 +222,11 @@ public class UserService {
         userDto.setPhoneNumber(user.getPhoneNumber());
 
         return userDto;
+    }
+
+    public int getAdditRealtorInfo(long userId) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundExeption::new);
+
+        return flatRepository.findAllByOwner(user).size();
     }
 }

@@ -143,7 +143,7 @@ class FlatPage extends Component {
                     firstName, secondName, lastName,
                     email, phoneNumber, role,
                     button_style, phone_style, email_style, lbl_style,
-                    awatar_rieltor, ownerId,
+                    awatar_rieltor, ownerId, ownerUsername,
                     loading, main_container } = this.state;
 
         return (
@@ -226,7 +226,7 @@ class FlatPage extends Component {
                         </div>
 
                         <div className='main-window-right-section'>
-                            <a href={'/user/'+ownerId}>
+                            <a href={'/user/'+ownerUsername}>
                                 <div className='right-secton-devider'>
                                     <div>
                                         <h4>Продавец:</h4>

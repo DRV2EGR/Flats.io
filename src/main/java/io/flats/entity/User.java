@@ -77,6 +77,8 @@ public class User extends BaseEntity {
     @Column(name = "user_profile_image_url", nullable = true)
     protected String userProfileImageUrl;
 
+    protected float rating;
+
     /**
      * The Role.
      */
@@ -90,7 +92,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy="user_from")
     protected List<Comments> puttedCommentsToFlats;
 
-    @OneToMany(mappedBy="user_to")
+    @OneToMany()
     protected List<Comments> receivedCommentsToFlats;
 
     /**

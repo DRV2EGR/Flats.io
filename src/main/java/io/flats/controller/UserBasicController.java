@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.AuthProvider;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +124,10 @@ public class UserBasicController {
         userResponce.setRole(user.getRole().getName());
         userResponce.setSecondName(user.getSecondName());
         userResponce.setPhoneNumber(user.getPhoneNumber());
+        userResponce.setRating(user.getRating());
+        userResponce.setDateUserFrom(java.util.Date
+                .from(user.getTimeOfAccountCreation().atZone(ZoneId.systemDefault())
+                        .toInstant()));
 
         return ResponseEntity.ok(userResponce);
     }
@@ -167,6 +172,13 @@ public class UserBasicController {
             userResponce.setRole(user.getRole().getName());
             userResponce.setSecondName(user.getSecondName());
             userResponce.setPhoneNumber(user.getPhoneNumber());
+            userResponce.setRating(user.getRating());
+            userResponce.setDateUserFrom(java.util.Date
+                    .from(user.getTimeOfAccountCreation().atZone(ZoneId.systemDefault())
+                            .toInstant()));
+            userResponce.setRealtorsCommentsNomber(
+                    likeAndCommentService.getReceivedCommentsByUserId(user.getId()).size()
+            );
 
             responseDto.add(userResponce);
         }
@@ -206,5 +218,10 @@ public class UserBasicController {
         }
 
         return ResponseEntity.ok(responseList);
+    }
+
+    @GetMapping("/get_additional_info_about_realtor")
+    public ResponseEntity<Integer> getAddRealtorInfo(@RequestParam long id) {
+        return ResponseEntity.ok(userService.getAdditRealtorInfo(id));
     }
 }

@@ -3,6 +3,7 @@ package io.flats.service;
 import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import io.flats.JWT_AUTH.exeption.NotFoundException;
 import io.flats.entity.Comments;
@@ -48,12 +49,27 @@ public class LikeAndCommentService {
         comment.setUser_from(userRepository.findById(id_from).orElseThrow(
                 () -> { throw new UserNotFoundExeption(); }
         ));
-        comment.setUser_to(userRepository.findById(id_to).orElseThrow(
+
+        User toUser = userRepository.findById(id_to).orElseThrow(
                 () -> { throw new UserNotFoundExeption(); }
-        ));
+        );
+        comment.setUserTo(toUser);
         comment.setRating(rating);
         comment.setCommentText(commentText);
         commentsRepository.save(comment);
+        toUser.getReceivedCommentsToFlats().add(comment);
+        userRepository.save(toUser);
+
+        float rat = rating;
+        int cnt = 1;
+        for(Optional<Comments> _comment :commentsRepository.findAllByUserTo(toUser)) {
+            rat += _comment.get().getRating();
+            cnt += 1;
+        }
+
+        toUser.setRating(rat/cnt);
+        userRepository.save(toUser);
+
         return true;
     }
 
