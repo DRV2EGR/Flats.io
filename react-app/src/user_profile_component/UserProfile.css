@@ -747,3 +747,20 @@ ui {
 
     margin-right: 20px;
 }
+
+.repl-cmt-main {
+    display: flex;
+    flex-direction: row;
+}
+
+.repl-cmt-text {
+    margin-left: 40px;
+
+    width: 100%;
+}
+
+.repl-cmt-button {
+    margin-top: 10px;
+
+    margin-left: calc(100% - 179px);
+}

@@ -13,6 +13,10 @@ import AwesomeSlider from "react-awesome-slider";
 import Typography from "@material-ui/core/Typography";
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
+import {TextField} from "@material-ui/core";
+import { sizing } from '@material-ui/system';
+import Button from "@material-ui/core/Button";
+import {rudString} from "rud";
 
 
 class UserProfile extends Component {
@@ -21,6 +25,7 @@ class UserProfile extends Component {
         this.state = {
             main_container:'hidden',
             loading: true,
+            cmttext: '',
 
             mappedImgs: [],
 
@@ -30,6 +35,9 @@ class UserProfile extends Component {
         }
 
         this.renderFlats = this.renderFlats.bind(this);
+        this.givecmtsection = this.givecmtsection.bind(this);
+        this.handleSetComment = this.handleSetComment.bind(this);
+
     }
 
     async makeReplyes() {
@@ -111,6 +119,7 @@ class UserProfile extends Component {
                             username: res.username,
                             email: res.email,
                             role: res.role,
+                            dt: res.dateUserFrom
                         });
                         if (this.state.role == 'ROLE_ADMIN') {
                             this.setState({role: 'Администратор'});
@@ -125,6 +134,12 @@ class UserProfile extends Component {
                 );
 
             const lemma = [];
+
+            let dateFrom = new Date(this.state.dt);
+            let frmo = (rudString(dateFrom.getFullYear().toString() + ("0" + (dateFrom.getMonth() + 1)).slice(-2)));
+            frmo = frmo.slice(2);
+
+            this.setState({frm:frmo});
 
             await this.makeReplyes().then(async (res) => {
 
@@ -337,14 +352,81 @@ class UserProfile extends Component {
         return userList;
     }
 
+    handleSetComment() {
+        const cookies = new Cookies();
+        let ap = cookies.get('accessToken');
+        let bp = cookies.get('username');
+        if (this.state.stars != 0) {
+            fetch('/api/user/public/set_comment_to_user' , {
+                method: 'post',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + ap,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({'id_to': this.state.id,'commentText': this.state.cmttext, 'rating':this.state.stars})
+            }).then(response => response.json())
+                .then(res => /*console.log(result.imgUrl) );*/ this.setState({user_image: res.img}));
+        }
 
+        window.location.reload();
+    }
+
+    givecmtsection() {
+        const cookies = new Cookies();
+        let ap = cookies.get('accessToken');
+        let bp = cookies.get('username');
+
+        if (bp) {
+            return (
+                <div>
+                    <h3>Напишите отзыв!</h3>
+                    <div className='repl-cmt-main'>
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                            <Rating
+                                name="simple-controlled"
+                                value={this.state.stars}
+                                onChange={(event, newValue) => {
+                                    this.setState({stars:newValue});
+                                }}
+                            />
+
+                        </Box>
+                        <div className='repl-cmt-text'>
+                            <TextField
+                                id="filled-multiline-static"
+                                label="Текст комментария"
+                                multiline
+                                variant="filled"
+                                width="auto"
+                                style ={{width: '100%'}}
+                                onChange={(event, value) => this.setState({cmttext: event.target.value})}
+                            />
+                        </div>
+                    </div>
+                    <div className='repl-cmt-button'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleSetComment}
+                        >
+                            Отправить отзыв
+                        </Button>
+                    </div>
+                </div>
+            );
+        } else {
+           return ( <div className='repl-cmt-main'>
+               <h4>Войдите, чтобы написать отзыв!</h4>
+           </div> );
+        }
+    }
 
     render() {
         const { username, user_image, phoneNumber,
                 firstName, secondName,lastName,
                 email, role,
                 loading, main_container, page, summa,
-                likes_summ } = this.state;
+                likes_summ, frm } = this.state;
         // const {code, description} = this.state;
         return (
 
@@ -397,7 +479,7 @@ class UserProfile extends Component {
 
                             </div>
                             <div className="profile-since">
-                                На сайте с: Фев 2021
+                                На сайте с: {frm}
                             </div>
 
                             <div className="profile-details">
@@ -489,18 +571,7 @@ class UserProfile extends Component {
 
                                             {page}
 
-                                            <div>
-                                                <h3>Напишите отзыв!</h3>
-                                                <Box component="fieldset" mb={3} borderColor="transparent">
-                                                    <Rating
-                                                        name="simple-controlled"
-                                                        value={this.state.stars}
-                                                        onChange={(event, newValue) => {
-                                                            this.setState({stars:newValue});
-                                                        }}
-                                                    />
-                                                </Box>
-                                            </div>
+                                            {this.givecmtsection()}
                                         </div>
                                     </TabPanel>
 
