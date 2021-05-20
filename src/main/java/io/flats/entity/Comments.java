@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="users_comments")
+@Table(name ="comments")
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class Comments extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id_from")
@@ -18,9 +17,11 @@ public class Comments extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "user_id_to")
-    protected User user_to;
+    protected User userTo;
 
     @Column(columnDefinition = "TEXT")
     protected String commentText;
+
+    protected float rating;
 
 }

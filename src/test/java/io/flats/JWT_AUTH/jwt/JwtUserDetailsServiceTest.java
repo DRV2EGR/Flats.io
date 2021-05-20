@@ -7,6 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import io.flats.JWT_AUTH.service.UserService;
+import io.flats.entity.Comments;
+import io.flats.entity.Likes;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 
@@ -18,7 +20,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {UserService.class, JwtUserDetailsService.class})
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 public class JwtUserDetailsServiceTest {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
@@ -47,13 +47,17 @@ public class JwtUserDetailsServiceTest {
         user.setEmail("jane.doe@example.org");
         user.setPassword("iloveyou");
         user.setActivationCode("Activation Code");
-        user.setUsername("janedoe");
-        user.setSecondName("Second Name");
         user.setId(123L);
         user.setPhoneNumber("4105551212");
         user.setTimeOfAccountCreation(LocalDateTime.of(1, 1, 1, 1, 1));
         user.setUserProfileImageUrl("https://example.org/example");
         user.setFirstName("Jane");
+        user.setReceivedCommentsToFlats(new ArrayList<Comments>());
+        user.setUsername("janedoe");
+        user.setSecondName("Second Name");
+        user.setPuttedLikesToFlats(new ArrayList<Likes>());
+        user.setPuttedCommentsToFlats(new ArrayList<Comments>());
+        user.setRating(10.0f);
         user.setRole(role);
         Optional<User> ofResult = Optional.<User>of(user);
         when(this.userService.findByUsername(anyString())).thenReturn(ofResult);
@@ -70,20 +74,24 @@ public class JwtUserDetailsServiceTest {
     public void testLoadUserByUsername2() throws UsernameNotFoundException {
         Role role = new Role();
         role.setId(123L);
-        role.setName("ADMIN");
+        role.setName("NAME");
 
         User user = new User();
         user.setLastName("Doe");
         user.setEmail("jane.doe@example.org");
         user.setPassword("iloveyou");
         user.setActivationCode("Activation Code");
-        user.setUsername("janedoe");
-        user.setSecondName("Second Name");
         user.setId(123L);
         user.setPhoneNumber("4105551212");
         user.setTimeOfAccountCreation(LocalDateTime.of(1, 1, 1, 1, 1));
         user.setUserProfileImageUrl("https://example.org/example");
         user.setFirstName("Jane");
+        user.setReceivedCommentsToFlats(new ArrayList<Comments>());
+        user.setUsername("janedoe");
+        user.setSecondName("Second Name");
+        user.setPuttedLikesToFlats(new ArrayList<Likes>());
+        user.setPuttedCommentsToFlats(new ArrayList<Comments>());
+        user.setRating(10.0f);
         user.setRole(role);
         Optional<User> ofResult = Optional.<User>of(user);
         when(this.userService.findByUsername(anyString())).thenReturn(ofResult);

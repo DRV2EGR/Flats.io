@@ -1,5 +1,6 @@
 package io.flats.JWT_AUTH.jwt;
 
+import io.flats.JWT_AUTH.exeption.JwtInvalidAccessTokenException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

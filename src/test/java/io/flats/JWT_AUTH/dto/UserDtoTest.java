@@ -6,9 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class UserDtoTest {
     @Test
     public void testConstructor() {

@@ -1,5 +1,9 @@
 package io.flats.dto;
 
+import java.util.Date;
+
+import io.flats.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private long id;
     private String firstName;
@@ -17,6 +22,10 @@ public class UserDto {
     private String email;
     private String phoneNumber;
     private String role;
+    private float rating;
+    private Date dateUserFrom;
+
+    private int realtorsCommentsNomber;
 
     /**
      * Instantiates a new User dto.
@@ -37,5 +46,15 @@ public class UserDto {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
+    }
+
+    public UserDto(User user) {
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+        this.lastName = user.getLastName();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+        this.role = user.getRole().getName();
     }
 }

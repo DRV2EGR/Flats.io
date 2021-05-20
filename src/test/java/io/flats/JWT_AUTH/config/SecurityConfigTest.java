@@ -1,28 +1,18 @@
 package io.flats.JWT_AUTH.config;
 
 import io.flats.JWT_AUTH.jwt.JwtTokenProvider;
-
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {SecurityConfig.class, JwtTokenProvider.class, AuthenticationManagerBuilder.class})
+@ContextConfiguration(classes = {SecurityConfig.class, JwtTokenProvider.class, HttpSecurity.class})
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 public class SecurityConfigTest {
     @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    @Autowired
-    private ObjectPostProcessor<Object> objectPostProcessor;
+    private HttpSecurity httpSecurity;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -47,8 +37,7 @@ public class SecurityConfigTest {
 //        //   See https://diff.blue/R004
 //
 //        SecurityConfig securityConfig = new SecurityConfig(this.jwtTokenProvider);
-//        securityConfig.configure(new HttpSecurity(this.objectPostProcessor, this.authenticationManagerBuilder,
-//                new HashMap<Class<?>, Object>(1)));
+//        securityConfig.configure(this.httpSecurity);
 //    }
 }
 

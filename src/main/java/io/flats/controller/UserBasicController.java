@@ -4,9 +4,9 @@ import io.flats.JWT_AUTH.dto.UserDto;
 import io.flats.JWT_AUTH.jwt.JwtUser;
 import io.flats.JWT_AUTH.jwt.JwtUserDetailsService;
 import io.flats.JWT_AUTH.service.UserService;
-import io.flats.dto.BasicResponce;
-import io.flats.dto.ResponceCompletedDto;
-import io.flats.dto.UserProfileImageUrlDto;
+import io.flats.dto.*;
+import io.flats.entity.Comments;
+import io.flats.entity.Likes;
 import io.flats.entity.User;
 import io.flats.exception.UserNotFoundExeption;
 import io.flats.payload.CommentDtoPayload;
@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.AuthProvider;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +124,10 @@ public class UserBasicController {
         userResponce.setRole(user.getRole().getName());
         userResponce.setSecondName(user.getSecondName());
         userResponce.setPhoneNumber(user.getPhoneNumber());
+        userResponce.setRating(user.getRating());
+        userResponce.setDateUserFrom(java.util.Date
+                .from(user.getTimeOfAccountCreation().atZone(ZoneId.systemDefault())
+                        .toInstant()));
 
         return ResponseEntity.ok(userResponce);
     }
@@ -148,7 +153,7 @@ public class UserBasicController {
                     throw new UserNotFoundExeption();
                 }
         );
-        likeAndCommentService.setComment(currentUser.getId(), commentDtoPayload.getId_to(), commentDtoPayload.getCommentText());
+        likeAndCommentService.setComment(currentUser.getId(), commentDtoPayload.getId_to(), commentDtoPayload.getCommentText(), commentDtoPayload.getRating());
         return ResponseEntity.ok(new ResponceCompletedDto());
     }
 
@@ -167,11 +172,56 @@ public class UserBasicController {
             userResponce.setRole(user.getRole().getName());
             userResponce.setSecondName(user.getSecondName());
             userResponce.setPhoneNumber(user.getPhoneNumber());
+            userResponce.setRating(user.getRating());
+            userResponce.setDateUserFrom(java.util.Date
+                    .from(user.getTimeOfAccountCreation().atZone(ZoneId.systemDefault())
+                            .toInstant()));
+            userResponce.setRealtorsCommentsNomber(
+                    likeAndCommentService.getReceivedCommentsByUserId(user.getId()).size()
+            );
 
             responseDto.add(userResponce);
         }
 
         return ResponseEntity.ok(responseDto);
+    }
 
+    @RequestMapping("/get_comments_to_user_by_id")
+    public ResponseEntity<List<CommentDto>> getCommentsToUserById(@RequestParam long id) {
+
+        List<CommentDto> responseList = new ArrayList<>();
+        List<Comments> comments = likeAndCommentService.getReceivedCommentsByUserId(id);
+        for (Comments comment : comments) {
+            CommentDto cd = new CommentDto();
+            cd.setComment(comment.getCommentText());
+            cd.setUser_from(new io.flats.dto.UserDto(comment.getUser_from()));
+            cd.setImg_from(new UserProfileImageUrlDto(comment.getUser_from().getUserProfileImageUrl()));
+            cd.setRating(comment.getRating());
+
+            responseList.add(cd);
+        }
+
+        return ResponseEntity.ok(responseList);
+    }
+
+    @RequestMapping("/get_likes_from_user_by_id")
+    public ResponseEntity<List<LikeDto>> getLikesFromUserById(@RequestParam long id) {
+
+        List<LikeDto> responseList = new ArrayList<>();
+        List<Likes> likes = likeAndCommentService.getLikesOfUserById(id);
+        for (Likes like : likes) {
+            LikeDto cd = new LikeDto();
+            cd.setUser(userService.convertUserToUserDto( like.getUser()));
+            cd.setFlat(flatService.convertFlatToFlatDto(like.getFlat()));
+
+            responseList.add(cd);
+        }
+
+        return ResponseEntity.ok(responseList);
+    }
+
+    @GetMapping("/get_additional_info_about_realtor")
+    public ResponseEntity<Integer> getAddRealtorInfo(@RequestParam long id) {
+        return ResponseEntity.ok(userService.getAdditRealtorInfo(id));
     }
 }

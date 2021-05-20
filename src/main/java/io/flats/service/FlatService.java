@@ -142,6 +142,13 @@ public class FlatService {
 
 //        System.out.println(newFlat.getId());
 
+        if (newFlatDao.getFlatsImages().size() == 0) {
+            FlatsImages fi = new FlatsImages();
+            fi.setImgUrl("https://upload.wikimedia.org/wikipedia/commons/9/9a/%D0%9D%D0%B5%D1%82_%D1%84%D0%BE%D1%82%D0%BE.png");
+            fi.setFlat(findFlatById(newFlat.getId()));
+            flatsImagesRepository.save(fi);
+        }
+
         for (String image: newFlatDao.getFlatsImages()) {
             FlatsImages fi = new FlatsImages();
             fi.setImgUrl(image);
@@ -206,6 +213,29 @@ public class FlatService {
         //log.info(String.valueOf(flatRepository.findById(id).isEmpty()));
 
         return flatRepository.findById(id).isEmpty();
+    }
+
+    public FlatDto convertFlatToFlatDto(Flat flat) {
+        FlatDto fdto = new FlatDto();
+        fdto.setCountry(flat.getCountry());
+        fdto.setTown(flat.getTown());
+        fdto.setStreet(flat.getStreet());
+        fdto.setHouseNom(flat.getHouseNom());
+        fdto.setFloor(flat.getFloor());
+        fdto.setId(flat.getId());
+
+        fdto.setDescription(flat.getDescription());
+        fdto.setPrice(flat.getPrice());
+
+        fdto.setOwnerUsername(flat.getOwner().getUsername());
+        fdto.setOwnerID(flat.getOwner().getId());
+
+        fdto.setImageListToNew();
+        for (FlatsImages image: flat.getFlatsImages()) {
+            fdto.getImages().add(image.getImgUrl());
+        }
+
+        return fdto;
     }
 
 }
