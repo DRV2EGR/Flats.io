@@ -58,7 +58,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/openjdk:latest
+      - image: circleci/openjdk:11
     steps:
       - checkout
       - run:
