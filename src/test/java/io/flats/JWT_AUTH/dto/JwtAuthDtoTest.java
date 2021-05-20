@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class JwtAuthDtoTest {
     @Test
     public void testCanEqual() {
@@ -21,8 +19,40 @@ public class JwtAuthDtoTest {
     }
 
     @Test
+    public void testConstructor() {
+        JwtAuthDto actualJwtAuthDto = new JwtAuthDto();
+        actualJwtAuthDto.setAccessToken("ABC123");
+        actualJwtAuthDto.setRefreshToken("ABC123");
+        actualJwtAuthDto.setUsername("janedoe");
+        assertEquals("ABC123", actualJwtAuthDto.getAccessToken());
+        assertEquals("ABC123", actualJwtAuthDto.getRefreshToken());
+        assertEquals("janedoe", actualJwtAuthDto.getUsername());
+        assertEquals("JwtAuthDto(username=janedoe, accessToken=ABC123, refreshToken=ABC123)", actualJwtAuthDto.toString());
+    }
+
+    @Test
     public void testEquals() {
         assertFalse((new JwtAuthDto()).equals("42"));
+    }
+
+    @Test
+    public void testEquals10() {
+        JwtAuthDto jwtAuthDto = new JwtAuthDto();
+        jwtAuthDto.setAccessToken("ABC123");
+
+        JwtAuthDto jwtAuthDto1 = new JwtAuthDto();
+        jwtAuthDto1.setAccessToken("ABC123");
+        assertTrue(jwtAuthDto.equals(jwtAuthDto1));
+    }
+
+    @Test
+    public void testEquals11() {
+        JwtAuthDto jwtAuthDto = new JwtAuthDto();
+        jwtAuthDto.setUsername("janedoe");
+
+        JwtAuthDto jwtAuthDto1 = new JwtAuthDto();
+        jwtAuthDto1.setUsername("janedoe");
+        assertTrue(jwtAuthDto.equals(jwtAuthDto1));
     }
 
     @Test
@@ -80,6 +110,16 @@ public class JwtAuthDtoTest {
     }
 
     @Test
+    public void testEquals9() {
+        JwtAuthDto jwtAuthDto = new JwtAuthDto();
+        jwtAuthDto.setRefreshToken("ABC123");
+
+        JwtAuthDto jwtAuthDto1 = new JwtAuthDto();
+        jwtAuthDto1.setRefreshToken("ABC123");
+        assertTrue(jwtAuthDto.equals(jwtAuthDto1));
+    }
+
+    @Test
     public void testHashCode() {
         assertEquals(357642, (new JwtAuthDto()).hashCode());
     }
@@ -103,32 +143,6 @@ public class JwtAuthDtoTest {
         JwtAuthDto jwtAuthDto = new JwtAuthDto();
         jwtAuthDto.setUsername("janedoe");
         assertEquals(592859843, jwtAuthDto.hashCode());
-    }
-
-    @Test
-    public void testSetAccessToken() {
-        JwtAuthDto jwtAuthDto = new JwtAuthDto();
-        jwtAuthDto.setAccessToken("ABC123");
-        assertEquals("ABC123", jwtAuthDto.getAccessToken());
-    }
-
-    @Test
-    public void testSetRefreshToken() {
-        JwtAuthDto jwtAuthDto = new JwtAuthDto();
-        jwtAuthDto.setRefreshToken("ABC123");
-        assertEquals("ABC123", jwtAuthDto.getRefreshToken());
-    }
-
-    @Test
-    public void testSetUsername() {
-        JwtAuthDto jwtAuthDto = new JwtAuthDto();
-        jwtAuthDto.setUsername("janedoe");
-        assertEquals("janedoe", jwtAuthDto.getUsername());
-    }
-
-    @Test
-    public void testToString() {
-        assertEquals("JwtAuthDto(username=null, accessToken=null, refreshToken=null)", (new JwtAuthDto()).toString());
     }
 }
 

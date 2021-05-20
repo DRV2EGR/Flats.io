@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class AuthenticationRequestDtoTest {
     @Test
     public void testCanEqual() {
@@ -18,6 +16,17 @@ public class AuthenticationRequestDtoTest {
     public void testCanEqual2() {
         AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
         assertTrue(authenticationRequestDto.canEqual(new AuthenticationRequestDto()));
+    }
+
+    @Test
+    public void testConstructor() {
+        AuthenticationRequestDto actualAuthenticationRequestDto = new AuthenticationRequestDto();
+        actualAuthenticationRequestDto.setEmail("jane.doe@example.org");
+        actualAuthenticationRequestDto.setPassword("iloveyou");
+        assertEquals("jane.doe@example.org", actualAuthenticationRequestDto.getEmail());
+        assertEquals("iloveyou", actualAuthenticationRequestDto.getPassword());
+        assertEquals("AuthenticationRequestDto(email=jane.doe@example.org, password=iloveyou)",
+                actualAuthenticationRequestDto.toString());
     }
 
     @Test
@@ -64,6 +73,26 @@ public class AuthenticationRequestDtoTest {
     }
 
     @Test
+    public void testEquals7() {
+        AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
+        authenticationRequestDto.setEmail("jane.doe@example.org");
+
+        AuthenticationRequestDto authenticationRequestDto1 = new AuthenticationRequestDto();
+        authenticationRequestDto1.setEmail("jane.doe@example.org");
+        assertTrue(authenticationRequestDto.equals(authenticationRequestDto1));
+    }
+
+    @Test
+    public void testEquals8() {
+        AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
+        authenticationRequestDto.setPassword("iloveyou");
+
+        AuthenticationRequestDto authenticationRequestDto1 = new AuthenticationRequestDto();
+        authenticationRequestDto1.setPassword("iloveyou");
+        assertTrue(authenticationRequestDto.equals(authenticationRequestDto1));
+    }
+
+    @Test
     public void testHashCode() {
         assertEquals(6061, (new AuthenticationRequestDto()).hashCode());
     }
@@ -80,25 +109,6 @@ public class AuthenticationRequestDtoTest {
         AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
         authenticationRequestDto.setPassword("iloveyou");
         assertEquals(-1332412826, authenticationRequestDto.hashCode());
-    }
-
-    @Test
-    public void testSetEmail() {
-        AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
-        authenticationRequestDto.setEmail("jane.doe@example.org");
-        assertEquals("jane.doe@example.org", authenticationRequestDto.getEmail());
-    }
-
-    @Test
-    public void testSetPassword() {
-        AuthenticationRequestDto authenticationRequestDto = new AuthenticationRequestDto();
-        authenticationRequestDto.setPassword("iloveyou");
-        assertEquals("iloveyou", authenticationRequestDto.getPassword());
-    }
-
-    @Test
-    public void testToString() {
-        assertEquals("AuthenticationRequestDto(email=null, password=null)", (new AuthenticationRequestDto()).toString());
     }
 }
 

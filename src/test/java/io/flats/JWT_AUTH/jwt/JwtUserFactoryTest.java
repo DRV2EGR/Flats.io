@@ -2,6 +2,8 @@ package io.flats.JWT_AUTH.jwt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.flats.entity.Comments;
+import io.flats.entity.Likes;
 import io.flats.entity.Role;
 import io.flats.entity.User;
 
@@ -10,10 +12,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 
-@SpringBootTest
 public class JwtUserFactoryTest {
     @Test
     public void testCreate() {
@@ -26,13 +26,17 @@ public class JwtUserFactoryTest {
         user.setEmail("jane.doe@example.org");
         user.setPassword("iloveyou");
         user.setActivationCode("Activation Code");
-        user.setUsername("janedoe");
-        user.setSecondName("Second Name");
         user.setId(123L);
         user.setPhoneNumber("4105551212");
         user.setTimeOfAccountCreation(LocalDateTime.of(1, 1, 1, 1, 1));
         user.setUserProfileImageUrl("https://example.org/example");
         user.setFirstName("Jane");
+        user.setReceivedCommentsToFlats(new ArrayList<Comments>());
+        user.setUsername("janedoe");
+        user.setSecondName("Second Name");
+        user.setPuttedLikesToFlats(new ArrayList<Likes>());
+        user.setPuttedCommentsToFlats(new ArrayList<Comments>());
+        user.setRating(10.0f);
         user.setRole(role);
         JwtUser actualCreateResult = JwtUserFactory.create(user);
         Collection<? extends GrantedAuthority> authorities = actualCreateResult.getAuthorities();
@@ -59,13 +63,17 @@ public class JwtUserFactoryTest {
 //        user.setEmail("jane.doe@example.org");
 //        user.setPassword("iloveyou");
 //        user.setActivationCode("Activation Code");
-//        user.setUsername("janedoe");
-//        user.setSecondName("Second Name");
 //        user.setId(123L);
 //        user.setPhoneNumber("4105551212");
 //        user.setTimeOfAccountCreation(LocalDateTime.of(1, 1, 1, 1, 1));
 //        user.setUserProfileImageUrl("https://example.org/example");
 //        user.setFirstName("Jane");
+//        user.setReceivedCommentsToFlats(new ArrayList<Comments>());
+//        user.setUsername("janedoe");
+//        user.setSecondName("Second Name");
+//        user.setPuttedLikesToFlats(new ArrayList<Likes>());
+//        user.setPuttedCommentsToFlats(new ArrayList<Comments>());
+//        user.setRating(10.0f);
 //        user.setRole(role);
 //        JwtUserFactory.create(user);
 //    }

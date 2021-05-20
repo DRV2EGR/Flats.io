@@ -1,49 +1,42 @@
 package io.flats.controller;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@WebAppConfiguration
-@ContextConfiguration
-@AutoConfigureMockMvc
-//@TestPropertySource("/application-test.properties")
-//@Sql(value = {"/before-each-test.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Transactional
+@ContextConfiguration(classes = {restfull.class})
+@ExtendWith(SpringExtension.class)
 public class restfullTest {
     @Autowired
-    private MockMvc mockMvc;
-
-    @Before
-    @Test
-    public void contextMvcLoads() {
-        assertThat(mockMvc).isNotNull();
-    }
+    private restfull restfull;
 
     @Test
     public void testReturnPong() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/check_stability/ping"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(1)))
-                .andExpect(jsonPath("$.response").value("OK"))
-                .andReturn();
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/check_stability/ping");
+        MockMvcBuilders.standaloneSetup(this.restfull)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("{\"response\":\"OK\"}")));
+    }
+
+    @Test
+    public void testReturnPong2() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/check_stability/ping", "Uri Vars");
+        MockMvcBuilders.standaloneSetup(this.restfull)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("{\"response\":\"OK\"}")));
     }
 }
+
