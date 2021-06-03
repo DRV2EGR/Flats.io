@@ -2,7 +2,7 @@
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:8081/",
+  "proxy": "https://flats-io.herokuapp.com/",
   "dependencies": {
     "@autoaddress.ie/autoaddress-react": "^1.0.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
