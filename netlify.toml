@@ -1,4 +1,4 @@
 [build]
 base = "react-app"
 publish = "react-app/react-my-static/"
-command = "npm run build"
+command = "rm -rf dist && mkdir dist && rsync -rv * dist --exclude ./dist && npm run build"
