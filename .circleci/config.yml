@@ -16,6 +16,7 @@ workflows:
   build-deploy:
     jobs:
       - build
+      - set_tests_report
       - deploy:
           requires:
             - build
@@ -54,6 +55,10 @@ jobs:
       - store_artifacts:
           path: target/Flats_io.jar
 
+  set_tests_report:
+    docker:
+      - image: circleci/openjdk:latest
+    steps:
       - run: bash <(curl -s https://codecov.io/bash)
 
   deploy:
