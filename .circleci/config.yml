@@ -110,10 +110,10 @@ jobs:
             docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
             docker tag trppflats registry.heroku.com/peaceful-savannah-81579/web
             docker push registry.heroku.com/peaceful-savannah-81579/web
-      - run:
-          name: Deploy to Heroku
-          command: |
-            heroku container:release web
+#      - run:
+#          name: Deploy to Heroku
+#          command: |
+#            heroku container:release web
 #      - run:
 #         command: heroku container:login
 #         name: Login to Heroku Docker image registry
@@ -124,3 +124,11 @@ jobs:
 #         command: |
 #           docker push registry.heroku.com/peaceful-savannah-81579/web
 #         name: Push Docker image to Heroku
+  release_herocu_app:
+    machine: true
+    steps:
+      - checkout
+    - run:
+        name: Deploy to Heroku
+        command: |
+          heroku container:release web
