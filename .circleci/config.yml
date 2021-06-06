@@ -4,6 +4,7 @@ orbs:
   maven: circleci/maven@0.0.12
   codecov: codecov/codecov@1.1.1
   coveralls: coveralls/coveralls@1.0.4
+  heroku: circleci/heroku@1.2.6
 
 general:
   branches:
@@ -59,3 +60,43 @@ jobs:
           name: Deploy Master to Heroku
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+  push_docker_image:
+    docker:
+      - image: circleci/openjdk:latest
+    parametrs:
+      api-key:
+        default: $HEROKU_API_KEY
+        description: The name of the environment variable containing your Heroku API Key.
+        type: env_var_name
+        app-name:
+          default: $HEROKU_APP_NAME
+          description: The name of your Heroku App. For backwards compatibility the literal value `$HEROKU_APP_NAME` is the default, so you can easily use this command by setting an environment variable called HEROKU_APP_NAME
+          type: string
+        no_output_timeout:
+          default: 10m
+          description: Allows you to specify the no_output_timeout for the `git push` to heroku. Defaults to 10m.
+          type: string
+        process-types:
+          default: "web"
+          description: Process types.
+          type: string
+        recursive:
+          default: false
+          description: Push all Dockerfiles in the directory to Heroku.
+          type: boolean
+    steps:
+      - commands:
+          - |
+            machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_TOKEN
+      - run: docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
+      - run: docker tag trppflats registry.heroku.com/peaceful-savannah-81579/web
+      - run:
+         command: heroku container:login
+         name: Login to Heroku Docker image registry
+      - run:
+         command: |
+           docker push registry.heroku.com/peaceful-savannah-81579/web
+         name: Push Docker image to Heroku
