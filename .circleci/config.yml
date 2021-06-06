@@ -106,14 +106,14 @@ jobs:
       - checkout
       - run: mvn install
       - run: |
-        docker login --username=$HEROKU_EMAIL --password=$HEROKU_API_KEY registry.heroku.com
-        docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
-        docker tag trppflats registry.heroku.com/peaceful-savannah-81579/web
-        docker push registry.heroku.com/peaceful-savannah-81579/web
+          docker login --username=$HEROKU_EMAIL --password=$HEROKU_API_KEY registry.heroku.com
+          docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
+          docker tag trppflats registry.heroku.com/peaceful-savannah-81579/web
+          docker push registry.heroku.com/peaceful-savannah-81579/web
       - run:
           name: Deploy to Heroku
           command: |
-          heroku container:release web --app $HEROKU_APP_NAME
+            heroku container:release web --app $HEROKU_APP_NAME
 
 
 
