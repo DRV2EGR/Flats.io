@@ -134,7 +134,7 @@ jobs:
     machine: true
     steps:
       - checkout
-    - run:
-        name: Deploy to Heroku
-        command: |
-          heroku container:release web
+      - run:
+          name: Deploy to Heroku
+          command: |
+            heroku container:release web
