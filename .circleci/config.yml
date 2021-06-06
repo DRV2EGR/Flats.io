@@ -74,7 +74,8 @@ jobs:
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
   push_docker_image:
-    machine: true
+    machine:
+      image: ubuntu-1604:202007-01
 
 #    parametrs:
 #      api-key:
@@ -105,8 +106,15 @@ jobs:
 #            password $HEROKU_TOKEN
     steps:
 #      - setup_remote_docker
+      - run:
+          name: Install OpenJDK 11
+          command: |
+            sudo apt-get update && sudo apt-get install openjdk-11-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+            sudo update-alternatives --set javac /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
+            java -version
       - checkout
-#      - run: mvn package
+      - run: mvn package
       - run: |
           docker login --username=$HEROKU_EMAIL --password=$HEROKU_API_KEY registry.heroku.com
           docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
