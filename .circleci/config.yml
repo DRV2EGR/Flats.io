@@ -134,6 +134,7 @@ jobs:
     machine: true
     steps:
       - checkout
+      - run: heroku --version
       - run:
           name: Deploy to Heroku
           command: |
