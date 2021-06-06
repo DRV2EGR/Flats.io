@@ -66,8 +66,11 @@ jobs:
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
   push_docker_image:
+    machine:
+      enabled: true
     docker:
       - image: circleci/openjdk:latest
+      - image: docker:17.05.0-ce-git
     parametrs:
       api-key:
         default: $HEROKU_API_KEY
@@ -98,6 +101,7 @@ jobs:
     steps:
       - checkout
       - run: mvn install
+      - setup_remote_docker
       - run: docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
       - run: docker tag trppflats registry.heroku.com/peaceful-savannah-81579/web
       - run:
