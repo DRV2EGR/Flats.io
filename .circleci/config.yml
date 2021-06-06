@@ -25,6 +25,8 @@ workflows:
             branches:
               only: master
       - push_docker_image:
+          requires:
+            - build
           filters:
             branches:
               only: master
@@ -104,7 +106,7 @@ jobs:
     steps:
 #      - setup_remote_docker
       - checkout
-      - run: mvn install
+#      - run: mvn package
       - run: |
           docker login --username=$HEROKU_EMAIL --password=$HEROKU_API_KEY registry.heroku.com
           docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
