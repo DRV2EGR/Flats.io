@@ -96,6 +96,7 @@ jobs:
             login $HEROKU_EMAIL
             password $HEROKU_TOKEN
     steps:
+      - checkout
       - run: mvn install
       - run: docker build -t trppflats . --build-arg JAR_FILE=target/flats-0.0.1.jar
       - run: docker tag trppflats registry.heroku.com/peaceful-savannah-81579/web
