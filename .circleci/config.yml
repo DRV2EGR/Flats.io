@@ -69,7 +69,6 @@ jobs:
     machine:
       enabled: true
     docker:
-      - image: circleci/openjdk:latest
       - image: docker:17.05.0-ce-git
     parametrs:
       api-key:
