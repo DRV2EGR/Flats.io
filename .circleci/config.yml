@@ -28,6 +28,12 @@ workflows:
           filters:
             branches:
               only: master
+      - release_heroku_app:
+          requires:
+            - push_docker_image
+            filters:
+              branches:
+                only: master
 
 jobs:
   build:
@@ -124,7 +130,7 @@ jobs:
 #         command: |
 #           docker push registry.heroku.com/peaceful-savannah-81579/web
 #         name: Push Docker image to Heroku
-  release_herocu_app:
+  release_heroku_app:
     machine: true
     steps:
       - checkout
