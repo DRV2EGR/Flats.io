@@ -32,19 +32,8 @@ jobs:
     docker:
       - image: circleci/openjdk:latest
       - image: circleci/postgres:latest
-#        environment:
-#          POSTGRES_USER: hackaton_app
-#          POSTGRES_DB: hackaton_demo
-#          POSTGRES_PASSWORD: 1234
 
     steps:
-#      - run:
-#          name: Setup PSQL Databases
-#          command: |
-#            sudo rm -rf /var/lib/apt/lists/* && sudo apt update
-#            sudo apt-get update
-#            sudo apt install -y postgresql-client
-#            createdb -h localhost hackaton_test -U hackaton_app
       - checkout
 
       - run: mvn package
