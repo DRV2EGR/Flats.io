@@ -68,6 +68,7 @@ jobs:
   push_docker_image:
     docker:
       - image: docker:17.05.0-ce-git
+      - image: circleci/openjdk:latest
     parametrs:
       api-key:
         default: $HEROKU_API_KEY
