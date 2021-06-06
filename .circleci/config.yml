@@ -17,7 +17,9 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - set_tests_report
+      - set_tests_report:
+          requires:
+            - build
       - deploy:
           requires:
             - build
@@ -123,7 +125,7 @@ jobs:
       - run:
           name: Deploy to Heroku
           command: |
-            heroku container:release web --app $HEROKU_APP_NAME
+            heroku container:release web
 
 
 
