@@ -24,10 +24,10 @@ workflows:
           filters:
             branches:
               only: master
-      - push_docker_image
-        filters:
-          branches:
-            only: master
+      - push_docker_image:
+          filters:
+            branches:
+              only: master
 
 jobs:
   build:
