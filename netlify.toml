@@ -1,4 +1,3 @@
 [build]
 base = "react-app"
 publish = "dist"
-# command = "rm -rf dist && mkdir dist && rsync -rv * dist --exclude ./dist && npm run build"
