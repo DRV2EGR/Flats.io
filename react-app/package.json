@@ -2,7 +2,6 @@
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://peaceful-savannah-81579.herokuapp.com/",
   "dependencies": {
     "@autoaddress.ie/autoaddress-react": "^1.0.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -15,6 +14,7 @@
     "@unicef/material-ui-currency-textfield": "^0.8.6",
     "bootstrap": "^4.0.0-alpha.6",
     "cloudinary-react": "^1.7.0",
+    "dotenv": "^10.0.0",
     "dt-format": "^1.0.8",
     "material-ui-dropzone": "^3.5.0",
     "mui-image-slider": "^1.0.7",

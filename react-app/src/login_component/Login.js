@@ -52,7 +52,7 @@ async function loginUser(credentials) { //credentials as param
     //console.log(JSON.stringify(credentials));
 
     let data = '';
-    return fetch('/api/auth/login', {
+    return fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ class Login extends Component {
 
     // componentDidMount() {
     //     //TODO: вставить получение картинки.
-    //     fetch('/api/user/get_user_img_url?userId=22' )
+    //     fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/get_user_img_url?userId=22' )
     //         .then(response => response.json())
     //         .then(res => /*console.log(result.imgUrl) );*/ this.setState({data_p : res.img}));
     //
@@ -131,7 +131,7 @@ class Login extends Component {
     // async loginUser(credentials) { //credentials as param
     //     console.log(credentials);
     //
-    //     return fetch('http://localhost:8080/api/auth/login', {
+    //     return fetch(process.env.REACT_APP_BASE_BACKEND_URL + 'http://localhost:8080/api/auth/login', {
     //         method: 'POST',
     //         headers: {
     //             'Content-Type': 'application/json'

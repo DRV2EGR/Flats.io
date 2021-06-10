@@ -51,7 +51,7 @@ function registerSellerUser(credentials) { //credentials as param
     //console.log(JSON.stringify(credentials));
 
     let data = '';
-    return fetch('/api/signup/seller', {
+    return fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/signup/seller', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ async function registerRealtorUser(credentials) { //credentials as param
     //console.log(JSON.stringify(credentials));
 
     let data = '';
-    return fetch('/api/signup/realtor', {
+    return fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/signup/realtor', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ class SignUP extends Component {
 
     // componentDidMount() {
     //     //TODO: вставить получение картинки.
-    //     fetch('/api/user/get_user_img_url?userId=22' )
+    //     fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/get_user_img_url?userId=22' )
     //         .then(response => response.json())
     //         .then(res => /*console.log(result.imgUrl) );*/ this.setState({data_p : res.img}));
     //

@@ -13,7 +13,7 @@ import './Header.css';
 //     let b = cookies.get('username');
 //     console.log(b)
 //
-//     return fetch('/api/user/get_user_img_url_by_username?username=' + b, {
+//     return fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/get_user_img_url_by_username?username=' + b, {
 //         method: 'post',
 //         headers: new Headers({
 //             'Authorization': 'Barer ' + a,
@@ -45,7 +45,7 @@ class Header extends Component {
         React.createElement(CheckAcsessComponent);
 
         //TODO: вставить получение картинки.
-        // fetch('/api/user/get_user_img_url?userId=22' )
+        // fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/get_user_img_url?userId=22' )
         //     .then(response => response.json())
         //     .then(res => /*console.log(result.imgUrl) );*/ this.setState({data_p : res.img}));
         //
@@ -65,7 +65,7 @@ class Header extends Component {
 
             //console.log(b)
 
-            fetch('/api/user/public/get_user_img_url_by_username?username=' + b, {
+            fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_user_img_url_by_username?username=' + b, {
                 method: 'post',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + a,

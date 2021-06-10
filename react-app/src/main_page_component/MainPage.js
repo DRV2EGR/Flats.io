@@ -37,7 +37,7 @@ class MainPage extends Component {
 
     // Получение квартир на основную страницу
     async getRandomFlats() {
-        return await fetch(`/api/service/flats`)
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + `/api/service/flats`)
             .then(data => data.json());
 
         // //console.log(res.json());
@@ -49,6 +49,7 @@ class MainPage extends Component {
     // Выполнение перед загрузкой страницы
     // Десериализация квартир и подготовка к отрисовке
     async componentDidMount() {
+        //console.log("process.env.REACT_APP_API_KEY = ", process.env.REACT_APP_API_KEY);
         //TODO:
         const _flats = await this.getRandomFlats();
         console.log(_flats);

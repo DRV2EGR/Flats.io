@@ -106,7 +106,7 @@ class AddSellingFlat extends Component {
     //     let a = cookies.get('accessToken');
     //
     //     let data = '';
-    //     return await fetch('/api/flats/add_flat', {
+    //     return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/flats/add_flat', {
     //         method: 'POST',
     //         headers: {
     //             'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ class AddSellingFlat extends Component {
             formData.append('file', file);
             formData.append('upload_preset', 'fxqt4ulu');
 
-            return fetch('https://api.cloudinary.com/v1_1/drv2vna/upload', {
+            return fetch(process.env.REACT_APP_BASE_BACKEND_URL + 'https://api.cloudinary.com/v1_1/drv2vna/upload', {
                 method: 'POST',
                 body: formData
             })
@@ -175,7 +175,7 @@ class AddSellingFlat extends Component {
                 flatsImages
             };
 
-            fetch('/api/flats/add_flat', {
+            fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/flats/add_flat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ class AddSellingFlat extends Component {
     //
     // }
 
-    // doCompleteFetch() {
+    // doCompletefetch(process.env.REACT_APP_BASE_BACKEND_URL + ) {
     //
     //     // "country":"TestCountry",
     //     // "town":"TestTown",

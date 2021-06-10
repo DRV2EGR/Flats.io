@@ -22,7 +22,7 @@ class RealtorsPage extends Component {
     }
 
     async getAllRieltors(credentials) {
-        return await fetch('/api/user/public/get_all_realtors', {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_all_realtors', {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ class RealtorsPage extends Component {
 
     async getUserAwatar(username) {
 
-        return await fetch('/api/user/public/get_user_img_url_by_username?username=' + username, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_user_img_url_by_username?username=' + username, {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ class RealtorsPage extends Component {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
 
-        return await fetch('/api/user/public/get_comments_to_user_by_id?id=' + id, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_comments_to_user_by_id?id=' + id, {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ class RealtorsPage extends Component {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
 
-        return await fetch('/api/user/public/get_additional_info_about_realtor?id=' + id, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_additional_info_about_realtor?id=' + id, {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'

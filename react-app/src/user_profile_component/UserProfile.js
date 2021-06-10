@@ -44,7 +44,7 @@ class UserProfile extends Component {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
 
-        return await fetch('/api/user/public/get_comments_to_user_by_id?id=' + this.state.id, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_comments_to_user_by_id?id=' + this.state.id, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + a,
@@ -63,7 +63,7 @@ class UserProfile extends Component {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
 
-        return await fetch('/api/user/public/get_likes_from_user_by_id?id=' + this.state.id, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_likes_from_user_by_id?id=' + this.state.id, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + a,
@@ -89,7 +89,7 @@ class UserProfile extends Component {
 
         if (b) {
 
-            await fetch('/api/user/public/get_user_img_url_by_username?username=' + b, {
+            await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_user_img_url_by_username?username=' + b, {
                 method: 'post',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + a,
@@ -101,7 +101,7 @@ class UserProfile extends Component {
 
 
 
-            await fetch('/api/user/public/get_user_info', {
+            await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_user_info', {
                 method: 'post',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + a,
@@ -357,7 +357,7 @@ class UserProfile extends Component {
         let ap = cookies.get('accessToken');
         let bp = cookies.get('username');
         if (this.state.stars != 0) {
-            fetch('/api/user/public/set_comment_to_user' , {
+            fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/set_comment_to_user' , {
                 method: 'post',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + ap,

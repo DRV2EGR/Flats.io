@@ -47,7 +47,7 @@ class FlatPage extends Component {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
 
-        return await fetch('/api/flats/get_flat?id=' + this.props.match.params.flatId, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/flats/get_flat?id=' + this.props.match.params.flatId, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + a,
@@ -65,7 +65,7 @@ class FlatPage extends Component {
     async getUser(credentials) {
         const cookies = new Cookies();
         let a = cookies.get('accessToken');
-        return await fetch('/api/user/public/get_user_info', {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_user_info', {
             method: 'post',
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ class FlatPage extends Component {
 
     async getUserAwatar() {
 
-        return await fetch('/api/user/public/get_user_img_url_by_username?username=' + this.state.ownerUsername, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/get_user_img_url_by_username?username=' + this.state.ownerUsername, {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -163,7 +163,7 @@ class FlatPage extends Component {
     }
 
     async frt() {
-        return await fetch('/api/flats/get_likes_to_flat_by_id?id=' + this.state.id, {
+        return await fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/flats/get_likes_to_flat_by_id?id=' + this.state.id, {
             method: 'get',
             headers: new Headers({
                 'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ class FlatPage extends Component {
         let ap = cookies.get('accessToken');
         let bp = cookies.get('username');
         if (ap) {
-            fetch('/api/user/public/set_like_to_flat' , {
+            fetch(process.env.REACT_APP_BASE_BACKEND_URL + '/api/user/public/set_like_to_flat' , {
                 method: 'post',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + ap,
